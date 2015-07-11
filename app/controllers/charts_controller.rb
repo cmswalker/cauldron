@@ -19,6 +19,7 @@ class ChartsController < ApplicationController
   #   end
   # end
 
+
   # def show
   #   @chart = current_chart
   #   @ingredients = @chart.ingredients
@@ -29,14 +30,13 @@ class ChartsController < ApplicationController
   # end
 
   def show
+    @ingredient = Ingredient.new
     @ingredients = @chart.ingredients.arrange_serializable
     respond_to do |f|
-      f.html { render :index }
+      f.html { render :show, location: @chart }
       f.json { render json: @ingredients }
     end
   end
-
-
 
 
   # GET /charts/new

@@ -51,6 +51,7 @@ class IngredientsController < ApplicationController
   # POST /ingredients.json
   def create
     @ingredient = Ingredient.new(ingredient_params)
+    # binding.pry
 
     respond_to do |format|
       if @ingredient.save
@@ -95,6 +96,6 @@ class IngredientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ingredient_params
-      params.require(:ingredient).permit(:name, :chart_id)
+      params.require(:ingredient).permit(:name, :chart_id, :top_field, :mid_field, :bottom_field)
     end
 end

@@ -31,6 +31,7 @@ class ChartsController < ApplicationController
 
   def show
     @ingredient = Ingredient.new
+    @root = @chart.ingredients.first
     @ingredients = @chart.ingredients.arrange_serializable
     respond_to do |f|
       f.html { render :show, location: @chart }
@@ -52,9 +53,11 @@ class ChartsController < ApplicationController
   # POST /charts.json
   def create
     @chart = Chart.new(chart_params)
-
+    if @chart.save
+      @ingredient = Ingredient.create! :name => @chart.name, :chart_id => @chart.id
+    end
     respond_to do |format|
-      if @chart.save
+      if @chart
         format.html { redirect_to @chart, notice: 'Chart was successfully created.' }
         format.json { render :show, status: :created, location: @chart }
       else

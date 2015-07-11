@@ -6,7 +6,7 @@ class Ingredient < ActiveRecord::Base
 	belongs_to :parent, :class_name => "Ingredient", :foreign_key => "parent_id"
 	has_many :children, :class_name => "Ingredient", :foreign_key => "parent_id"
 
-	validates :name, presence: true, uniqueness: true
+	validates :name, presence: true
 
 	# def self.json_tree(nodes)
 	#     nodes.map do |node, sub_nodes|

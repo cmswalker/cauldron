@@ -4,10 +4,10 @@ class IngredientsController < ApplicationController
   # GET /ingredients
   # GET /ingredients.json
   def index
-    # @ingredients = Ingredient.all
+    # ingredients = Ingredient.all
     @ingredients = Ingredient.arrange_serializable
     respond_to do |f|
-      f.html { render :index}
+      f.html { render :index }
       f.json { render json: @ingredients}
       # f.json {render json: @ingredients.as_json(include: :children, except: [:updated_at, :created_at])}
     end

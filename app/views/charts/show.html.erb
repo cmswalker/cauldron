@@ -2,7 +2,9 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @chart.name %>
+  <%= @chart.name %><br>
+  <strong>THIS IS ROOT</strong>
+  <%= @root.name %><br>
   Ingredients
   <% @chart.ingredients.each do |i| %>
   	<div><%= i.name %></div>

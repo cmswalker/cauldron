@@ -1,0 +1,15 @@
+{
+  "name": "chart_app",
+  "version": "0.0.0",
+  "authors": [
+    "cmswalker <c.michael.s.walker@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

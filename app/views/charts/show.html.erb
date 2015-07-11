@@ -2,7 +2,9 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @chart.name %>
+  <%= @chart.name %><br>
+  <strong>THIS IS ROOT</strong>
+  <%= @root.name %><br>
   Ingredients
   <% @chart.ingredients.each do |i| %>
   	<div><%= i.name %></div>
@@ -26,11 +28,15 @@
     </div>
   <% end %>
 
+<hr>
+NEW INGREDIENT
+
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
   <%= f.hidden_field :chart_id, :value => params[:id] %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

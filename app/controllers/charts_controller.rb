@@ -9,15 +9,36 @@ class ChartsController < ApplicationController
 
   # GET /charts/1
   # GET /charts/1.json
-  def show
-    @chart = current_chart
-    @ingredient = Ingredient.new
 
+  # def show
+  #   @chart = current_chart
+  #   @ingredient = Ingredient.new
+  #   respond_to do |f|
+  #     f.html { render :show, location: @chart }
+  #     f.json {render json: @chart.as_json(include: :ingredients, except: [:chart, :password_digest, :updated_at, :created_at])}
+  #   end
+  # end
+
+
+  # def show
+  #   @chart = current_chart
+  #   @ingredients = @chart.ingredients
+  #   respond_to do |f|
+  #     f.html { render :show, location: @chart }
+  #     f.json {render json: @ingredients.as_json(include: :children, except: [:chart, :password_digest, :updated_at, :created_at])}
+  #   end
+  # end
+
+  def show
+    @ingredient = Ingredient.new
+    @root = @chart.ingredients.first
+    @ingredients = @chart.ingredients.arrange_serializable
     respond_to do |f|
       f.html { render :show, location: @chart }
-      f.json {render json: @chart.as_json(include: :ingredients, except: [:chart, :password_digest, :updated_at, :created_at])}
+      f.json { render json: @ingredients }
     end
   end
+
 
   # GET /charts/new
   def new
@@ -32,9 +53,11 @@ class ChartsController < ApplicationController
   # POST /charts.json
   def create
     @chart = Chart.new(chart_params)
-
+    if @chart.save
+      @ingredient = Ingredient.create! :name => @chart.name, :chart_id => @chart.id
+    end
     respond_to do |format|
-      if @chart.save
+      if @chart
         format.html { redirect_to @chart, notice: 'Chart was successfully created.' }
         format.json { render :show, status: :created, location: @chart }
       else

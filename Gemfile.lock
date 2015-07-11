@@ -36,6 +36,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     angular-rails-templates (0.1.4)
       railties (>= 3.1)
       sprockets
@@ -167,6 +169,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ancestry
   angular-rails-templates
   bcrypt (~> 3.1.7)
   bootstrap-sass

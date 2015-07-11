@@ -4,4 +4,6 @@ module ApplicationHelper
 		@current_chart = Chart.find(params[:id])
 	end
 
+	
+
 end

@@ -19,14 +19,25 @@ class ChartsController < ApplicationController
   #   end
   # end
 
+  # def show
+  #   @chart = current_chart
+  #   @ingredients = @chart.ingredients
+  #   respond_to do |f|
+  #     f.html { render :show, location: @chart }
+  #     f.json {render json: @ingredients.as_json(include: :children, except: [:chart, :password_digest, :updated_at, :created_at])}
+  #   end
+  # end
+
   def show
-    @chart = current_chart
-    @ingredients = @chart.ingredients
+    @ingredients = @chart.ingredients.arrange_serializable
     respond_to do |f|
-      f.html { render :show, location: @chart }
-      f.json {render json: @ingredients.as_json(include: :children, except: [:chart, :password_digest, :updated_at, :created_at])}
+      f.html { render :index }
+      f.json { render json: @ingredients }
     end
   end
+
+
+
 
   # GET /charts/new
   def new

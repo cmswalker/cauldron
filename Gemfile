@@ -20,6 +20,8 @@ gem 'responders'
 
 gem 'bower-rails'
 
+gem 'ancestry'
+
 gem'angular-rails-templates'
 
 gem 'rack-cors', :require => 'rack/cors'

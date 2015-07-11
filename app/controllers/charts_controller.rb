@@ -9,13 +9,22 @@ class ChartsController < ApplicationController
 
   # GET /charts/1
   # GET /charts/1.json
+
+  # def show
+  #   @chart = current_chart
+  #   @ingredient = Ingredient.new
+  #   respond_to do |f|
+  #     f.html { render :show, location: @chart }
+  #     f.json {render json: @chart.as_json(include: :ingredients, except: [:chart, :password_digest, :updated_at, :created_at])}
+  #   end
+  # end
+
   def show
     @chart = current_chart
-    @ingredient = Ingredient.new
-
+    @ingredients = @chart.ingredients
     respond_to do |f|
       f.html { render :show, location: @chart }
-      f.json {render json: @chart.as_json(include: :ingredients, except: [:chart, :password_digest, :updated_at, :created_at])}
+      f.json {render json: @ingredients.as_json(include: :children, except: [:chart, :password_digest, :updated_at, :created_at])}
     end
   end
 

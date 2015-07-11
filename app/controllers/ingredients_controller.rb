@@ -4,13 +4,39 @@ class IngredientsController < ApplicationController
   # GET /ingredients
   # GET /ingredients.json
   def index
-    @ingredients = Ingredient.all
+    # @ingredients = Ingredient.all
+    @ingredients = Ingredient.arrange_serializable
+    respond_to do |f|
+      f.html { render :index}
+      f.json { render json: @ingredients}
+      # f.json {render json: @ingredients.as_json(include: :children, except: [:updated_at, :created_at])}
+    end
   end
 
   # GET /ingredients/1
   # GET /ingredients/1.json
+  # def show
+  # end
+
+  # def show
+  #   @ingredients = Ingredient.arrange
+  #   respond_to do |format|
+  #     format.html # index.html.erb
+  #     format.xml  { render :xml => @goals }
+  #     format.json { render :json =>  Ingredient.json_tree(@ingredients)}
+  #   end
+  # end
+
   def show
+    # @ingredients = Ingredient.arrange_as_array.each{|n| puts "#{'-' * n.depth} #{n.name}" }
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render :json => Ingredient.arrange_serializable }
+      # format.json { render :json => Ingredient.arrange_as_array.each{|n| puts "#{'-' * n.depth} #{n.name}" } }
+    end
+
   end
+
 
   # GET /ingredients/new
   def new

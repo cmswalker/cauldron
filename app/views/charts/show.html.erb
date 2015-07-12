@@ -12,9 +12,39 @@
 
 <h4>BEGIN ANGULAR BELOW</h4>
 
+<script type="text/ng-template" id="customTemplate.html">
+  <a>
+      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
+      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+  </a>
+</script>
+
 
 <div ng-app="ChartApp">
   <div ng-controller="ChartCtrl">
+
+  <div class="col-xs-4">
+      <h4>BUILD</h4>
+      <div>
+
+        <input type="text" ng-model="selected" typeahead="name for name in current_chart.allchild | filter:$viewValue | limitTo:8" class="form-control">
+
+
+        <h1>before repeat div</h1>
+        <div ng-repeat="child in current_chart.children | filter:{ name: by_name }">
+          {{ child.name }}
+        </div>
+        <h1>after repeat div</h1>
+
+
+        <input type="text" ng-model="selected" typeahead="name for name in current_chart.allchild | filter:$viewValue | limitTo:8" class="form-control">
+      </div>
+      
+  </div>
+
+
+
+
 
     <div>
       Search: <input type="text" ng-model="search_key"/>
@@ -27,9 +57,9 @@
     </div>
     <h3>END SEARCH LOOP</h3>
 
-    <div ng-repeat="child in current_chart.children">
+   <!--  <div ng-repeat="child in current_chart.children">
       {{ child.name }}
-    </div>
+    </div> -->
 
 <!--     CHECK LAYER LOOP
     <p>
@@ -68,6 +98,12 @@
           </ul>
         </div>
       <% end %>
+
+
+      
+
+
+
 
         <form name="ingredient_form" class="row">
           <div class="small-9 columns">

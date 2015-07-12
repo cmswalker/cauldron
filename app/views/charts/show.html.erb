@@ -12,13 +12,6 @@
 
 <h4>BEGIN ANGULAR BELOW</h4>
 
-<script type="text/ng-template" id="customTemplate.html">
-  <a>
-      <img ng-src="http://upload.wikimedia.org/wikipedia/commons/thumb/{{match.model.flag}}" width="16">
-      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-  </a>
-</script>
-
 
 <div ng-app="ChartApp">
   <div ng-controller="ChartCtrl">
@@ -38,31 +31,21 @@
         <input type="text" ng-model="selected5" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 6</label>
         <input type="text" ng-model="selected6" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
-      </div>
-
-        <!-- <h1>before repeat div</h1>
-        <div ng-repeat="child in current_chart.children | filter:{ name: by_name }">
-          {{ child.name }}
-        </div>
-        <h1>after repeat div</h1> -->
-      
-      
+      </div>      
   </div>
 
 
-
-
-
+    <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
     <div>
       Search: <input type="text" ng-model="search_key"/>
     </div>  
-
     <div ng-repeat="child in current_chart.allchild | filter: search_key ">
       <div>
         {{ child }}
       </div>
     </div>
     <h3>END SEARCH LOOP</h3>
+
 
    <!--  <div ng-repeat="child in current_chart.children">
       {{ child.name }}
@@ -93,25 +76,14 @@
     {{ current_chart.allchild }}
     END CHECK ALL CHILDREN -->
 
-    <%= form_for(@ingredient) do |f| %>
-      <% if @ingredient.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
 
-          <ul>
-          <% @ingredient.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
 
 
       
 
 
 
-
+<!--         TRIAL FORM START
         <form name="ingredient_form" class="row">
           <div class="small-9 columns">
             <label>Base?</label>
@@ -142,12 +114,13 @@
             <input type="submit" value="Submit" class="button small-3 small-offset-4 medium-3 large-4 columns" ng-click="new_receipt(receipt, $event); receipt_modal=false">
           </div>
         </form>
+        TRIAL FORM END -->
 
-
+<!--         ANOTHER TRIAL START
         <button type="button" ng-click="top=true" ng-hide="startedIng" ng-click="startedIng=true">Start Process</button>
         <div>
           <input type="text" ng-click="startedIng=true" placeholder="base ing" ng-model="current_chart.children">
-          <!-- submit first ingredient -->
+          SUBMIT FIRST
           <button type="button" ng-click="top=false" ng-model="current_chart.children.children">onTo2nd</button><br>
 
           <input type="text" placeholder="2nd ing" />
@@ -156,10 +129,21 @@
           <input type="text" placeholder="3rd ing" />
           <button type="button" ng-click="">onTo4th</button><br>
         </div>
-        
+        ANOTHER TRIAL END -->
 
 
+    <%= form_for(@ingredient) do |f| %>
+          <% if @ingredient.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
 
+              <ul>
+              <% @ingredient.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>       
 
 
       <div id="ingredient_menu">
@@ -175,11 +159,9 @@
           <%= f.text_field :name, id: "ingredient_field" %>
           <%= f.hidden_field :chart_id, :value => params[:id] %>
           <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
-        </div>
-
-
-        
+        </div> 
       </div>
+
 
     <% end %>
 

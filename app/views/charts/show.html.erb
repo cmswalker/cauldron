@@ -24,21 +24,28 @@
   <div ng-controller="ChartCtrl">
 
   <div class="col-xs-4">
-      <h4>BUILD</h4>
+      <h4>BUILD FORM</h4>
       <div>
+        <label>layer 1</label>
+        <input type="text" ng-model="selected1" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 2</label>
+        <input type="text" ng-model="selected2" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 3</label>
+        <input type="text" ng-model="selected3" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 4</label>
+        <input type="text" ng-model="selected4" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 5</label>
+        <input type="text" ng-model="selected5" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 6</label>
+        <input type="text" ng-model="selected6" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
+      </div>
 
-        <input type="text" ng-model="selected" typeahead="name for name in current_chart.allchild | filter:$viewValue | limitTo:8" class="form-control">
-
-
-        <h1>before repeat div</h1>
+        <!-- <h1>before repeat div</h1>
         <div ng-repeat="child in current_chart.children | filter:{ name: by_name }">
           {{ child.name }}
         </div>
-        <h1>after repeat div</h1>
-
-
-        <input type="text" ng-model="selected" typeahead="name for name in current_chart.allchild | filter:$viewValue | limitTo:8" class="form-control">
-      </div>
+        <h1>after repeat div</h1> -->
+      
       
   </div>
 

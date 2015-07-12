@@ -200,7 +200,12 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 
 
 
-	  $scope.selected = undefined;
+	  $scope.selected1 = undefined;
+	  $scope.selected2 = undefined;
+	  $scope.selected3 = undefined;
+	  $scope.selected4 = undefined;
+	  $scope.selected5 = undefined;
+	  $scope.selected6 = undefined;
 	  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 
 	  'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
 	  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 

@@ -117,6 +117,7 @@ class IngredientsController < ApplicationController
           @looping_parent = c
           @level_two = c.children
           if @level_two.length == 0
+            binding.pry
             #create the node if children of field_1 is empty
             create_from_trie
           end
@@ -134,13 +135,13 @@ class IngredientsController < ApplicationController
               #BEGIN LEVEL THREE QUERY
               @level_three.each do |c3|
                 if @search == c3.name
-                  binding.pry
+                  # binding.pry
                   @search = @four_field
                   # @ingredient = nil
                   @looping_parent = c3
                   @level_four = c3.children
                   if @level_four.length == 0
-                    binding.pry
+                    # binding.pry
                     #create the node if children of field_3 is empty
                     create_from_trie
                   end
@@ -155,6 +156,11 @@ class IngredientsController < ApplicationController
           #END LEVEL ONE QUERY
         end
         ##LOOP ENDS HERE
+
+        ##BEGIN CREATING BRAND NEW NODES IF NOTHING WAS FOUND
+        # @looping_parent = @root
+        # @search = @one_field
+        # create_from_trie
 
         #must tell it to create nodes that DONT exist yet
         # all you helpers are fucked

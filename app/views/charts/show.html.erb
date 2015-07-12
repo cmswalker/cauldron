@@ -5,18 +5,12 @@
   <%= @chart.name %><br>
   <strong>THIS IS ROOT</strong>
   <%= @root.name %><br>
-  Ingredients
-  <% @chart.ingredients.each do |i| %>
-  	<div><%= i.name %></div>
-  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_chart_path(@chart) %> |
 <%= link_to 'Back', charts_path %>
 
-<hr>
 <h4>BEGIN ANGULAR BELOW</h4>
-<hr>
 
 
 
@@ -27,16 +21,20 @@
       Search: <input type="text" ng-model="search_key"/>
     </div>  
 
-    <div ng-repeat="child in current_chart.children | filter: search_key ">
+    <div ng-repeat="child in current_chart.allchild | filter: search_key ">
       <div>
-        {{ child.name }}
+        {{ child }}
       </div>
     </div>
+    <h3>END SEARCH LOOP</h3>
 
+    <div ng-repeat="child in current_chart.children">
+      {{ child.name }}
+    </div>
 
-    {{ current_chart }}
-    {{ current_chart.id }}
-    {{ current_chart.children }}
+    {{ current_chart.children.name }}
+    {{ current_chart.children.children }}
+    {{ current_chart.allchild }}
 
     <%= form_for(@ingredient) do |f| %>
       <% if @ingredient.errors.any? %>
@@ -51,14 +49,50 @@
         </div>
       <% end %>
 
-      <h3>ADD A BASE INGREDIENT</h3>
-      <div class="field">
-        <%= f.label :name %><br>
-        <%= f.text_field :name, id: "ingredient_field" %>
-      </div>
-      <%= f.hidden_field :chart_id, :value => params[:id] %>
-      <div class="actions">
-        <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
+        <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
+        <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
+        <label for="ng-change-example2">Confirmed</label><br />
+        <tt>debug = {{confirmed}}</tt><br/>
+        <tt>counter = {{counter}}</tt><br/>
+
+
+        <button type="button" ng-click="top=true" ng-hide="startedIng" ng-click="startedIng=true">Start Process</button>
+
+        <div>
+          <input type="text" ng-click="startedIng=true" placeholder="base ing" ng-model="current_chart.children">
+          <!-- submit first ingredient -->
+          <button type="button" ng-click="top=false" ng-model="current_chart.children.children">onTo2nd</button><br>
+
+          <input type="text" placeholder="2nd ing" />
+          <button type="button" ng-click="onTo3rd">onTo3rd</button><br>
+
+          <input type="text" placeholder="3rd ing" />
+          <button type="button" ng-click="">onTo4th</button><br>
+          
+        </div>
+        
+
+
+
+
+
+      <div id="ingredient_menu">
+        <h3>ADD A BASE INGREDIENT</h3>
+        <div id="base_ingredient" class="field" ng-show="base" ng-hide="ing_2">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, id: "ingredient_field" %>
+          <%= f.hidden_field :chart_id, :value => params[:id] %>
+          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
+        </div>
+        <div id="2nd_ingredient" class="field" ng-hide="ing_2">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, id: "ingredient_field" %>
+          <%= f.hidden_field :chart_id, :value => params[:id] %>
+          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
+        </div>
+
+
+        
       </div>
 
     <% end %>

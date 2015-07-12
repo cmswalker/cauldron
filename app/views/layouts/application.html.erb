@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>ChartApp</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>	
-<div class="container-fluid">
+	<head>
+	  <title>ChartApp</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>	
+		<div class="container-fluid">
 
-	<%= yield %>
+			<%= flash_messages %>
+			<% if flash[:notice] %>
+			  <div class="alert alert-danger col-md-12" role="alert">
+			    <%= flash[:notice] %>
+			  </div>
+			<% end %>
+			<%= yield %>
 
-</div>
+		</div>
 
-<% console %>
+		<% console %>
 
-</body>
+	</body>
 </html>

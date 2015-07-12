@@ -9,7 +9,9 @@ Rails.application.routes.draw do
 
   get "/sessions", to: "sessions#destroy", as: "user_logout"
 
-  post "/charts/:id/ingredients", to: "ingredients#create", as: "chart_ingredient_create"
+  get "/account", to: "users#show", as: "user_dashboard"
+
+  post "/charts/:id/ingredients(.:format)", to: "ingredients#ngcreate", as: "ng_chart_ingredient_create"
 
 
 

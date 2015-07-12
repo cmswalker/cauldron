@@ -9,7 +9,8 @@ class SessionsController < ApplicationController
 		@user = User.confirm(user_params)
 		if @user
 			login(@user)
-			redirect_to user_path(@user)
+			# redirect_to user_path(@user)
+			redirect_to user_dashboard_path
 		else
 			redirect_to root_path
 			flash[:notice] = "could not match email and password"

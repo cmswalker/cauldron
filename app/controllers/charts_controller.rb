@@ -1,5 +1,7 @@
 class ChartsController < ApplicationController
   before_action :set_chart, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token
+  before_filter :restrict_access, except: :index
 
   # GET /charts
   # GET /charts.json
@@ -100,6 +102,11 @@ class ChartsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def chart_params
       params.require(:chart).permit(:name)
+    end
+
+    def restrict_access
+      auth_user = User.find_by(user_key: params[:user_key])
+      head :unauthorized unless auth_user
     end
 end
 

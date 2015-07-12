@@ -13,6 +13,10 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = current_user
+    respond_to do |format|
+        format.html { render :show, notice: 'User was successfully created.' }
+        format.json { render json: @user, except: [:password_digest, :email, :created_at, :updated_at] }
+    end
   end
 
   # GET /users/new

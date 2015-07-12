@@ -5,61 +5,163 @@
   <%= @chart.name %><br>
   <strong>THIS IS ROOT</strong>
   <%= @root.name %><br>
-  Ingredients
-  <% @chart.ingredients.each do |i| %>
-  	<div><%= i.name %></div>
-  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_chart_path(@chart) %> |
 <%= link_to 'Back', charts_path %>
 
-<hr>
 <h4>BEGIN ANGULAR BELOW</h4>
-<hr>
-
 
 
 <div ng-app="ChartApp">
   <div ng-controller="ChartCtrl">
 
+  <div class="col-xs-4">
+      <h4>BUILD FORM</h4>
+      <div>
+        <label>layer 1</label>
+        <input type="text" ng-model="selected1" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 2</label>
+        <input type="text" ng-model="selected2" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 3</label>
+        <input type="text" ng-model="selected3" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 4</label>
+        <input type="text" ng-model="selected4" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 5</label>
+        <input type="text" ng-model="selected5" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
+        <label>layer 6</label>
+        <input type="text" ng-model="selected6" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
+      </div>      
+  </div>
+
+
+    <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
     <div>
       Search: <input type="text" ng-model="search_key"/>
     </div>  
-
-    <div ng-repeat="child in current_chart.children | filter: search_key ">
+    <div ng-repeat="child in current_chart.allchild | filter: search_key ">
       <div>
-        {{ child.name }}
+        {{ child }}
       </div>
     </div>
+    <h3>END SEARCH LOOP</h3>
 
 
-    {{ current_chart }}
-    {{ current_chart.id }}
-    {{ current_chart.children }}
+   <!--  <div ng-repeat="child in current_chart.children">
+      {{ child.name }}
+    </div> -->
+
+<!--     CHECK LAYER LOOP
+    <p>
+      <h3>LAYERS</h3>
+      <h2>one</h2>
+      {{ current_chart.layer_1 }}
+      <hr>
+      <h2>two</h2>
+      {{ current_chart.layer_2 }}
+      <hr>
+      <h2>three</h2>
+      {{ current_chart.layer_3 }}
+      <h2>four</h2>
+      {{ current_chart.layer_4 }}
+      <h2>five</h2>
+      {{ current_chart.layer_5 }}
+      <h2>six</h2>
+      {{ current_chart.layer_6 }}
+    </p>
+    END CHECK LAYER LOOP -->
+    
+<!--     CHECK ALL CHILDREN
+    <h2>ALL CHILDREN</h2>
+    {{ current_chart.allchild }}
+    END CHECK ALL CHILDREN -->
+
+
+
+
+      
+
+
+
+<!--         TRIAL FORM START
+        <form name="ingredient_form" class="row">
+          <div class="small-9 columns">
+            <label>Base?</label>
+            <input type="text" name="rec_trans_num" ng-model="current_chart.children" >
+          </div>
+          <div class="small-9 columns">
+            <label>2nd Level</label>
+            <input type="text" name="rec_payment" ng-model="current_chart.layer_1">
+          </div>
+          <div class="small-9 columns">
+            <label>3rd Level</label>
+            <input type="text" name="rec_amount" ng-model="current_chart.layer_2">
+          </div>
+          <div class="small-9 columns">
+            <label>4th Level</label>
+            <input type="text" name="rec_tip" ng-model="current_chart.layer_3">
+          </div>
+          <div class="small-9 columns">
+            <label>5th Level</label>
+            <input type="text" name="rec_total" ng-model="current_chart.layer_4">
+          </div>
+          <div class="small-9 columns">
+            <label>6th Level</label>
+            <input type="text" name="rec_total" ng-model="current_chart.layer_5">
+          </div>
+          <hr>
+          <div class="row">
+            <input type="submit" value="Submit" class="button small-3 small-offset-4 medium-3 large-4 columns" ng-click="new_receipt(receipt, $event); receipt_modal=false">
+          </div>
+        </form>
+        TRIAL FORM END -->
+
+<!--         ANOTHER TRIAL START
+        <button type="button" ng-click="top=true" ng-hide="startedIng" ng-click="startedIng=true">Start Process</button>
+        <div>
+          <input type="text" ng-click="startedIng=true" placeholder="base ing" ng-model="current_chart.children">
+          SUBMIT FIRST
+          <button type="button" ng-click="top=false" ng-model="current_chart.children.children">onTo2nd</button><br>
+
+          <input type="text" placeholder="2nd ing" />
+          <button type="button" ng-click="onTo3rd">onTo3rd</button><br>
+
+          <input type="text" placeholder="3rd ing" />
+          <button type="button" ng-click="">onTo4th</button><br>
+        </div>
+        ANOTHER TRIAL END -->
+
 
     <%= form_for(@ingredient) do |f| %>
-      <% if @ingredient.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
+          <% if @ingredient.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
 
-          <ul>
-          <% @ingredient.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
+              <ul>
+              <% @ingredient.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>       
+
+
+      <div id="ingredient_menu">
+        <h3>ADD A BASE INGREDIENT</h3>
+        <div id="base_ingredient" class="field" ng-show="base" ng-hide="ing_2">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, id: "ingredient_field" %>
+          <%= f.hidden_field :chart_id, :value => params[:id] %>
+          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
         </div>
-      <% end %>
+        <div id="2nd_ingredient" class="field" ng-hide="ing_2">
+          <%= f.label :name %><br>
+          <%= f.text_field :name, id: "ingredient_field" %>
+          <%= f.hidden_field :chart_id, :value => params[:id] %>
+          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
+        </div> 
+      </div>
 
-      <h3>ADD A BASE INGREDIENT</h3>
-      <div class="field">
-        <%= f.label :name %><br>
-        <%= f.text_field :name, id: "ingredient_field" %>
-      </div>
-      <%= f.hidden_field :chart_id, :value => params[:id] %>
-      <div class="actions">
-        <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
-      </div>
 
     <% end %>
 

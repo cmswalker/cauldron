@@ -14,31 +14,74 @@
 <%= link_to 'Edit', edit_chart_path(@chart) %> |
 <%= link_to 'Back', charts_path %>
 
-
-<%= form_for(@ingredient) do |f| %>
-  <% if @ingredient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
-
-      <ul>
-      <% @ingredient.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
 <hr>
-NEW INGREDIENT
+<h4>BEGIN ANGULAR BELOW</h4>
+<hr>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <%= f.hidden_field :chart_id, :value => params[:id] %>
 
-  <div class="actions">
-    <%= f.submit %>
+
+<div ng-app="ChartApp">
+  <div ng-controller="ChartCtrl">
+
+    <div>
+      Search: <input type="text" ng-model="search_key"/>
+    </div>  
+
+    <div ng-repeat="child in current_chart.children | filter: search_key ">
+      <div>
+        {{ child.name }}
+      </div>
+    </div>
+
+
+    {{ current_chart }}
+    {{ current_chart.id }}
+    {{ current_chart.children }}
+
+    <%= form_for(@ingredient) do |f| %>
+      <% if @ingredient.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
+
+          <ul>
+          <% @ingredient.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <h3>ADD A BASE INGREDIENT</h3>
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_field :name, id: "ingredient_field" %>
+      </div>
+      <%= f.hidden_field :chart_id, :value => params[:id] %>
+      <div class="actions">
+        <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
+      </div>
+
+    <% end %>
+
+    <%= javascript_include_tag "charts", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "chart_ctrl", "data-turbolinks-track" => true %>
+    
+
+
+
+
+
+
+
+
+
   </div>
-<% end %>
+  <!-- END ChartCtrl -->
+</div>
+<!-- END ChartApp -->
+
+
+
+
+
 

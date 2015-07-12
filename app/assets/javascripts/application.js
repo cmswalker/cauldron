@@ -23,8 +23,6 @@
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
 
 
-
-
 //JUST IN CASE
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
@@ -78,6 +76,14 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 
 				$scope.current_chart = response[0];
 				$scope.current_chart.allchild = null;
+				$scope.rec = {};
+				$scope.rec.one = undefined;
+				$scope.rec.two = undefined;
+				$scope.rec.three = undefined;
+				$scope.rec.four = undefined;
+				$scope.rec.five = undefined;
+				$scope.rec.six = undefined;
+				console.log('here is scope.rec ', $scope.rec)
 				$scope.current_chart.layer_1 = [];
 				$scope.current_chart.layer_2 = [];
 				$scope.current_chart.layer_3 = [];
@@ -149,7 +155,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 			}
 			//END regen_layer_loop
 
-
 			regen_layer_loop();
 			console.log('yo names ', $scope.current_chart.layer_6_names)
 			
@@ -157,13 +162,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 			var total_seconds = end_seconds - start_seconds;
 			console.log(total_seconds + " seconds for loop");
 			$scope.current_chart.allchild = chart_children;
-
-
-
-
-
-
-
 
 
 
@@ -193,25 +191,32 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 
 
 
+	$scope.new_recipe = function(taco_recipe, event) {
+		event.preventDefault();
+		$scope.master = {};
+		$scope.master = angular.copy(taco_recipe);
+		$http.post("/charts/8/ingredients.json", $scope.master)
+			.success(function(data, status) {
+				console.log(status);
+				console.log("SHOULD BE WORKING?");
+				//regenerate();
+			})
+			.error(function(error) {
+				console.log(error);
+			})
+	}
 
 
 
 
 
+	  // $scope.rec.one = undefined;
+	  // $scope.rec.two = undefined;
+	  // $scope.rec.three = undefined;
+	  // $scope.rec.four = undefined;
+	  // $scope.rec.five = undefined;
+	  // $scope.rec.six = undefined;
 
-
-	  $scope.selected1 = undefined;
-	  $scope.selected2 = undefined;
-	  $scope.selected3 = undefined;
-	  $scope.selected4 = undefined;
-	  $scope.selected5 = undefined;
-	  $scope.selected6 = undefined;
-	  $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 
-	  'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
-	  'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 
-	  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 
-	  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 
-	  'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 	
 
 

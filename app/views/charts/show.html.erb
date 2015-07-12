@@ -20,17 +20,18 @@
       <h4>BUILD FORM</h4>
       <div>
         <label>layer 1</label>
-        <input type="text" ng-model="selected1" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 2</label>
-        <input type="text" ng-model="selected2" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.two" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 3</label>
-        <input type="text" ng-model="selected3" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.three" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 4</label>
-        <input type="text" ng-model="selected4" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.four" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 5</label>
-        <input type="text" ng-model="selected5" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.five" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
         <label>layer 6</label>
-        <input type="text" ng-model="selected6" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="text" ng-model="rec.six" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
+        <input type="submit" value="Submit" class="button" ng-click="new_recipe(rec, $event)">
       </div>      
   </div>
 
@@ -76,10 +77,6 @@
     {{ current_chart.allchild }}
     END CHECK ALL CHILDREN -->
 
-
-
-
-      
 
 
 

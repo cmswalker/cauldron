@@ -1,0 +1,15 @@
+{
+  "name": "form2js-bower",
+  "homepage": "https://github.com/dkarpenko/form2js",
+  "version": "2.0.1",
+  "_release": "2.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.0.1",
+    "commit": "4c61ccc3f63d670e9022ff550d8a19508996a21b"
+  },
+  "_source": "git://github.com/dkarpenko/form2js.git",
+  "_target": "~2.0.1",
+  "_originalSource": "form2js-bower",
+  "_direct": true
+}

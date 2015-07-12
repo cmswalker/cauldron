@@ -51,14 +51,35 @@ class IngredientsController < ApplicationController
   # POST /ingredients.json
   def create
     @ingredient = Ingredient.new(ingredient_params)
+    @root = current_chart_root
+    @top_level = @root.children
+    @search = @ingredient.name
+
+    def trie_search
+      @top_level.each do |child|
+        if child.name == @search
+          # redirect_to "/charts/#{@root.chart_id}", notice: 'DUPLICATE'
+          @ingredient = nil
+          return
+        end
+      end
+    end
+
+    trie_search
+
     # binding.pry
+    
+    if @ingredient
+      @ingredient = @root.children.create! :name => @ingredient[:name], :chart_id => @ingredient[:chart_id]
+    end
 
     respond_to do |format|
-      if @ingredient.save
+      if @ingredient
         format.html { redirect_to @ingredient, notice: 'Ingredient was successfully created.' }
         format.json { render :show, status: :created, location: @ingredient }
       else
-        format.html { render :new }
+        # format.html { render :new }
+        format.html { redirect_to "/charts/#{@root.chart_id}", notice: 'DUPLICATE' }
         format.json { render json: @ingredient.errors, status: :unprocessable_entity }
       end
     end

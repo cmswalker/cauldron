@@ -13,7 +13,6 @@
 <h4>BEGIN ANGULAR BELOW</h4>
 
 
-
 <div ng-app="ChartApp">
   <div ng-controller="ChartCtrl">
 
@@ -32,9 +31,30 @@
       {{ child.name }}
     </div>
 
-    {{ current_chart.children.name }}
-    {{ current_chart.children.children }}
+<!--     CHECK LAYER LOOP
+    <p>
+      <h3>LAYERS</h3>
+      <h2>one</h2>
+      {{ current_chart.layer_1 }}
+      <hr>
+      <h2>two</h2>
+      {{ current_chart.layer_2 }}
+      <hr>
+      <h2>three</h2>
+      {{ current_chart.layer_3 }}
+      <h2>four</h2>
+      {{ current_chart.layer_4 }}
+      <h2>five</h2>
+      {{ current_chart.layer_5 }}
+      <h2>six</h2>
+      {{ current_chart.layer_6 }}
+    </p>
+    END CHECK LAYER LOOP -->
+    
+<!--     CHECK ALL CHILDREN
+    <h2>ALL CHILDREN</h2>
     {{ current_chart.allchild }}
+    END CHECK ALL CHILDREN -->
 
     <%= form_for(@ingredient) do |f| %>
       <% if @ingredient.errors.any? %>
@@ -49,15 +69,39 @@
         </div>
       <% end %>
 
-        <input type="checkbox" ng-model="confirmed" ng-change="change()" id="ng-change-example1" />
-        <input type="checkbox" ng-model="confirmed" id="ng-change-example2" />
-        <label for="ng-change-example2">Confirmed</label><br />
-        <tt>debug = {{confirmed}}</tt><br/>
-        <tt>counter = {{counter}}</tt><br/>
+        <form name="ingredient_form" class="row">
+          <div class="small-9 columns">
+            <label>Base?</label>
+            <input type="text" name="rec_trans_num" ng-model="current_chart.children" >
+          </div>
+          <div class="small-9 columns">
+            <label>2nd Level</label>
+            <input type="text" name="rec_payment" ng-model="current_chart.layer_1">
+          </div>
+          <div class="small-9 columns">
+            <label>3rd Level</label>
+            <input type="text" name="rec_amount" ng-model="current_chart.layer_2">
+          </div>
+          <div class="small-9 columns">
+            <label>4th Level</label>
+            <input type="text" name="rec_tip" ng-model="current_chart.layer_3">
+          </div>
+          <div class="small-9 columns">
+            <label>5th Level</label>
+            <input type="text" name="rec_total" ng-model="current_chart.layer_4">
+          </div>
+          <div class="small-9 columns">
+            <label>6th Level</label>
+            <input type="text" name="rec_total" ng-model="current_chart.layer_5">
+          </div>
+          <hr>
+          <div class="row">
+            <input type="submit" value="Submit" class="button small-3 small-offset-4 medium-3 large-4 columns" ng-click="new_receipt(receipt, $event); receipt_modal=false">
+          </div>
+        </form>
 
 
         <button type="button" ng-click="top=true" ng-hide="startedIng" ng-click="startedIng=true">Start Process</button>
-
         <div>
           <input type="text" ng-click="startedIng=true" placeholder="base ing" ng-model="current_chart.children">
           <!-- submit first ingredient -->
@@ -68,7 +112,6 @@
 
           <input type="text" placeholder="3rd ing" />
           <button type="button" ng-click="">onTo4th</button><br>
-          
         </div>
         
 

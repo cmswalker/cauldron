@@ -69,49 +69,74 @@ ChartApp.factory('Chart', function ($http, $q) {
 ChartApp.controller("ChartCtrl", function ($scope, $http, Chart) {
 
 	$scope.current_chart = null;
+	
 
 	var regenerate = function() {
 		Chart.get().then(
 			function(response){
+
 				$scope.current_chart = response[0];
 				$scope.current_chart.allchild = null;
+				$scope.current_chart.layer_1 = [];
+				$scope.current_chart.layer_2 = [];
+				$scope.current_chart.layer_3 = [];
+				$scope.current_chart.layer_4 = [];
+				$scope.current_chart.layer_5 = [];
+				$scope.current_chart.layer_6 = [];
+
 				var chart_children = [];
 				var start_seconds = new Date().getTime() / 1000;
 
-				$scope.current_chart.children.forEach(function(v1,i) {
-					console.log('top layer ', v1.name);
-					chart_children.push(v1.name);
-					if (v1.children !== undefined) {
-						v1.children.forEach(function(v2,ii) {
-							chart_children.push(v2.name);
-							//console.log('2nd layer ', v2.name);
-							if (v2.children !== undefined) {
-								v2.children.forEach(function(v3,iii) {
-									chart_children.push(v3.name);
-									//console.log('3rd layer ', v3.name );
-									if (v3.children !== undefined) {
-										v3.children.forEach(function(v4,iiii) {
-											chart_children.push(v4.name);
-											//console.log('4th layer ', v4.name);
-											if (v4.children !== undefined) {
-												v4.children.forEach(function(v5, i5) {
-													chart_children.push(v5.name);
-													//console.log('5th layer ', v5.name);
-													if (v5.children !== undefined) {
-														v5.children.forEach(function(v6, i6) {
-															chart_children.push(v6.name);
-															//console.log('in bottom ', v6.name);
-														})
+
+				function regen_layer_loop() {
+
+					if ($scope.current_chart.children !== undefined) {
+						$scope.current_chart.layer_1 = $scope.current_chart.children
+						$scope.current_chart.children.forEach(function(v1,i) {
+							//console.log('top layer ', v1.name);
+							chart_children.push(v1.name);
+							if (v1.children !== undefined && v1.children.length !== 0 ) {
+								$scope.current_chart.layer_2 = v1.children;
+								//console.log($scope.current_chart.layer_2, "h");
+								v1.children.forEach(function(v2,ii) {
+									chart_children.push(v2.name);
+									//console.log('2nd layer ', v2.name);
+									if (v2.children !== undefined && v2.children.length !== 0 ) {
+										$scope.current_chart.layer_3 = v2.children;
+										v2.children.forEach(function(v3,iii) {
+											chart_children.push(v3.name);
+											//console.log('3rd layer ', v3.name );
+											if (v3.children !== undefined && v3.children.length !== 0 ) {
+												$scope.current_chart.layer_4 = v3.children;
+												v3.children.forEach(function(v4,iiii) {
+													chart_children.push(v4.name);
+													//console.log('4th layer ', v4.name);
+													if (v4.children !== undefined && v4.children.length !== 0) {
+														$scope.current_chart.layer_5 = v4.children;
+														v4.children.forEach(function(v5, i5) {
+															chart_children.push(v5.name);
+															//console.log('5th layer ', v5.name);
+															if (v5.children !== undefined && v5.children.length !== 0) {
+																$scope.current_chart.layer_6 = v5.children;
+																v5.children.forEach(function(v6, i6) {
+																	chart_children.push(v6.name);
+																	//console.log('in bottom ', v6.name);
+																})
+															}
+														});
 													}
 												});
 											}
-										});
+										});	
 									}
-								});	
+								});
 							}
 						});
 					}
-				});
+			}
+			//END regen_layer_loop
+
+			regen_layer_loop();
 			
 			var end_seconds = new Date().getTime() / 1000;
 			var total_seconds = end_seconds - start_seconds;

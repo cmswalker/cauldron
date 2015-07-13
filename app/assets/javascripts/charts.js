@@ -17,6 +17,7 @@
 		    .range([0, 2 * Math.PI]);
 
 		var y = d3.scale.linear()
+				//can be sqrt!
 		    .range([0, radius]);
 
 		var color = d3.scale.category20c(); 
@@ -75,6 +76,7 @@
 		      })
 
 		    function click(d) {
+		    	//console.log('clicked it');
 		      // fade out all text elements
 
 		      // stop root from regenerating
@@ -131,7 +133,6 @@
 
 
 //END SERVICE
-
 
 
 

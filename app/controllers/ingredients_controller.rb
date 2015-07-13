@@ -173,34 +173,35 @@ class IngredientsController < ApplicationController
             end
           end
           end
-        #END LEVEL ONE QUERY
+          #END LEVEL ONE QUERY
         end
         ##LOOP ENDS HERE
-
         ##BEGIN CREATING BRAND NEW NODES PER FIELD IF NOTHING WAS FOUND
-        @looping_parent = @root
-        @search = @one_field
-        create_from_trie
+        # @looping_parent = @root
+        # @search = @one_field
+        # create_from_trie
+        # # binding.pry
 
-        @looping_parent = @ingredient
-        @search = @two_field
-        create_from_trie
+        # @looping_parent = @ingredient
+        # @search = @two_field
+        # create_from_trie
 
-        @looping_parent = @ingredient
-        @search = @three_field
-        create_from_trie
+        # @looping_parent = @ingredient
+        # @search = @three_field
+        # create_from_trie
 
-        @looping_parent = @ingredient
-        @search = @four_field
-        create_from_trie
+        # @looping_parent = @ingredient
+        # @search = @four_field
+        # create_from_trie
 
-        @looping_parent = @ingredient
-        @search = @five_field
-        create_from_trie
+        # @looping_parent = @ingredient
+        # @search = @five_field
+        # create_from_trie
 
-        @looping_parent = @ingredient
-        @search = @six_field
-        create_from_trie
+        # @looping_parent = @ingredient
+        # @search = @six_field
+        # create_from_trie
+        
 
         #must tell it to create nodes that DONT exist yet
         # all you helpers are fucked

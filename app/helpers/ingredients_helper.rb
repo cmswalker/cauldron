@@ -8,6 +8,10 @@ module IngredientsHelper
 		@ingredient = @looping_parent.children.create! :name => @search, :chart_id => @ingredient.chart_id
 	end
 
+	def create_from_trie_drop
+		@ingredient_drop = @looping_parent.children.create! :name => @new_search, :chart_id => @ingredient.chart_id
+	end
+
 
 	def auth_create
 	  if @ingredient

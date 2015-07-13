@@ -76,6 +76,8 @@
 		      })
 
 		    function click(d) {
+		    	console.log("this is what you clicked", d);
+		    	
 		    	//console.log('clicked it');
 		      // fade out all text elements
 
@@ -90,6 +92,7 @@
 		        .duration(750)
 		        .attrTween("d", arcTween(d))
 		        .each("end", function(e, i) {
+		        	//console.log('arrrrt d', d);
 		            // check if the animated element's data e lies within the visible angle span given in d
 		            if (e.x >= d.x && e.x < (d.x + d.dx)) {
 		              // get a selection of the associated text element
@@ -106,14 +109,19 @@
 		  ///END GET
 
 
-		d3.select(self.frameElement).style("height", height + "px");
+		//d3.select(self.frameElement).style("height", height + "px");
 
 		// Interpolate the scales!
 		function arcTween(d) {
+			console.log('heres args');
+			console.log(arguments);
 		  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
 		      yd = d3.interpolate(y.domain(), [d.y, 1]),
 		      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+		      console.log(xd, yd, yr);
 		  return function(d, i) {
+		  	//console.log('heres d and i')
+		  	//console.log(d, i);
 		    return i
 		        ? function(t) { return arc(d); }
 		        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };

@@ -56,8 +56,9 @@ d3.chart.architectureTree = function() {
     function chart(){
         if (typeof(tree) === 'undefined') {
             tree = d3.layout.tree()
-                .size([360, diameter / 2 - 120])
-                .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+            //KEEP CHANING ABOVE TO BLACKED OUT TO MATCH PREFERANCE
+                //.size([360, diameter / 2 - 120])
+                //.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
       
             // svg = d3.select("#graph").append("svg")
             //     .attr("width", diameter)
@@ -70,7 +71,8 @@ d3.chart.architectureTree = function() {
             .data(partition.nodes(treeData))
           .enter().append("g");
 
-        var path = g.append("path")
+
+        var path = g.append("path").attr("class", "link")
           .attr("d", arc)
           .style("fill", 
             function(d) { 
@@ -79,59 +81,87 @@ d3.chart.architectureTree = function() {
                     return color((d.parent ? d.parent.name : d.name))
                 //}
             })
-          .on("click", click);
+          .on("click", click)
+
+        // var linkSelection = svg.selectAll(".link").data(links, function(d) {
+        //     console.log('here is d ', d);
+        //     if (d.source !== undefined) {
+        //         return d.source.name + d.target.name + Math.random();
+        //     }
+            
+        // });
+        // linkSelection.exit().remove();
+
+        // //MAY be interfering with PATH
+        // linkSelection.enter().append("path")
+        //     .attr("class", "link")
+            //.attr("d", diagonal);
+
+
+        
+
+        //MAY be interfering with PATH
+        // linkSelection.enter().append("path")
+        //     .attr("class", "link")
+        //     .attr("d", diagonal);
+
+
+
 
         // TEXT BASED ON INITIAL, TRYING TO USE NODE
-        // var text = g.append("text")
-        //   .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-        //   .attr("x", function(d) { return y(d.y); })
-        //   .attr("dx", "6") // margin
-        //   .attr("dy", ".35em") // vertical-align
-        //   .text(function(d) { return d.name; })
-        //   //REMOVE initial text for all fields
-        //   .attr("opacity", function(d) {
-        //     if (!d.children) {
-        //       return 0;
-        //     }
-        //   });
+        var text = g.append("text")
+          .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+          .attr("x", function(d) { return y(d.y); })
+          .attr("dx", "6") // margin
+          .attr("dy", ".35em") // vertical-align
+          .text(function(d) { return d.name; })
+          //REMOVE initial text for all fields
+          .attr("opacity", function(d) {
+            if (!d.children) {
+              return 0;
+            }
+          });
 
         function click(d) {
           // fade out all text elements
 
           // stop root from regenerating
-          // console.log(this);
-          // if (this.parentNode.textContent === "Dranks") {
-          //   return
-          // }
-          // text.transition().attr("opacity", 0);
-          // path.transition()
-          //   .duration(750)
-          //   .attrTween("d", arcTween(d))
-          //   .each("end", function(e, i) {
-          //       // check if the animated element's data e lies within the visible angle span given in d
-          //       if (e.x >= d.x && e.x < (d.x + d.dx)) {
-          //         // get a selection of the associated text element
-          //         var arcText = d3.select(this.parentNode).select("text");
-          //         // fade in the text element and recalculate positions
-          //         arcText.transition().duration(750)
-          //           .attr("opacity", 1)
-          //           .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
-          //           .attr("x", function(d) { return y(d.y); });
-          //       }
-          //   });
+          console.log(this);
+          if (this.parentNode.textContent === "Dranks") {
+            return
+          }
+          text.transition().attr("opacity", 0);
+          path.transition()
+            .duration(750)
+            .attrTween("d", arcTween(d))
+            .each("end", function(e, i) {
+                // check if the animated element's data e lies within the visible angle span given in d
+                if (e.x >= d.x && e.x < (d.x + d.dx)) {
+                  // get a selection of the associated text element
+                  var arcText = d3.select(this.parentNode).select("text");
+                  // fade in the text element and recalculate positions
+                  arcText.transition().duration(750)
+                    .attr("opacity", 1)
+                    .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
+                    .attr("x", function(d) { return y(d.y); });
+                }
+            });
         }
         
         //THIS IS INTERFERING BUT WILL NEED LATER
         var nodes = tree.nodes(treeData),
             links = tree.links(nodes);
 
+        console.log('here are new nodes ', nodes);
+        console.log('here are new links ', links);
+
         activeNode = null;
 
         svg.call(updateData, nodes, links);
-        // d3.select(self.frameElement).style("height", height + "px");
+        //d3.select(self.frameElement).style("height", height + "px");
     }
 
-    d3.select(self.frameElement).style("height", height + "px");
+    //d3.select(self.frameElement).style("height", height + "px");
 
     /**
      * Update the chart data
@@ -145,20 +175,21 @@ d3.chart.architectureTree = function() {
         nodes.map(function(node) {
             addIndex(node);
         });
+        // var diagonal = d3.svg.diagonal.radial()
+        //     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+        // //original was .data(nodes
+        // var linkSelection = svg.selectAll(".link").data(links, function(d) {
+        //     if (d.source !== undefined) {
+        //         return d.source.name + d.target.name + Math.random();
+        //     }
+            
+        // });
+        // linkSelection.exit().remove();
 
-        var diagonal = d3.svg.diagonal.radial()
-            .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
-        //original was .data(nodes
-        var linkSelection = svg.selectAll(".link").data(treeData, function(d) {
-            return d.source.name + d.target.name + Math.random();
-        });
-        linkSelection.exit().remove();
-
-        //MAY be interfering with PATH
+        // //MAY be interfering with PATH
         // linkSelection.enter().append("path")
         //     .attr("class", "link")
-        //     .attr("d", diagonal);
-
+        //     //.attr("d", diagonal);
 
         //original was .data(nodes)
         var nodeSelection = container.selectAll(".node").data(nodes, function(d) {
@@ -186,8 +217,10 @@ d3.chart.architectureTree = function() {
             })
             .on('click', function(d) {
                 select(d.name);
-                
+                //click();
             });
+
+
 
         // node.append("circle")
         //     .attr("r", function(d) { return 4.5 * (d.size || 1); })

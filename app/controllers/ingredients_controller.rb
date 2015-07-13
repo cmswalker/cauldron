@@ -117,7 +117,6 @@ class IngredientsController < ApplicationController
           @looping_parent = c
           @level_two = c.children
           if @level_two.length == 0
-            binding.pry
             #create the node if children of field_1 is empty
             create_from_trie
           end
@@ -135,32 +134,73 @@ class IngredientsController < ApplicationController
               #BEGIN LEVEL THREE QUERY
               @level_three.each do |c3|
                 if @search == c3.name
-                  # binding.pry
                   @search = @four_field
                   # @ingredient = nil
                   @looping_parent = c3
                   @level_four = c3.children
                   if @level_four.length == 0
-                    # binding.pry
                     #create the node if children of field_3 is empty
                     create_from_trie
                   end
+                  #BEGIN LEVEL FOUR QUERY
+                  @level_four.each do |c4|
+                    if @search == c4.name
+                      @search = @five_field
+                      # @ingredient = nil
+                      @looping_parent = c4
+                      @level_five = c4.children
+                      if @level_five.length == 0
+                        #create the node if children of field_4 is empty
+                        create_from_trie
+                      end
+                      #BEGIN LEVEL FIVE QUERY
+                      @level_five.each do |c5|
+                        if @search == c5.name
+                          @search = @six_field
+                          # @ingredient = nil
+                          @looping_parent = c5
+                          @level_six = c5.children
+                          if @level_six.length == 0
+                            #create the node if children of field_5 is empty
+                            create_from_trie
+                          end
+                        end
+                      end
+                    end
+                  end  #WTF?
                 end
-              end
-        
-
-
               end
             end
           end
-          #END LEVEL ONE QUERY
+          end
+        #END LEVEL ONE QUERY
         end
         ##LOOP ENDS HERE
 
-        ##BEGIN CREATING BRAND NEW NODES IF NOTHING WAS FOUND
-        # @looping_parent = @root
-        # @search = @one_field
-        # create_from_trie
+        ##BEGIN CREATING BRAND NEW NODES PER FIELD IF NOTHING WAS FOUND
+        @looping_parent = @root
+        @search = @one_field
+        create_from_trie
+
+        @looping_parent = @ingredient
+        @search = @two_field
+        create_from_trie
+
+        @looping_parent = @ingredient
+        @search = @three_field
+        create_from_trie
+
+        @looping_parent = @ingredient
+        @search = @four_field
+        create_from_trie
+
+        @looping_parent = @ingredient
+        @search = @five_field
+        create_from_trie
+
+        @looping_parent = @ingredient
+        @search = @six_field
+        create_from_trie
 
         #must tell it to create nodes that DONT exist yet
         # all you helpers are fucked

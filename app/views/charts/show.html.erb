@@ -1,5 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<% if @ingredient.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+    <% @ingredient.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @chart.name %><br>

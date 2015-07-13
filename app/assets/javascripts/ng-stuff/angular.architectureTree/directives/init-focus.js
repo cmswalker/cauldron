@@ -1,3 +1,6 @@
+console.log('init focus.js   ')
+
+
 ChartApp.directive('initFocus', function() {
 	console.log('init focus');
     var timer;

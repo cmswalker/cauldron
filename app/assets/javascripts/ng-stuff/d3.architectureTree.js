@@ -1,3 +1,5 @@
+console.log('d3.architecture.js   NO DEPENDENCIES')
+
 'use strict';
 
 d3.chart = d3.chart || {};
@@ -67,88 +69,6 @@ d3.chart.architectureTree = function() {
             //     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
         }
 
-        var g = svg.selectAll("g")
-            .data(partition.nodes(treeData))
-          .enter().append("g");
-
-
-        var path = g.append("path").attr("class", "link")
-          .attr("d", arc)
-          .style("fill", 
-            function(d) { 
-                // if (  color((d.children ? d : d.parent).name) === undefined ) {
-                    //return color((d.children ? d : d.parent).name);
-                    return color((d.parent ? d.parent.name : d.name))
-                //}
-            })
-          .on("click", click)
-
-        // var linkSelection = svg.selectAll(".link").data(links, function(d) {
-        //     console.log('here is d ', d);
-        //     if (d.source !== undefined) {
-        //         return d.source.name + d.target.name + Math.random();
-        //     }
-            
-        // });
-        // linkSelection.exit().remove();
-
-        // //MAY be interfering with PATH
-        // linkSelection.enter().append("path")
-        //     .attr("class", "link")
-            //.attr("d", diagonal);
-
-
-        
-
-        //MAY be interfering with PATH
-        // linkSelection.enter().append("path")
-        //     .attr("class", "link")
-        //     .attr("d", diagonal);
-
-
-
-
-        // TEXT BASED ON INITIAL, TRYING TO USE NODE
-        var text = g.append("text")
-          .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-          .attr("x", function(d) { return y(d.y); })
-          .attr("dx", "6") // margin
-          .attr("dy", ".35em") // vertical-align
-          .text(function(d) { return d.name; })
-          //REMOVE initial text for all fields
-          .attr("opacity", function(d) {
-            if (!d.children) {
-              return 0;
-            }
-          });
-
-        function click(d) {
-          // fade out all text elements
-
-          // stop root from regenerating
-          console.log(this);
-          if (this.parentNode.textContent === "Dranks") {
-            return
-          }
-          text.transition().attr("opacity", 0);
-          path.transition()
-            .duration(750)
-            .attrTween("d", arcTween(d))
-            .each("end", function(e, i) {
-                // check if the animated element's data e lies within the visible angle span given in d
-                if (e.x >= d.x && e.x < (d.x + d.dx)) {
-                  // get a selection of the associated text element
-                  var arcText = d3.select(this.parentNode).select("text");
-                  // fade in the text element and recalculate positions
-                  arcText.transition().duration(750)
-                    .attr("opacity", 1)
-                    .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
-                    .attr("x", function(d) { return y(d.y); });
-                }
-            });
-        }
-        
-        //THIS IS INTERFERING BUT WILL NEED LATER
         var nodes = tree.nodes(treeData),
             links = tree.links(nodes);
 
@@ -175,39 +95,30 @@ d3.chart.architectureTree = function() {
         nodes.map(function(node) {
             addIndex(node);
         });
-        // var diagonal = d3.svg.diagonal.radial()
-        //     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
-        // //original was .data(nodes
-        // var linkSelection = svg.selectAll(".link").data(links, function(d) {
-        //     if (d.source !== undefined) {
-        //         return d.source.name + d.target.name + Math.random();
-        //     }
-            
-        // });
-        // linkSelection.exit().remove();
-
-        // //MAY be interfering with PATH
-        // linkSelection.enter().append("path")
-        //     .attr("class", "link")
-        //     //.attr("d", diagonal);
-
+           
         //original was .data(nodes)
         var nodeSelection = container.selectAll(".node").data(nodes, function(d) {
             return d.name + Math.random();  // always update node
         });
         nodeSelection.exit().remove();
 
-        var node = nodeSelection.enter().append("g")
-            .attr("class", "node")
+        var g = svg.selectAll("g")
+            .data(partition.nodes(treeData))
+          .enter().append("g")
+          .attr("class", "node")
             .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
             .on('mouseover', function(d) {
+                console.log(d, 'on mouseover')
                 if(activeNode !== null) {
                     return;
                 }
-                fade(0.1)(d);
-                document.querySelector('#panel').dispatchEvent(
-                    new CustomEvent("hoverNode", { "detail": d.name })
-                );
+                fade(0.3)(d);
+                angular.element("#panel_heading_id").text(d.name);
+
+                // document.querySelector('#panel').dispatchEvent(
+                //     new CustomEvent("hoverNode", { "detail": d.name })
+                // );
+                console.log(d.name);
             })
             .on('mouseout', function(d) {
                 if(activeNode !== null) {
@@ -215,34 +126,123 @@ d3.chart.architectureTree = function() {
                 }
                 fade(1)(d);
             })
-            .on('click', function(d) {
-                select(d.name);
-                //click();
-            });
+            // .on('click', function(d) {
+            //     //click
+                
+            //     //click();
+            // });
 
 
+        var path = g.append("path").attr("class", "link")
+          .attr("d", arc)
+          .style("fill", 
+            function(d) { 
+                // if (  color((d.children ? d : d.parent).name) === undefined ) {
+                    //return color((d.children ? d : d.parent).name);
+                    return color((d.parent ? d.parent.name : d.name))
+                //}
+            })
+          .on("click", click)
 
-        // node.append("circle")
-        //     .attr("r", function(d) { return 4.5 * (d.size || 1); })
-        //     .style('stroke', function(d) {
-        //         return d3.scale.linear()
-        //             .domain([1, 0])
-        //             .range(["steelblue", "red"])(typeof d.satisfaction !== "undefined" ? d.satisfaction : 1);
+        
+
+        // var node = nodeSelection.enter().append("g")
+        //     .attr("class", "node")
+        //     .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+        //     .on('mouseover', function(d) {
+        //         if(activeNode !== null) {
+        //             return;
+        //         }
+        //         fade(0.1)(d);
+        //         document.querySelector('#panel').dispatchEvent(
+        //             new CustomEvent("hoverNode", { "detail": d.name })
+        //         );
         //     })
-        //     .style('fill', function(d) {
-        //         if (typeof d.satisfaction === "undefined") return '#fff';
-        //         return d3.scale.linear()
-        //             .domain([1, 0])
-        //             .range(["white", "#f66"])(typeof d.satisfaction !== "undefined" ? d.satisfaction : 1);
+        //     .on('mouseout', function(d) {
+        //         if(activeNode !== null) {
+        //             return;
+        //         }
+        //         fade(1)(d);
+        //     })
+        //     .on('click', function(d) {
+        //         //click
+                
+        //         //click();
         //     });
 
-        node.append("text")
-            .attr("dy", ".31em")
-            .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-            .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-            .text(function(d) {
-                return d.name;
+        var text = g.append("text")
+          .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+          .attr("x", function(d) { return y(d.y); })
+          .attr("dx", "6") // margin
+          .attr("dy", ".35em") // vertical-align
+          .text(function(d) { return d.name; })
+          //REMOVE initial text for all fields
+          .attr("opacity", function(d) {
+            // if (!d.children) {
+            //   return 0;
+            // }
+          });
+
+        // var text = g.append("text")
+        //   .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+        //   .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+        //   //.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+        //   .attr("x", function(d) { return y(d.y); })
+        //   .attr("dx", "6") // margin
+        //   .attr("dy", ".31em") // vertical-align
+        //   .text(function(d) { return d.name; })
+        //   //REMOVE initial text for all fields
+        //   // .attr("opacity", function(d) {
+        //   //   if (!d.children) {
+        //   //     return 0;
+        //   //   }
+        //   // });
+
+        // node.append("text")
+        //     .attr("dy", ".31em")
+        //     .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+        //     .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+        //     .text(function(d) {
+        //         console.log("IN NODE CLICK", d.name)
+        //         return d.name;
+        //     });
+
+        function click(d) {
+          // fade out all text elements
+
+          // stop root from regenerating
+          console.log(this);
+          if (this.parentNode.textContent === "TRIE BACKEND") {
+            return
+          }
+          text.transition().attr("opacity", 0);
+          path.transition()
+            .duration(750)
+            .attrTween("d", arcTween(d))
+            .each("end", function(e, i) {
+                // check if the animated element's data e lies within the visible angle span given in d
+                if (e.x >= d.x && e.x < (d.x + d.dx)) {
+                  // get a selection of the associated text element
+                  var arcText = d3.select(this.parentNode).select("text");
+                  // fade in the text element and recalculate positions
+                  arcText.transition().duration(750)
+                    .attr("opacity", 1)
+                    .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
+                    .attr("x", function(d) { return y(d.y); });
+                }
             });
+            select(d.name);
+            console.log(d.name);
+        }
+
+        // node.append("text")
+        //     .attr("dy", ".31em")
+        //     .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
+        //     .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
+        //     .text(function(d) {
+        //         console.log("IN NODE CLICK", d.name)
+        //         return d.name;
+        //     });
     };
 
     /**
@@ -283,6 +283,7 @@ d3.chart.architectureTree = function() {
      * }
      */
     var addIndex = function(node) {
+        console.log('heres node ', node);
         node.index = {
             relatedNodes: [],
             technos: [],
@@ -383,22 +384,25 @@ d3.chart.architectureTree = function() {
     };
 
     var select = function(name) {
+        console.log('you selected ', name);
         if (activeNode && activeNode.name == name) {
             unselect();
             return;
         }
         unselect();
+
         svg.selectAll(".node")
             .filter(function(d) {
                 if (d.name === name) return true;
             })
             .each(function(d) {
+
                 document.querySelector('#panel').dispatchEvent(
                     new CustomEvent("selectNode", { "detail": d.name })
                 );
                 d3.select(this).attr("id", "node-active");
                 activeNode = d;
-                fade(0.1)(d);
+                fade(1)(d);
             });
     };
 

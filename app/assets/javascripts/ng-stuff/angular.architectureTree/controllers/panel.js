@@ -1,7 +1,7 @@
-console.log('loaded panel controller');
+console.log('panel.js  pushing in $scope, $timeout, $window, data bus');
 ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus) {
     'use strict';
-
+    console.log('HERES DATAAAAAA', data);
     var container = angular.element(document.querySelector('#panel')),
         graph = document.querySelector('#graph');
 
@@ -117,6 +117,9 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
     };
 
     var getNodeByName = function(name, data) {
+        console.log('passing through name', name);
+        // console.log('passing through data', data);
+        // console.log(data);
         if (data.name === name) {
             return data;
         }

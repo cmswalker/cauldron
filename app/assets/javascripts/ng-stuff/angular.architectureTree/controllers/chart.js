@@ -1,4 +1,4 @@
-console.log('loaded chart controller');
+console.log('chart.js   pusing in $scope, bus');
 ChartApp.controller('chartCtrl', function ($scope, bus) {
     'use strict';
 

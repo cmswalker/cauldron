@@ -1,4 +1,4 @@
-console.log(ChartApp)
+console.log('data.js   pushing in $http, $q, bus')
 
 ChartApp.service('data', function ($http, $q, bus) {
     'use strict';

@@ -28,7 +28,7 @@
 //JUST IN CASE
 
 
-    
+console.log('overall chart app');
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
 

@@ -1,4 +1,4 @@
-console.log('loaded json-data controller');
+console.log('json data.js   pushing in $scope, bus, data');
 ChartApp.controller('jsonDataCtrl', function ($scope, bus, data) {
     'use strict';
 
@@ -8,6 +8,8 @@ ChartApp.controller('jsonDataCtrl', function ($scope, bus, data) {
         previousData = data;
         console.log('this is previousData ', previousData);
         $scope.data = JSON.stringify(data, undefined, 2);
+        console.log('heres updating dataaaaaa')
+        console.log($scope.data);
     });
 
     $scope.updateData = function() {

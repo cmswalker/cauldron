@@ -1,8 +1,8 @@
-console.log('loaded filter controller');
+console.log('filter.js   pusing in $scope, bus')
+
+
 ChartApp.controller('filterCtrl', function ($scope, bus) {
     'use strict';
-
-    console.log('in filtercontroller');
 
     bus.on('updateData', function(data) {
         $scope.technos = computeTechnos(data);

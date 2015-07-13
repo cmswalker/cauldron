@@ -1,3 +1,5 @@
+console.log('treechart.js   pushing in bus')
+
 ChartApp.directive('treeChart', function(bus) {
     'use strict';
 

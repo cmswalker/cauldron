@@ -1,3 +1,5 @@
+console.log('bus pushing in $http, $q')
+
 ChartApp.service('bus', function ($http, $q) {
     'use strict';
 

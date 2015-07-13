@@ -1,4 +1,4 @@
-console.log('loaded undo controller');
+console.log('undo.js   pushing in $scope, bus, data');
 ChartApp.controller('undoCtrl', function($scope, bus, data) {
 
     var history = [];

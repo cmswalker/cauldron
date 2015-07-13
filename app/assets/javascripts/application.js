@@ -21,8 +21,14 @@
 //= require angular-route/angular-route.min.js
 //= require angular-animate/angular-animate.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
+//= require_self
+//= require_tree ./ng-stuff
+
 
 //JUST IN CASE
+
+
+    
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
 
@@ -42,6 +48,12 @@ ChartApp.config(["$httpProvider", function($httpProvider) {
     $httpProvider.
         defaults.headers.common["X-CSRF"] = $("meta[name=csrf-token]").attr("content");
 }]);
+
+ChartApp.run(function(data) {
+        data.fetchJsonData().then(function (response) {
+            console.log('data loaded FROM OTHER GUYS');
+        }, console.error);
+    });
 
 ChartApp.factory('Chart', function ($http, $q) {
 	var Chart = {};

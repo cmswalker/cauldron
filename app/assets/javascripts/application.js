@@ -18,7 +18,7 @@
 //= require colorbrewer.js
 //= require angular/angular.min.js
 //= require angular-resource/angular-resource.min.js
-//= require angular-route/angular-route.min.js
+//= require angular-route/angular-route.js
 //= require angular-animate/angular-animate.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
 //= require ./ng-stuff/d3.architectureTree.js
@@ -36,49 +36,55 @@
 
 //JUST IN CASE
 
-
-console.log('overall chart app');
-
 // var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
 
-var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
-    .run(function(data) {
-        data.fetchJsonData().then(function (response) {
-            console.log('data loaded');
-        }, console.error);
-    });
+	url = location.pathname
+	var ID = url.substring(url.lastIndexOf('/') + 1);
 
-ChartApp.config(function($routeProvider) {
+
+	console.log('IDDDDDDDD', ID);
+
+var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
+
+    // .run(function(data) {
+    //     data.fetchJsonData().then(function (response) {
+    //         console.log('data loaded');
+    //     }, console.error);
+    // });
+
+ChartApp.config([ "$routeProvider", function($routeProvider) {
 
 	$routeProvider
 		.when('/',{
-			templateUrl: '/index.html'
+			templateUrl: '/index.html',
+			controller: 'NONE'
 		})
-		.when('/charts/:id', {
+		.when('/charts/:chartId', {
 			controller: 'ChartCtrl'
 		});
 
-});
+}]);
+
 
 ChartApp.config(["$httpProvider", function($httpProvider) {
     $httpProvider.
         defaults.headers.common["X-CSRF"] = $("meta[name=csrf-token]").attr("content");
 }]);
 
-ChartApp.run(function(data) {
-        data.fetchJsonData().then(function (response) {
-            console.log('data loaded FROM OTHER GUYS');
-        }, console.error);
-    });
+// ChartApp.run(function(data) {
+//         data.fetchJsonData().then(function (response) {
+//             console.log('data loaded FROM OTHER GUYS');
+//         }, console.error);
+//     });
 
 ChartApp.factory('Chart', function ($http, $q) {
 	var Chart = {};
 
-	Chart.get = function() {
+	Chart.get = function(id) {
 		var deferred = $q.defer()
 
 		$http
-			.get("/charts/1.json")
+			.get("/charts/" + ID + ".json")
 			.success(function(response) {
 				deferred.resolve(response);
 			})
@@ -114,15 +120,14 @@ function BEANS() {
 }
 
 
-
-ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
+ChartApp.controller("ChartCtrl", ["$scope", "$http", "$routeParams", "Chart", "User", function ($scope, $http, $routeParams, Chart, User) {
 
 
 	$scope.current_user = null;
 	$scope.current_chart = null;
 
 	var gen_chart_data = function() {
-		Chart.get().then(
+		Chart.get(ID).then(
 			function(response){
 				$scope.current_chart = response[0];
 				$scope.chart_id = $scope.current_chart.chart_id;
@@ -286,7 +291,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 
 
 
-});
-
+}]);
 
 

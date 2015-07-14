@@ -9,13 +9,13 @@ ChartApp.service('data', function ($http, $q, bus) {
      * Get the tree object from json file
      * @returns {Promise}
      */
-    var fetchJsonData = function () {
+    var fetchJsonData = function (ID) {
         if (typeof (jsonData) !== 'undefined') {
             return $q.when(jsonData);
         }
         console.log('grabbing the data?')
         
-        return $http.get("/charts/1.json").success(function(data) {
+        return $http.get("/charts/" + ID + ".json").success(function(data) {
             setJsonData(data[0]);
             console.log('REAL DATA? ', data[0]);
             return data;

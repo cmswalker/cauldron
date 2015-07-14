@@ -2,6 +2,57 @@ console.log('d3.architecture.js   NO DEPENDENCIES')
 
 'use strict';
 
+console.log('treechart.js   pushing in bus')
+
+ChartApp.directive('treeChart', function(bus) {
+    'use strict';
+
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div id="graph"></div>',
+        scope: false,
+        link: function(scope, element) {
+            var chart = d3.chart.architectureTree();
+            //debugger
+
+            scope.$watch("data", function(data) {
+                if (typeof (data) === 'undefined') {
+                    return;
+                }
+
+                chart.diameter(960)
+                    .data(scope.data);
+
+                //call the entire chart
+                d3.select(element[0])
+                    .call(chart);
+            });
+
+            bus.on('nameFilterChange', function(nameFilter) {
+                chart.nameFilter(nameFilter);
+            });
+
+            bus.on('select', function(name) {
+                chart.select(name);
+            });
+
+            bus.on('unselect', function() {
+                chart.unselect();
+            });
+
+        }
+    };
+
+
+
+
+
+
+
+});
+
+
 d3.chart = d3.chart || {};
 
 d3.chart.architectureTree = function() {
@@ -37,7 +88,6 @@ d3.chart.architectureTree = function() {
         .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
     var graph = angular.element("#graph")
-
 
     var partition = d3.layout.partition()
         .sort(null)
@@ -89,7 +139,6 @@ d3.chart.architectureTree = function() {
         svg.call(updateData, nodes, links);
         //d3.select(self.frameElement).style("height", height + "px");
     }
-
     //d3.select(self.frameElement).style("height", height + "px");
 
     /**
@@ -114,13 +163,10 @@ d3.chart.architectureTree = function() {
         var container = angular.element(document.querySelector('#panel')),
             graph = document.querySelector('#graph');
 
+
         //ADD DOM EVENTS HERE
 
-        
-
         var demo_div = angular.element("#demo");
-
-
 
         var g = svg.selectAll("g")
             .data(partition.nodes(treeData))
@@ -153,7 +199,7 @@ d3.chart.architectureTree = function() {
             function(d) { 
                 //if (  color((d.children ? d : d.parent).name) === undefined ) {
                     //return color((d.children ? d : d.parent).name);
-                    
+
                     return color((d.parent ? d.parent.name : d.name))
                 //}
             })
@@ -337,6 +383,12 @@ d3.chart.architectureTree = function() {
 
     var demo_div2 = angular.element("#demo2");
 
+    function timeup() {
+        console.log('timeup');
+    }
+
+    BEANS("HI");
+
     var select = function(d) {
         //alert(d);
         //BEANS();
@@ -402,7 +454,6 @@ d3.chart.architectureTree = function() {
         filters.hosts = hostsFilter;
         refreshFilters();
     };
-
 
     return chart;
 };

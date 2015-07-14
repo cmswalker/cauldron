@@ -108,60 +108,72 @@ class IngredientsController < ApplicationController
     def trie_search
 
       @level_1_search = @root.descendants.find_by(name: @one_field)
-      if @level_1_search and @one_field
+      if @level_1_search and @one_field.length
         @found = true
         @looping_parent = @level_1_search
         @new_root = @looping_parent
         #continue the loop
         @level_2_search = @new_root.descendants.find_by(name: @two_field)
-        if @level_2_search and @two_field
+        if @level_2_search and @two_field.length
           @found = true
           @looping_parent = @level_2_search
           @new_root = @looping_parent
           #continue the loop
           @level_3_search = @new_root.descendants.find_by(name: @three_field)
-          if @level_3_search and @three_field
+          if @level_3_search and @three_field.length
             @found = true
             @looping_parent = @level_3_search
             @new_root = @looping_parent
             #continue the loop
             @level_4_search = @new_root.descendants.find_by(name: @four_field)
-            if @level_4_search and @four_field
+            if @level_4_search and @four_field.length
               @found = true
               @looping_parent = @level_4_search
               @new_root = @looping_parent
               #contiue the loop
               @level_5_search = @new_root.descendants.find_by(name: @five_field)
-              if @level_5_search and @five_field
+              if @level_5_search and @five_field.length
                 @found = true
                 @looping_parent = @level_5_search
                 @new_root = @looping_parent
                 #continue the loop
                 @level_6_search = @new_root.descendants.find_by(name: @six_field)
-                if @level_6_search and @six_field
+                if @level_6_search and @six_field.length
                   @found = true
                   @looping_parent = @level_6_search
                   @new_root = nil
                   #END THE LOOP
                 else #if level_6_search fails
+                  if @six_field == nil
+                   return 
+                  end
                   @found = false
                   @create_search = @six_field
                   create_from_trie
                   return
                 end
               else #if level_5_search fails
+                if @five_field == nil
+                 return 
+                end
                 @found = false
                 @create_search = @five_field
                 create_from_trie
                 trie_search
               end
             else #if level_4_search fails
+              if @four_field == nil
+               return 
+              end
               @found = false
               @create_search = @four_field
               create_from_trie
               trie_search
             end
           else # if level_3_search fails
+            if @three_field == nil
+             return 
+            end
             @found = false
             @create_search = @three_field
             create_from_trie
@@ -169,6 +181,9 @@ class IngredientsController < ApplicationController
             trie_search
           end
         else #if level_2_search_fails
+          if @two_field == nil
+           return 
+          end
           @found = false
           @create_search = @two_field
           create_from_trie
@@ -176,6 +191,9 @@ class IngredientsController < ApplicationController
           trie_search
         end
       else  #if level_1_search_fails
+        if @one_field == nil
+         return 
+        end
         @found = false
         @create_search = @one_field
         create_from_trie

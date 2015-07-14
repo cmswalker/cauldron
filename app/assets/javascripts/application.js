@@ -21,7 +21,17 @@
 //= require angular-route/angular-route.min.js
 //= require angular-animate/angular-animate.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
+//= require ./ng-stuff/d3.architectureTree.js
 //= require_self
+//= require ./ng-stuff/angular.architectureTree/controllers/chart.js
+//= require ./ng-stuff/angular.architectureTree/controllers/filter.js
+//= require ./ng-stuff/angular.architectureTree/controllers/json-data.js
+//= require ./ng-stuff/angular.architectureTree/controllers/panel.js
+//= require ./ng-stuff/angular.architectureTree/controllers/undo.js
+//= require ./ng-stuff/angular.architectureTree/directives/tree-chart.js
+//= require ./ng-stuff/angular.architectureTree/directives/init-focus.js
+//= require ./ng-stuff/angular.architectureTree/services/data.js
+//= require ./ng-stuff/angular.architectureTree/services/bus.js
 //= require_tree ./ng-stuff
 
 
@@ -30,7 +40,14 @@
 
 console.log('overall chart app');
 
-var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
+// var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
+
+var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
+    .run(function(data) {
+        data.fetchJsonData().then(function (response) {
+            console.log('data loaded');
+        }, console.error);
+    });
 
 ChartApp.config(function($routeProvider) {
 
@@ -260,7 +277,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	}
 
 
-
 	  // $scope.rec.one = undefined;
 	  // $scope.rec.two = undefined;
 	  // $scope.rec.three = undefined;
@@ -270,6 +286,8 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 
 	
 
+
+  
 
 
 

@@ -28,7 +28,14 @@
 <div ng-app="ChartApp">
 
   <div ng-controller="filterCtrl">
-     
+    <div class="filters panel panel-default">
+      <div class="panel-heading">Search</div>
+      <div class="panel-body">
+        <form id="filter_form">
+          <input name="name" type="text" class="form-control" placeholder="Filter by name" ng-model="$parent.nameFilter"/>
+        </form>
+      </div>
+    </div>
   </div>
 
   <div ng-controller="chartCtrl">
@@ -39,11 +46,11 @@
       <div id="panel">
           <!-- <div ng-if="detail"> -->
               <div class="details panel panel-info">
-                  <div class="panel-heading" id="panel_heading_id"></div>
+                  <div class="panel-heading" id="panel_heading_id"> {{ node.name }} </div>
                   <div class="panel-body">
 
                       <div class="comments panel panel-default" ng-if="node.comments">
-                          <div class="panel-body" id="panel_body_comments"></div>
+                          <div class="panel-body" id="panel_body_comments">  {{ node.comments }}</div>
                       </div>
 
                       <div class="properties" ng-if="node.details.Dependencies">
@@ -65,7 +72,7 @@
                       </div>
                   </div>
               </div>
-          <!-- </div> -->
+         <!--  </div> -->
 
           <div ng-if="edit">
              <form name="editForm" ng-submit="editNode(editForm, $event)">
@@ -107,8 +114,6 @@
           </div>
       </div>
   </div>
-
-
 
 
   <!-- START CUSTOM -->
@@ -260,19 +265,8 @@
         </div> 
       </div>
 
-
+      
     <% end %>
-
-    <%= javascript_include_tag "charts", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "chart_ctrl", "data-turbolinks-track" => true %>
-    
-
-
-
-
-
-
-
 
 
   </div>
@@ -280,16 +274,7 @@
 </div>
 <!-- END ChartApp -->
 
-<!-- FILTER START -->
-<div class="filters panel panel-default">
-  <div class="panel-heading">Search</div>
-  <div class="panel-body">
-    <form id="filter_form">
-      <input name="name" type="text" class="form-control" placeholder="Filter by name" ng-model="$parent.nameFilter"/>
-    </form>
-  </div>
-</div>
-<!-- FILTER END -->
+
 
 
 

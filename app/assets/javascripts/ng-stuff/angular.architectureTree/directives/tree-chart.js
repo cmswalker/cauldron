@@ -26,7 +26,6 @@ ChartApp.directive('treeChart', function(bus) {
             });
 
             bus.on('nameFilterChange', function(nameFilter) {
-                console.log('name filter is running char.namefilter');
                 chart.nameFilter(nameFilter);
             });
 

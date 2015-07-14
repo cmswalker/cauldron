@@ -1,7 +1,6 @@
 console.log('panel.js  pushing in $scope, $timeout, $window, data bus');
 ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus) {
     'use strict';
-    console.log('HERES DATAAAAAA', data);
     var container = angular.element(document.querySelector('#panel')),
         graph = document.querySelector('#graph');
 
@@ -26,7 +25,7 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
                 node.dependsOn.forEach(function(dependsOn) {
                     var dependency = getNodeByName(dependsOn, data);
                     if (!dependency) {
-                        console.log('Dependency', dependsOn, 'not found for node', node);
+                        //console.log('Dependency', dependsOn, 'not found for node', node);
                         return;
                     }
                     if (!dependency.dependents) {
@@ -94,7 +93,6 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
         addParent(data);
         addDependents(data);
         addDetails(data);
-
         return data;
     }
 
@@ -117,7 +115,7 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
     };
 
     var getNodeByName = function(name, data) {
-        console.log('passing through name', name);
+        //console.log('passing through name', name);
         // console.log('passing through data', data);
         // console.log(data);
         if (data.name === name) {
@@ -133,12 +131,14 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
     // Events
     container
         .on('hoverNode', function(event) {
+            //console.log("EVENT DETAIL", event.detail);
             $scope.node = getNodeByName(event.detail, $scope.data);
             $scope.detail = true;
             $scope.edit = false;
             $scope.$digest();
         })
         .on('selectNode', function(event) {
+            console.log('this is event detail ', event.detail);
             $scope.enterEdit(event.detail);
             $scope.$digest();
         })
@@ -172,12 +172,12 @@ ChartApp.controller('panelCtrl', function ($scope, $timeout, $window, data, bus)
     $scope.editNode = function(form, $event) {
         $event.preventDefault();
 
-        // angular.forEach($scope.hostKeys, function(value, key) {
-        //     if (value !== key) {
-        //         $scope.node.host[value] = angular.copy($scope.node.host[key]);
-        //         delete $scope.node.host[key];
-        //     }
-        // });
+        angular.forEach($scope.hostKeys, function(value, key) {
+            if (value !== key) {
+                $scope.node.host[value] = angular.copy($scope.node.host[key]);
+                delete $scope.node.host[key];
+            }
+        });
 
         data.updateNode($scope.originalNode.name, $scope.node);
         data.emitRefresh();

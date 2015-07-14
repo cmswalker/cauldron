@@ -4,7 +4,6 @@ ChartApp.controller('undoCtrl', function($scope, bus, data) {
     var history = [];
 
     bus.on('updateData', function(data) {
-        console.log('history.push');
         history.push(angular.copy(data));
     });
 

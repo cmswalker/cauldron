@@ -72,9 +72,6 @@ d3.chart.architectureTree = function() {
         var nodes = tree.nodes(treeData),
             links = tree.links(nodes);
 
-        console.log('here are new nodes ', nodes);
-        console.log('here are new links ', links);
-
         activeNode = null;
 
         svg.call(updateData, nodes, links);
@@ -102,23 +99,45 @@ d3.chart.architectureTree = function() {
         });
         nodeSelection.exit().remove();
 
+        // var container = angular.element(document.querySelector('#panel')),
+        //     graph = document.querySelector('#graph');
+
+        // container
+        //     .on('hoverNode', function(event) {
+        //         console.log("EVENT DETAIL", event.detail);
+        //         $scope.node = getNodeByName(event.detail, $scope.data);
+        //         $scope.detail = true;
+        //         $scope.edit = false;
+        //         $scope.$digest();
+        //     })
+        //     .on('selectNode', function(event) {
+        //         console.log('this is event detail ', event.detail);
+        //         $scope.enterEdit(event.detail);
+        //         $scope.$digest();
+        //     })
+        //     .on('unSelectNode', function(event) {
+        //         if ($scope.edit) {
+        //             $scope.leaveEdit();
+        //             $scope.$digest();
+        //         }
+        //     });
+
         var g = svg.selectAll("g")
             .data(partition.nodes(treeData))
           .enter().append("g")
           .attr("class", "node")
             .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
             .on('mouseover', function(d) {
-                console.log(d, 'on mouseover')
                 if(activeNode !== null) {
                     return;
                 }
                 fade(0.3)(d);
-                angular.element("#panel_heading_id").text(d.name);
-
-                // document.querySelector('#panel').dispatchEvent(
-                //     new CustomEvent("hoverNode", { "detail": d.name })
-                // );
-                console.log(d.name);
+                console.log('here is d right before ', d);
+                
+                document.querySelector('#panel').dispatchEvent(
+                    new CustomEvent("hoverNode", { "detail": d.name })
+                );
+                //document.getElementById("panel").dispatchEvent(hoverNode(d))
             })
             .on('mouseout', function(d) {
                 if(activeNode !== null) {
@@ -126,11 +145,12 @@ d3.chart.architectureTree = function() {
                 }
                 fade(1)(d);
             })
-            // .on('click', function(d) {
-            //     //click
-                
-            //     //click();
-            // });
+            .on('click', function(d) {
+                console.log("BIG CLICK", d);
+                //click
+                select(d.name);
+                //click();
+            });
 
 
         var path = g.append("path").attr("class", "link")
@@ -209,9 +229,8 @@ d3.chart.architectureTree = function() {
 
         function click(d) {
           // fade out all text elements
-
           // stop root from regenerating
-          console.log(this);
+          // console.log(this);
           if (this.parentNode.textContent === "TRIE BACKEND") {
             return
           }
@@ -231,8 +250,8 @@ d3.chart.architectureTree = function() {
                     .attr("x", function(d) { return y(d.y); });
                 }
             });
-            select(d.name);
-            console.log(d.name);
+            // select(d.name);
+            //console.log(d.name);
         }
 
         // node.append("text")
@@ -283,7 +302,7 @@ d3.chart.architectureTree = function() {
      * }
      */
     var addIndex = function(node) {
-        console.log('heres node ', node);
+        //console.log('heres node ', node);
         node.index = {
             relatedNodes: [],
             technos: [],
@@ -385,18 +404,17 @@ d3.chart.architectureTree = function() {
 
     var select = function(name) {
         console.log('you selected ', name);
-        if (activeNode && activeNode.name == name) {
-            unselect();
-            return;
-        }
-        unselect();
+        // if (activeNode && activeNode.name == name) {
+        //     unselect();
+        //     return;
+        // }
+        // unselect();
 
         svg.selectAll(".node")
             .filter(function(d) {
                 if (d.name === name) return true;
             })
             .each(function(d) {
-
                 document.querySelector('#panel').dispatchEvent(
                     new CustomEvent("selectNode", { "detail": d.name })
                 );

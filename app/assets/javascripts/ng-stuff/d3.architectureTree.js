@@ -4,28 +4,38 @@ console.log('d3.architecture.js   NO DEPENDENCIES')
 
 d3.chart = d3.chart || {};
 
-
 d3.chart.architectureTree = function() {
 
     var svg, tree, treeData, diameter, activeNode;
 
-    var width = 960,
-        height = 700,
+    // var width = 960,
+    //     height = 700,
+    //     radius = Math.min(width, height) / 2;
+
+    var width = 900,
+        height = 900,
         radius = Math.min(width, height) / 2;
 
     var x = d3.scale.linear()
         .range([0, 2 * Math.PI]);
 
+    //can be sqrt
+    //seems to be better if you can get text curve right
     var y = d3.scale.linear()
         .range([0, radius]);
 
-    var color = d3.scale.category20c();
+    //var color = d3.scale.category20b();
+
+    var color = d3.scale.ordinal().range(colorbrewer.RdBu[9]);
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
         .attr("height", height)
       .append("g")
         .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
+
+    var graph = angular.element("#graph")
+        
 
     var partition = d3.layout.partition()
         .sort(null)
@@ -59,8 +69,8 @@ d3.chart.architectureTree = function() {
         if (typeof(tree) === 'undefined') {
             tree = d3.layout.tree()
             //KEEP CHANING ABOVE TO BLACKED OUT TO MATCH PREFERANCE
-                //.size([360, diameter / 2 - 120])
-                //.separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+                // .size([360, diameter / 2 - 120])
+                // .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
       
             // svg = d3.select("#graph").append("svg")
             //     .attr("width", diameter)
@@ -99,28 +109,16 @@ d3.chart.architectureTree = function() {
         });
         nodeSelection.exit().remove();
 
-        // var container = angular.element(document.querySelector('#panel')),
-        //     graph = document.querySelector('#graph');
+        var container = angular.element(document.querySelector('#panel')),
+            graph = document.querySelector('#graph');
 
-        // container
-        //     .on('hoverNode', function(event) {
-        //         console.log("EVENT DETAIL", event.detail);
-        //         $scope.node = getNodeByName(event.detail, $scope.data);
-        //         $scope.detail = true;
-        //         $scope.edit = false;
-        //         $scope.$digest();
-        //     })
-        //     .on('selectNode', function(event) {
-        //         console.log('this is event detail ', event.detail);
-        //         $scope.enterEdit(event.detail);
-        //         $scope.$digest();
-        //     })
-        //     .on('unSelectNode', function(event) {
-        //         if ($scope.edit) {
-        //             $scope.leaveEdit();
-        //             $scope.$digest();
-        //         }
-        //     });
+        //ADD DOM EVENTS HERE
+
+        
+
+        var demo_div = angular.element("#demo");
+
+
 
         var g = svg.selectAll("g")
             .data(partition.nodes(treeData))
@@ -133,11 +131,8 @@ d3.chart.architectureTree = function() {
                 }
                 fade(0.3)(d);
                 console.log('here is d right before ', d);
-                
-                document.querySelector('#panel').dispatchEvent(
-                    new CustomEvent("hoverNode", { "detail": d.name })
-                );
-                //document.getElementById("panel").dispatchEvent(hoverNode(d))
+
+                demo_div.text(d.name);
             })
             .on('mouseout', function(d) {
                 if(activeNode !== null) {
@@ -146,10 +141,7 @@ d3.chart.architectureTree = function() {
                 fade(1)(d);
             })
             .on('click', function(d) {
-                console.log("BIG CLICK", d);
-                //click
-                select(d.name);
-                //click();
+                select(d);
             });
 
 
@@ -157,86 +149,48 @@ d3.chart.architectureTree = function() {
           .attr("d", arc)
           .style("fill", 
             function(d) { 
-                // if (  color((d.children ? d : d.parent).name) === undefined ) {
+                //if (  color((d.children ? d : d.parent).name) === undefined ) {
                     //return color((d.children ? d : d.parent).name);
                     return color((d.parent ? d.parent.name : d.name))
                 //}
             })
           .on("click", click)
-
-        
-
-        // var node = nodeSelection.enter().append("g")
-        //     .attr("class", "node")
-        //     .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-        //     .on('mouseover', function(d) {
-        //         if(activeNode !== null) {
-        //             return;
-        //         }
-        //         fade(0.1)(d);
-        //         document.querySelector('#panel').dispatchEvent(
-        //             new CustomEvent("hoverNode", { "detail": d.name })
-        //         );
-        //     })
-        //     .on('mouseout', function(d) {
-        //         if(activeNode !== null) {
-        //             return;
-        //         }
-        //         fade(1)(d);
-        //     })
-        //     .on('click', function(d) {
-        //         //click
-                
-        //         //click();
-        //     });
-
+        //switch between uncommenting the two return IF statements for desired look
         var text = g.append("text")
+          .attr("class", "chart_text")
+          .attr("class", "no_click chart_text")
+          //font color
+          //.attr("fill", "pink")
+          //.attr("transform", "translate(0," + height + ")")
           .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
           .attr("x", function(d) { return y(d.y); })
           .attr("dx", "6") // margin
-          .attr("dy", ".35em") // vertical-align
-          .text(function(d) { return d.name; })
-          //REMOVE initial text for all fields
+          .attr("dy", ".35em")
+           // vertical-align
+          .text(function(d) { 
+            //if (d.children.length !== 0) {
+                return d.name; 
+            //}
+          })
+          //REMOVE initial text for all fields that dont have children
           .attr("opacity", function(d) {
-            // if (!d.children) {
-            //   return 0;
-            // }
+            if (!d.children) {
+              return 0;
+            }
           });
 
-        // var text = g.append("text")
-        //   .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-        //   .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-        //   //.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-        //   .attr("x", function(d) { return y(d.y); })
-        //   .attr("dx", "6") // margin
-        //   .attr("dy", ".31em") // vertical-align
-        //   .text(function(d) { return d.name; })
-        //   //REMOVE initial text for all fields
-        //   // .attr("opacity", function(d) {
-        //   //   if (!d.children) {
-        //   //     return 0;
-        //   //   }
-        //   // });
-
-        // node.append("text")
-        //     .attr("dy", ".31em")
-        //     .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-        //     .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-        //     .text(function(d) {
-        //         console.log("IN NODE CLICK", d.name)
-        //         return d.name;
-        //     });
 
         function click(d) {
           // fade out all text elements
           // stop root from regenerating
           // console.log(this);
-          if (this.parentNode.textContent === "TRIE BACKEND") {
+          if (this.parentNode.textContent === null) {
             return
           }
+          //Time defaults are 750
           text.transition().attr("opacity", 0);
           path.transition()
-            .duration(750)
+            .duration(300)
             .attrTween("d", arcTween(d))
             .each("end", function(e, i) {
                 // check if the animated element's data e lies within the visible angle span given in d
@@ -244,24 +198,14 @@ d3.chart.architectureTree = function() {
                   // get a selection of the associated text element
                   var arcText = d3.select(this.parentNode).select("text");
                   // fade in the text element and recalculate positions
-                  arcText.transition().duration(750)
+                  arcText.transition().duration(500)
                     .attr("opacity", 1)
                     .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
                     .attr("x", function(d) { return y(d.y); });
                 }
             });
-            // select(d.name);
             //console.log(d.name);
         }
-
-        // node.append("text")
-        //     .attr("dy", ".31em")
-        //     .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-        //     .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-        //     .text(function(d) {
-        //         console.log("IN NODE CLICK", d.name)
-        //         return d.name;
-        //     });
     };
 
     /**
@@ -287,20 +231,6 @@ d3.chart.architectureTree = function() {
         });
     };
 
-    /**
-     * Add indices to a node, including inherited ones.
-     *
-     * Mutates the given node (datum).
-     *
-     * Example added properties:
-     * {
-     *   index: {
-     *     relatedNodes: ["Foo", "Bar", "Baz", "Buzz"],
-     *     technos: ["Foo", "Bar"],
-     *     host: ["OVH", "fo"] 
-     *   }
-     * }
-     */
     var addIndex = function(node) {
         //console.log('heres node ', node);
         node.index = {
@@ -402,26 +332,32 @@ d3.chart.architectureTree = function() {
         });
     };
 
-    var select = function(name) {
-        console.log('you selected ', name);
-        // if (activeNode && activeNode.name == name) {
-        //     unselect();
-        //     return;
-        // }
-        // unselect();
+    var demo_div2 = angular.element("#demo2");
+
+    var select = function(d) {
+        //alert(d);
+        //BEANS();
+
+        console.log('you selected ', d.name);
+        demo_div2.text(d.name);
+        if (activeNode && activeNode.name == d.name) {
+            unselect();
+            return;
+        }
+        unselect();
 
         svg.selectAll(".node")
             .filter(function(d) {
-                if (d.name === name) return true;
+                if (d.name === d.name) return true;
             })
-            .each(function(d) {
-                document.querySelector('#panel').dispatchEvent(
-                    new CustomEvent("selectNode", { "detail": d.name })
-                );
-                d3.select(this).attr("id", "node-active");
-                activeNode = d;
-                fade(1)(d);
-            });
+            // .each(function(d) {
+            //     demo_div2.dispatchEvent(
+            //         new CustomEvent("selectNode", { "detail": d.name })
+            //     );
+            //     d3.select(this).attr("id", "node-active");
+            //     activeNode = d;
+            //     fade(1)(d);
+            // });
     };
 
     var unselect = function() {
@@ -463,6 +399,7 @@ d3.chart.architectureTree = function() {
         filters.hosts = hostsFilter;
         refreshFilters();
     };
+
 
     return chart;
 };

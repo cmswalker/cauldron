@@ -29,6 +29,15 @@ text {
 
 //////////NEW CHART
 
+.no_click {
+  pointer-events: none;
+
+}
+
+.chart_text {
+
+}
+
 .node circle {
     stroke-width: 1.5px;
 }
@@ -144,4 +153,7 @@ text {
     width: 960px;
     margin: auto;
 }
+
+
+
 

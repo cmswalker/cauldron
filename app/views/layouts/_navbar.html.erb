@@ -1,0 +1,41 @@
+
+<nav class="row navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-brand-centered">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="navbar-brand navbar-brand-centered">TITLE</div>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-brand-centered">
+          <ul class="nav navbar-nav"> 
+            <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                  <% if current_user %>
+                    <li><a href="#">Add</a></li>
+                    <li><a href="#">Charts</a></li>
+                    <li><a href="#">Share</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Share</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Log Out</a></li>
+                  <% end %>
+                  </ul>
+                </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">About</a></li>      
+          </ul>
+        </div><!-- /.navbar-collapse -->
+        </div>
+</nav>
+
+
+

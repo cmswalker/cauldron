@@ -14,8 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require form2js-bower/src/form2js.js
-//= require turbolinks
 //= require D3/d3.min.js
+//= require colorbrewer.js
 //= require angular/angular.min.js
 //= require angular-resource/angular-resource.min.js
 //= require angular-route/angular-route.min.js
@@ -33,7 +33,6 @@
 //= require ./ng-stuff/angular.architectureTree/services/data.js
 //= require ./ng-stuff/angular.architectureTree/services/bus.js
 //= require_tree ./ng-stuff
-
 
 //JUST IN CASE
 
@@ -110,8 +109,14 @@ ChartApp.factory('User', function ($http, $q) {
 	return User;
 });
 
+function BEANS() {
+	alert('BEANS');
+}
+
+
 
 ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
+
 
 	$scope.current_user = null;
 	$scope.current_chart = null;
@@ -256,10 +261,8 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	//Initiate the page
 	gen_user();
 
-	var ingredient_field = angular.element("#ingredient_field");
-	$scope.second_field = angular.element("#2ndingredient");
-
-
+	
+	
 	$scope.new_recipe = function(taco_recipe, event) {
 		event.preventDefault();
 		$scope.master = {};
@@ -277,20 +280,8 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	}
 
 
-	  // $scope.rec.one = undefined;
-	  // $scope.rec.two = undefined;
-	  // $scope.rec.three = undefined;
-	  // $scope.rec.four = undefined;
-	  // $scope.rec.five = undefined;
-	  // $scope.rec.six = undefined;
 
-	
-
-
-  
-
-
-
+ 
 
 
 

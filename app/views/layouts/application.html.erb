@@ -3,12 +3,17 @@
 	<head>
 	  <title>ChartApp</title>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.indigo-pink.min.css">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	  <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
 	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>	
+		
 		<div class="container-fluid">
+		<%= render partial: "layouts/navbar" %>
 
 			<%= flash_messages %>
 			<% if flash[:notice] %>
@@ -18,9 +23,11 @@
 			<% end %>
 			<%= yield %>
 
+			
+
 		</div>
 
-		<% console %>
+	
 
 	</body>
 </html>

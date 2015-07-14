@@ -1,5 +1,5 @@
 function chart_ctrl() {
-	console.log('loaded chart ctrl');
+	
 
 	// var ChartApp = angular.module("ChartApp", []);
 
@@ -34,16 +34,6 @@ function chart_ctrl() {
 
 
 	// });
-
-
-
-
-
-
-
-
-
-
 
 
 

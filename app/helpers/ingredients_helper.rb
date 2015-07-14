@@ -5,7 +5,7 @@ module IngredientsHelper
 	# end
 
 	def create_from_trie
-		@ingredient = @looping_parent.children.create! :name => @search, :chart_id => @ingredient.chart_id
+		@ingredient = @looping_parent.children.create! :name => @create_search, :chart_id => @ingredient.chart_id
 	end
 
 	def create_from_trie_drop

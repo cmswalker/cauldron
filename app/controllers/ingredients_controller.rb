@@ -103,111 +103,167 @@ class IngredientsController < ApplicationController
     @five_field = ng_ingredient_params[:five]
     @six_field = ng_ingredient_params[:six]
 
-    # binding.pry
+    @looping_parent = @root
+
+    #SECOND TRY WORKS THUS FAR BUT THERE IS AN EASIER WAY
+    # def trie_search
+    #   @level_1_search = @root.children.find_by(name: @one_field)
+    #   #returned the correct node
+    #   if @level_1_search
+    #     @beano = "happy"
+    #     binding.pry
+    #   end
+    # end
 
     def trie_search
-      @search = @one_field
-      @level_one = @root.children
-      #BEGIN LEVEL ONE QUERY
-      @level_one.each do |c|
-        if @search == c.name 
-          @search = @two_field
-          # @ingredient = nil
-          # CANT GET ERROR FLASH TO WORK
-          @looping_parent = c
-          @level_two = c.children
-          if @level_two.length == 0
-            #create the node if children of field_1 is empty
+
+      @level_1_search = @looping_parent.descendants.find_by(name: @one_field)
+      if @level_1_search
+        @found = true
+        @looping_parent = @level_1_search
+        #continue the loop
+        @level_2_search = @looping_parent.descendants.find_by(name: @two_field)
+        if @level_2_search
+          @found = true
+          @looping_parent = @level_2_search
+          #continue the loop
+          @level_3_search = @looping_parent.descendants.find_by(name: @three_field)
+          if @level_3_search
+            @found = true
+            @looping_parent = @level_2_search
+            #continue the loop
+          else
+            @found = false
+            @create_search = @three_field
             create_from_trie
+            #call for the rest of the stack
+            # trie_search
           end
-          #BEGIN LEVEL TWO QUERY
-          @level_two.each do |c2|
-            if @search == c2.name
-              @search = @three_field
-              # @ingredient = nil
-              @looping_parent = c2
-              @level_three = c2.children
-              if @level_three.length == 0
-                #create the node if children of field_2 is empty
-                create_from_trie
-              end
-              #BEGIN LEVEL THREE QUERY
-              @level_three.each do |c3|
-                if @search == c3.name
-                  @search = @four_field
-                  # @ingredient = nil
-                  @looping_parent = c3
-                  @level_four = c3.children
-                  if @level_four.length == 0
-                    #create the node if children of field_3 is empty
-                    create_from_trie
-                  end
-                  #BEGIN LEVEL FOUR QUERY
-                  @level_four.each do |c4|
-                    if @search == c4.name
-                      @search = @five_field
-                      # @ingredient = nil
-                      @looping_parent = c4
-                      @level_five = c4.children
-                      if @level_five.length == 0
-                        #create the node if children of field_4 is empty
-                        create_from_trie
-                      end
-                      #BEGIN LEVEL FIVE QUERY
-                      @level_five.each do |c5|
-                        if @search == c5.name
-                          @search = @six_field
-                          # @ingredient = nil
-                          @looping_parent = c5
-                          @level_six = c5.children
-                          if @level_six.length == 0
-                            #create the node if children of field_5 is empty
-                            create_from_trie
-                          end
-                        end
-                      end
-                    end
-                  end  #WTF?
-                end
-              end
-            end
-          end
-          end
-          #END LEVEL ONE QUERY
+
+
+        else #if level_2_search_fails
+          @found = false
+          @create_search = @two_field
+          create_from_trie
+          #call for the rest of the stack
+          # trie_search
         end
-        ##LOOP ENDS HERE
-        ##BEGIN CREATING BRAND NEW NODES PER FIELD IF NOTHING WAS FOUND
-        # @looping_parent = @root
-        # @search = @one_field
-        # create_from_trie
-        # # binding.pry
-
-        # @looping_parent = @ingredient
-        # @search = @two_field
-        # create_from_trie
-
-        # @looping_parent = @ingredient
-        # @search = @three_field
-        # create_from_trie
-
-        # @looping_parent = @ingredient
-        # @search = @four_field
-        # create_from_trie
-
-        # @looping_parent = @ingredient
-        # @search = @five_field
-        # create_from_trie
-
-        # @looping_parent = @ingredient
-        # @search = @six_field
-        # create_from_trie
-        
-
-        #must tell it to create nodes that DONT exist yet
-        # all you helpers are fucked
-
-        
+      else  #if level_1_search_fails
+        @found = false
+        @create_search = @one_field
+        create_from_trie
+        #call for the rest of the stack
+        trie_search
       end
+
+      
+    end
+
+    # binding.pry
+
+    # def trie_search
+    #   @search = @one_field
+    #   @level_one = @root.children
+    #   #BEGIN LEVEL ONE QUERY
+    #   @level_one.each do |c|
+    #     if @search == c.name 
+    #       @search = @two_field
+    #       # @ingredient = nil
+    #       # CANT GET ERROR FLASH TO WORK
+    #       @looping_parent = c
+    #       @level_two = c.children
+    #       if @level_two.length == 0
+    #         #create the node if children of field_1 is empty
+    #         create_from_trie
+    #       end
+    #       #BEGIN LEVEL TWO QUERY
+    #       @level_two.each do |c2|
+    #         if @search == c2.name
+    #           @search = @three_field
+    #           # @ingredient = nil
+    #           @looping_parent = c2
+    #           @level_three = c2.children
+    #           if @level_three.length == 0
+    #             #create the node if children of field_2 is empty
+    #             create_from_trie
+    #           end
+    #           #BEGIN LEVEL THREE QUERY
+    #           @level_three.each do |c3|
+    #             if @search == c3.name
+    #               @search = @four_field
+    #               # @ingredient = nil
+    #               @looping_parent = c3
+    #               @level_four = c3.children
+    #               if @level_four.length == 0
+    #                 #create the node if children of field_3 is empty
+    #                 create_from_trie
+    #               end
+    #               #BEGIN LEVEL FOUR QUERY
+    #               @level_four.each do |c4|
+    #                 if @search == c4.name
+    #                   @search = @five_field
+    #                   # @ingredient = nil
+    #                   @looping_parent = c4
+    #                   @level_five = c4.children
+    #                   if @level_five.length == 0
+    #                     #create the node if children of field_4 is empty
+    #                     create_from_trie
+    #                   end
+    #                   #BEGIN LEVEL FIVE QUERY
+    #                   @level_five.each do |c5|
+    #                     if @search == c5.name
+    #                       @search = @six_field
+    #                       # @ingredient = nil
+    #                       @looping_parent = c5
+    #                       @level_six = c5.children
+    #                       if @level_six.length == 0
+    #                         #create the node if children of field_5 is empty
+    #                         create_from_trie
+    #                       end
+    #                     end
+    #                   end
+    #                 end
+    #               end  #WTF?
+    #             end
+    #           end
+    #         end
+    #       end
+    #       end
+    #       #END LEVEL ONE QUERY
+    #     end
+    #     ##LOOP ENDS HERE
+    #     ##BEGIN CREATING BRAND NEW NODES PER FIELD IF NOTHING WAS FOUND
+    #     # @looping_parent = @root
+    #     # @search = @one_field
+    #     # create_from_trie
+    #     # # binding.pry
+
+    #     # @looping_parent = @ingredient
+    #     # @search = @two_field
+    #     # create_from_trie
+
+    #     # @looping_parent = @ingredient
+    #     # @search = @three_field
+    #     # create_from_trie
+
+    #     # @looping_parent = @ingredient
+    #     # @search = @four_field
+    #     # create_from_trie
+
+    #     # @looping_parent = @ingredient
+    #     # @search = @five_field
+    #     # create_from_trie
+
+    #     # @looping_parent = @ingredient
+    #     # @search = @six_field
+    #     # create_from_trie
+        
+
+    #     #must tell it to create nodes that DONT exist yet
+    #     # all you helpers are fucked
+
+        
+    #   end
       ##END OF FUNCTION CALLLLLL
       ##dont create above this line??
       # auth_create
@@ -217,7 +273,7 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if @ingredient
-        format.html { redirect_to @ingredient, notice: 'Ingredient was successfully created.' }
+        format.html { redirect_to "/charts/#{@ingredient.chart_id}", notice: 'Ingredient was successfully created.' }
         format.json { render :show, status: :created, location: @ingredient }
       else
         # format.html { render :new }

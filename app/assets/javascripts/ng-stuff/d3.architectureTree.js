@@ -26,7 +26,9 @@ d3.chart.architectureTree = function() {
 
     //var color = d3.scale.category20b();
 
-    var color = d3.scale.ordinal().range(colorbrewer.RdBu[9]);
+    // var color = d3.scale.ordinal().range(colorbrewer.RdBu[9]);
+    // var color = d3.scale.ordinal().range(colorbrewer.RdYlGn[9]);
+    var color = d3.scale.ordinal().range(colorbrewer.YlOrRd[9]);
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
@@ -35,7 +37,7 @@ d3.chart.architectureTree = function() {
         .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
     var graph = angular.element("#graph")
-        
+
 
     var partition = d3.layout.partition()
         .sort(null)
@@ -151,6 +153,7 @@ d3.chart.architectureTree = function() {
             function(d) { 
                 //if (  color((d.children ? d : d.parent).name) === undefined ) {
                     //return color((d.children ? d : d.parent).name);
+                    
                     return color((d.parent ? d.parent.name : d.name))
                 //}
             })

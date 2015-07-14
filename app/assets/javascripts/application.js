@@ -78,7 +78,7 @@ ChartApp.factory('Chart', function ($http, $q) {
 		var deferred = $q.defer()
 
 		$http
-			.get("/charts/8.json")
+			.get("/charts/1.json")
 			.success(function(response) {
 				deferred.resolve(response);
 			})

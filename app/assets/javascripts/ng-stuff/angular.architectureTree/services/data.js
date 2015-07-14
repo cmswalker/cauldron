@@ -15,7 +15,7 @@ ChartApp.service('data', function ($http, $q, bus) {
         }
         console.log('grabbing the data?')
         
-        return $http.get("/charts/8.json").success(function(data) {
+        return $http.get("/charts/1.json").success(function(data) {
             setJsonData(data[0]);
             console.log('REAL DATA? ', data[0]);
             return data;

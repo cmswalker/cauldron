@@ -1,5 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<% if @ingredient.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+    <ul>
+    <% @ingredient.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(@ingredient) do |f| %>
+      <% if @ingredient.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
+
+          <ul>
+          <% @ingredient.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>       
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @chart.name %><br>
@@ -7,33 +33,68 @@
   <%= @root.name %><br>
 </p>
 
-<%= link_to 'Edit', edit_chart_path(@chart) %> |
-<%= link_to 'Back', charts_path %>
-
-<h4>BEGIN ANGULAR BELOW</h4>
-
-
 <div ng-app="ChartApp">
-  <div ng-controller="ChartCtrl">
 
-  <div class="col-xs-4">
-      <h4>BUILD FORM</h4>
-      <div>
-        <label>layer 1</label>
-        <input type="text" ng-model="selected1" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" class="form-control">
-        <label>layer 2</label>
-        <input type="text" ng-model="selected2" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" class="form-control">
-        <label>layer 3</label>
-        <input type="text" ng-model="selected3" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" class="form-control">
-        <label>layer 4</label>
-        <input type="text" ng-model="selected4" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" class="form-control">
-        <label>layer 5</label>
-        <input type="text" ng-model="selected5" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" class="form-control">
-        <label>layer 6</label>
-        <input type="text" ng-model="selected6" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" class="form-control">
-      </div>      
+  <div ng-controller="chartCtrl">
+      <tree-chart data="data" diameter="960"></tree-chart>
   </div>
 
+  <!-- START CUSTOM -->
+  <div ng-controller="ChartCtrl">
+
+  <div id="demo"></div>
+  <div id="demo2"></div>
+
+  <div ng-click="add_new_rec=true">
+    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="add_new_rec_form=true">
+      Add a new recipe
+    </button>
+  </div>
+
+  <div class="col-xs-4" ng-show="add_new_rec_form">
+      <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <label>Add a new recipe:</label>
+      </div>
+      <div>
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Base Ingredient:</label>
+        </div>
+
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.two" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Ingredient 2...</label>
+        </div>
+
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.three" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Ingredient 3...</label>
+        </div>
+
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.four" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Ingredient 4...</label>
+        </div>
+
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.five" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Ingredient 5...</label>
+        </div>
+
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" class="mdl-textfield__input" ng-model="rec.six" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+          <label class="mdl-textfield__label" for="sample4">Ingredient 6...</label>
+        </div>
+
+        <!-- Flat button with ripple -->
+        <div>
+          <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="new_recipe(rec, $event)">
+            Submit
+          </button>
+        </div>
+
+      </div>      
+  </div>
 
     <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
     <div>
@@ -43,6 +104,9 @@
       <div>
         {{ child }}
       </div>
+    </div>
+    <h4>NEW CHART?</h4>
+    <div id="graph">
     </div>
     <h3>END SEARCH LOOP</h3>
 
@@ -75,12 +139,6 @@
     <h2>ALL CHILDREN</h2>
     {{ current_chart.allchild }}
     END CHECK ALL CHILDREN -->
-
-
-
-
-      
-
 
 
 <!--         TRIAL FORM START
@@ -132,48 +190,6 @@
         ANOTHER TRIAL END -->
 
 
-    <%= form_for(@ingredient) do |f| %>
-          <% if @ingredient.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
-
-              <ul>
-              <% @ingredient.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-              </ul>
-            </div>
-          <% end %>       
-
-
-      <div id="ingredient_menu">
-        <h3>ADD A BASE INGREDIENT</h3>
-        <div id="base_ingredient" class="field" ng-show="base" ng-hide="ing_2">
-          <%= f.label :name %><br>
-          <%= f.text_field :name, id: "ingredient_field" %>
-          <%= f.hidden_field :chart_id, :value => params[:id] %>
-          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
-        </div>
-        <div id="2nd_ingredient" class="field" ng-hide="ing_2">
-          <%= f.label :name %><br>
-          <%= f.text_field :name, id: "ingredient_field" %>
-          <%= f.hidden_field :chart_id, :value => params[:id] %>
-          <%= f.submit  class: "btn btn-primary", id: "add_ingredient_btn"%>
-        </div> 
-      </div>
-
-
-    <% end %>
-
-    <%= javascript_include_tag "charts", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "chart_ctrl", "data-turbolinks-track" => true %>
-    
-
-
-
-
-
-
 
 
 
@@ -181,6 +197,8 @@
   <!-- END ChartCtrl -->
 </div>
 <!-- END ChartApp -->
+
+
 
 
 

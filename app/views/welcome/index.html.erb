@@ -3,8 +3,8 @@ Login
 <%= form_for @user, url: "/sessions", method: "post" do |f| %>
 
 	<div class="field">
-	  <%= f.label :email %><br>
-	  <%= f.text_field :email %>
+	  <%= f.label :username %><br>
+	  <%= f.text_field :username %>
 	</div>
 	<div class="field">
 	  <%= f.label :password %><br>
@@ -13,7 +13,6 @@ Login
 	<div class="actions">
 	  <%= f.submit "Log In" %>
 	</div>
-	
 <% end %> 
 
 or <%= link_to "Register", new_user_path %>

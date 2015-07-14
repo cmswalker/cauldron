@@ -11,6 +11,11 @@
 </p>
 
 <p>
+  <strong>USER key:</strong>
+  <%= @user.user_key %>
+</p>
+
+<p>
   <strong>Api key:</strong>
   <%= @user.api_key %>
 </p>
@@ -22,3 +27,7 @@
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+
+<% @user.charts.each do |c| %>
+	<div><%= link_to c.name, chart_path(c) %></div>
+<% end %>

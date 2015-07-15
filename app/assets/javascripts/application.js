@@ -21,6 +21,7 @@
 //= require angular-route/angular-route.js
 //= require angular-animate/angular-animate.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
+//= require zoom.js
 
 //= require_self
 //= require ./ng-stuff/d3.architectureTree.js

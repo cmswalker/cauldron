@@ -150,10 +150,12 @@ d3.chart.architectureTree = function() {
           .attr("d", arc)
           .style("fill", 
             function(d) {
-                //if (  color((d.children ? d : d.parent).name) === undefined ) {
-                    //return color((d.children ? d : d.parent).name);
-                    return color((d.parent ? d.parent.name : d.name))
-                //}
+                    if (d.ancestry) {
+                        return color((d.parent ? d.parent.name : d.name))
+                    }
+                    else return color('grey');
+                    //original, no conditional
+                    //return color((d.parent ? d.parent.name : d.name))
             })
           .on("click", click)
         //switch between uncommenting the two return IF statements for desired look
@@ -162,11 +164,11 @@ d3.chart.architectureTree = function() {
           .attr("class", "chart_text")
           .attr("class", "no_click chart_text")
           //font color
-          //.attr("fill", "pink")
+          .attr("fill", "#7B2F00")
           //.attr("transform", "translate(0," + height + ")")
           .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
           .attr("x", function(d) { return y(d.y); })
-          .attr("dx", "6") // margin
+          .attr("dx", "8") // margin
           .attr("dy", ".35em")
            // vertical-align
           .text(function(d) { 
@@ -181,6 +183,15 @@ d3.chart.architectureTree = function() {
               return 0;
             }
           });
+
+          // .attr("transform", function(d, i) {
+          //         return "translate(" + (850*Math.cos(i*2*Math.PI/365)+width) + "," + (850*Math.sin(i*2*Math.PI/365)+height) + ")rotate(" + (i*360/365) + ")";
+          //     })
+          //     .text(function(d) { return d; });
+
+
+
+
 
         var new_depth;
         function click(d) {

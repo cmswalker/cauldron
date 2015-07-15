@@ -43,7 +43,20 @@
   <!-- START CUSTOM -->
   <div ng-controller="ChartCtrl">
 
-    <div id="edit_recipe_div" ng-show="edit_show">
+    <div id="edit_recipe_div" class="ninja row">
+      <form>
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <label class="mdl-textfield__label" for="sample4">Edit Ingredient:</label><br>
+          <input type="text" id="edit_input" class="mdl-textfield__input" >
+        </div>
+        <input type="text" id="edit_input_id" class="ninja">
+        <div>
+          <button type="button" id="edit_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            Save
+          </button>
+        </div>
+      </form>
+
       <form>
         <input type="text" id="delete_input_id" class="ninja">
         <div>
@@ -52,38 +65,19 @@
           </button>
         </div>
       </form>
-
-      <form>
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" id="edit_input" class="mdl-textfield__input" >
-          <label class="mdl-textfield__label" for="sample4">Edit Ingredient:</label>
-        </div>
-        <input type="text" id="edit_input_id" class="ninja">
-        <div>
-          <button type="button" id="edit_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
-            Edit
-          </button>
-        </div>
-      </form>
     </div>
 
     <div id="demo"></div>
     <div id="demo2"></div>
 
-  <div ng-hide="edit_show" ng-hide="remove_add_button">
-    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="remove_add_button=true" ng-hide="remove_add_button">
-      Add a new recipe
-    </button>
-  </div>
-
-  <div ng-click="edit_show=true" ng-hide="remove_add_button">
+  <!-- <div ng-click="edit_show=true" ng-hide="remove_add_button">
     <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="add_new_rec_form=true">
       Edit/Delete
     </button>
-  </div>
+  </div> -->
 
 
-  <div class="col-xs-4" ng-show="add_new_rec_form" ng-hide="edit_show">
+  <div class="col-xs-4 ninja" id="add_new_rec_div">
       <div>
         <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
           <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
@@ -121,7 +115,6 @@
             Submit
           </button>
         </div>
-
       </div>      
   </div>
 
@@ -138,7 +131,6 @@
         {{ child }}
       </div>
     </div>
-
 
   </div>
   <!-- END ChartCtrl -->

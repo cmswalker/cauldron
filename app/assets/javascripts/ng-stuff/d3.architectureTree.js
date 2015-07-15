@@ -129,9 +129,7 @@ d3.chart.architectureTree = function() {
                 if(activeNode !== null) {
                     return;
                 }
-                fade(0.3)(d);
-                console.log('here is d right before ', d);
-
+                fade(0.4)(d);
                 demo_div.text(d.name);
             })
             .on('mouseout', function(d) {
@@ -148,10 +146,9 @@ d3.chart.architectureTree = function() {
         var path = g.append("path").attr("class", "link")
           .attr("d", arc)
           .style("fill", 
-            function(d) { 
+            function(d) {
                 //if (  color((d.children ? d : d.parent).name) === undefined ) {
                     //return color((d.children ? d : d.parent).name);
-
                     return color((d.parent ? d.parent.name : d.name))
                 //}
             })
@@ -332,13 +329,21 @@ d3.chart.architectureTree = function() {
             return !isFoundByFilter(d);
         });
     };
-    var $graph = $("#graph");
+
     var demo_div2 = angular.element("#demo2");
     var $edit_input = $("#edit_input");
     var $edit_input_id =$("#edit_input_id");
     var $edit_input_submit = $("#edit_input_submit");
     var $delete_input_id = $("#delete_input_id");
     var $delete_input_submit = $("#delete_input_submit");
+
+    var $add_button = $("#add_button");
+    var $add_new_rec_div = $("#add_new_rec_div");
+    var $edit_recipe_div = $("#edit_recipe_div");
+
+    $add_button.on("click", function(e) {
+        $add_new_rec_div.fadeIn(700);
+    })
 
     $edit_input_submit.on("click", function() {
         edit_recipe($edit_input_id.val(), $edit_input.val());
@@ -347,14 +352,18 @@ d3.chart.architectureTree = function() {
         delete_recipe($delete_input_id.val());
     });
 
+
     var select = function(d) {
         var ing_id = d.id;
         demo_div2.text(d.name);
 
         $edit_input.val(d.name);
         $edit_input_id.val(d.id);
-        
+        ////
         $delete_input_id.val(d.id);
+
+        //show the edit modal on click
+        $edit_recipe_div.removeClass("ninja");
 
         if (activeNode && activeNode.name == d.name) {
             unselect();

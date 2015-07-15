@@ -7,6 +7,7 @@ d3.chart = d3.chart || {};
 var url = location.pathname
 var ID = url.substring(url.lastIndexOf('/') + 1);
 var nodes, links, svg;
+var root;
 
 d3.chart.architectureTree = function() {
 
@@ -118,7 +119,7 @@ d3.chart.architectureTree = function() {
 
         //ADD DOM EVENTS HERE
 
-        var demo_div = angular.element("#demo");
+        var demo_div = angular.element("#demo_input");
 
         var g = svg.selectAll("g")
             .data(partition.nodes(treeData))
@@ -126,6 +127,8 @@ d3.chart.architectureTree = function() {
           .attr("class", "node")
             .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
             .on('mouseover', function(d) {
+                $modal_body.text("");
+                $modal_title.text("");
                 if(activeNode !== null) {
                     return;
                 }
@@ -154,6 +157,7 @@ d3.chart.architectureTree = function() {
             })
           .on("click", click)
         //switch between uncommenting the two return IF statements for desired look
+        
         var text = g.append("text")
           .attr("class", "chart_text")
           .attr("class", "no_click chart_text")
@@ -166,9 +170,10 @@ d3.chart.architectureTree = function() {
           .attr("dy", ".35em")
            // vertical-align
           .text(function(d) { 
-            //if (d.children.length !== 0) {
-                return d.name; 
-            //}
+                if (d.ancestry) {
+                    return d.name; 
+                }
+                else {root = d;}
           })
           //REMOVE initial text for all fields that dont have children
           .attr("opacity", function(d) {
@@ -177,14 +182,21 @@ d3.chart.architectureTree = function() {
             }
           });
 
-
+        var new_depth;
         function click(d) {
           // fade out all text elements
           // stop root from regenerating
-          // console.log(this);
-          if (this.parentNode.textContent === null) {
-            return
+          // console.log('this from click ', this);
+          console.log('d from click ', d);
+          if (d.ancestry === null) {
+            console.log('WOWWWWW');
+            $edit_recipe_div.addClass("ninja");
           }
+          else {$edit_recipe_div.removeClass("ninja");};
+
+          // if (this.parentNode.textContent === null) {
+          //   return
+          // }
           //Time defaults are 750
           text.transition().attr("opacity", 0);
           path.transition()
@@ -330,7 +342,9 @@ d3.chart.architectureTree = function() {
         });
     };
 
-    var demo_div2 = angular.element("#demo2");
+
+    var $chart_container = $("#chart_container");
+
     var $edit_input = $("#edit_input");
     var $edit_input_id =$("#edit_input_id");
     var $edit_input_submit = $("#edit_input_submit");
@@ -340,6 +354,10 @@ d3.chart.architectureTree = function() {
     var $add_button = $("#add_button");
     var $add_new_rec_div = $("#add_new_rec_div");
     var $edit_recipe_div = $("#edit_recipe_div");
+
+    var $detail_modal = $("#detail_modal");
+    var $modal_body = $("#modal_body");
+    var $modal_title = $("#modal_title");
 
     $add_button.on("click", function(e) {
         $add_new_rec_div.fadeIn(700);
@@ -352,24 +370,45 @@ d3.chart.architectureTree = function() {
         delete_recipe($delete_input_id.val());
     });
 
+    var $test_modal = $("#test_modal");
+    var $demo = $("#demo");
+
 
     var select = function(d) {
-        var ing_id = d.id;
-        demo_div2.text(d.name);
-
+        //show the edit modal on click
+        //$demo_div.addClass("ninja");
+        console.log('this ', this);
+        
+        //$demo.hide();
         $edit_input.val(d.name);
         $edit_input_id.val(d.id);
-        ////
         $delete_input_id.val(d.id);
 
-        //show the edit modal on click
-        $edit_recipe_div.removeClass("ninja");
+        var ing_id = d.id;
+        console.log('kiddos ', d.children);
+        if (!d.children) {
+            var rec_name = d.name;
+            while (d.parent) {
+                console.log(d.parent);
+                if (d.parent.name === CHARTNAME) {break}
+                $modal_body.prepend('<li>' + d.parent.name + '</li>');
+                d = d.parent;
+            }
+            $modal_title.text(rec_name);
+
+
+
+            $detail_modal.modal('show');
+        }
+        //else { $test_modal_div.text("");}
+        
+        
 
         if (activeNode && activeNode.name == d.name) {
             unselect();
             return;
         }
-        unselect();
+        //unselect();
         svg.selectAll(".node")
             .filter(function(d) {
                 if (d.name === d.name) return true;
@@ -415,6 +454,9 @@ d3.chart.architectureTree = function() {
         filters.hosts = hostsFilter;
         refreshFilters();
     };
+
+    $chart_container.fadeIn(3000);
+
 
     return chart;
 };

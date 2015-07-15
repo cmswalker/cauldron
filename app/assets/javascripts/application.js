@@ -40,6 +40,7 @@ var url = location.pathname
 var ID = url.substring(url.lastIndexOf('/') + 1);
 var KEY;
 var CHART;
+var CHARTNAME;
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
     .run(function(data) {
@@ -119,6 +120,7 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			function(response){
 				$scope.current_chart = response[0];
 				$scope.chart_id = $scope.current_chart.chart_id;
+				CHARTNAME = $scope.current_chart.name;
 				console.log('Current Chart ', $scope.current_chart);
 				console.log('Current Chart ID ', $scope.chart_id);
 			},

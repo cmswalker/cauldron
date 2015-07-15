@@ -26,49 +26,51 @@
       <% end %>       
 <% end %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @chart.name %><br>
-  <strong>THIS IS ROOT</strong>
-  <%= @root.name %><br>
-</p>
-
 <div ng-app="ChartApp">
-  <div id="chart_container" class="col-xs-8">
-    <div ng-controller="chartCtrl">
-        <tree-chart data="data" diameter="960"></tree-chart>
-    </div>
-  </div>
+  
   
   <!-- START CUSTOM -->
   <div ng-controller="ChartCtrl">
 
+  <!-- HOVER FIELD -->
+  <div id="demo" class="row">
+    <span id="demo_input" class="mdl-textfield__input" >&nbsp;</span>
+  </div>
+
+
+  <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
+<!--   <button ng-click="show_search=true">
+    Search:
+  </button>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo"  ng-show="show_search">
+    Search: <input type="text" class="mdl-textfield__input" ng-model="search_key"/>
+  </div>  
+  <div ng-repeat="child in current_chart.allchild | filter: search_key ">
+    <div>
+      {{ child }}
+    </div>
+  </div> -->
+
+
     <div id="edit_recipe_div" class="ninja row">
-      <form>
+      <form id="save_button">
         <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
           <label class="mdl-textfield__label" for="sample4">Edit Ingredient:</label><br>
           <input type="text" id="edit_input" class="mdl-textfield__input" >
         </div>
-        <input type="text" id="edit_input_id" class="ninja">
-        <div>
+        <input type="text" id="edit_input_id" class="ninja">  
           <button type="button" id="edit_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
             Save
           </button>
-        </div>
       </form>
-
-      <form>
+      <form id="delete_button">
         <input type="text" id="delete_input_id" class="ninja">
-        <div>
           <button type="button" id="delete_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
             Delete
           </button>
-        </div>
       </form>
     </div>
 
-    <div id="demo"></div>
-    <div id="demo2"></div>
 
   <!-- <div ng-click="edit_show=true" ng-hide="remove_add_button">
     <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="add_new_rec_form=true">
@@ -118,22 +120,38 @@
       </div>      
   </div>
 
-    <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
+    
 
-    <button ng-click="show_search=true">
-      Search:
-    </button>
-    <div ng-show="show_search">
-      Search: <input type="text" ng-model="search_key"/>
-    </div>  
-    <div ng-repeat="child in current_chart.allchild | filter: search_key ">
-      <div>
-        {{ child }}
+    <!-- DETAIL MODAL -->
+      <div class="row">
+      <div id="detail_modal" class="modal fade in">
+            <div class="modal-dialog">
+                <div class="modal-content">
+     
+                    <div class="modal-header">
+                        <a class="btn btn-default" data-dismiss="modal"><span>X</span></a>
+                        <h4 id="modal_title" class="modal-title">Modal Heading</h4>
+                    </div>
+                    <div id="modal_body" class="modal-body">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dalog -->
+        </div><!-- /.modal -->   
       </div>
-    </div>
-
+    <!-- END DETAIL MODAL -->
+   
   </div>
   <!-- END ChartCtrl -->
+
+  <!-- START SVG -->
+  <div id="chart_container" class="row ninja">
+    <div ng-controller="chartCtrl">
+        <tree-chart data="data" diameter="960"></tree-chart>
+    </div>
+  </div>
+  <!-- END SVG -->
+
+
 </div>
 <!-- END ChartApp -->
 

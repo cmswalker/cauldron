@@ -5,6 +5,35 @@
 
 // D3 chart
 
+  .modal .modal-header {
+    border-bottom: none;
+    position: relative;
+  }
+  .modal .modal-header .btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+    border-radius: 0;
+  }
+  .modal .modal-footer {
+    border-top: none;
+    padding: 0;
+  }
+  .modal .modal-footer .btn-group > .btn:first-child {
+    border-bottom-left-radius: 0;
+  }
+  .modal .modal-footer .btn-group > .btn:last-child {
+    border-top-right-radius: 0;
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
+
+  //////////////
+
+
 body {
   font-family: "Josefin Sans", sans-serif;
   margin: auto;
@@ -152,6 +181,27 @@ text {
     margin: auto;
 }
 
+///FORMS
+
+#demo_input {
+  margin: 0 auto;
+  float: right;
+  text-align: right;
+  padding-right: 5vw;
+  max-width: 25vw;
+}
+
+#save_button, #delete_button {
+  display: inline-block;
+}
+
+#edit_recipe_div {
+  float: left;
+  margin: 0 auto;
+  position: absolute;
+  width: 30vw;
+  margin-top: -8vh;
+}
 
 
 

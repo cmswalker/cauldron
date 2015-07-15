@@ -23,11 +23,10 @@
  	background-color: RGBA(39, 40, 34, .3);
  }
 
- #graph {
+ #chart_container {
  	margin: 0 auto;
  	text-align: center;
- 	margin-top:3vh;
-
+ 	margin-top:4vh;
  }
 
  .navbar-inverse {
@@ -76,3 +75,13 @@
  svg g .node {
  	border: 10px solid black;
  }
+
+ //MODAL
+
+ .modal-content {
+    border-radius: 0;
+  }
+
+  .btn {
+  	border: none;
+  }

@@ -227,7 +227,7 @@ class IngredientsController < ApplicationController
   # PATCH/PUT /ingredients/1.json
   def update
     respond_to do |format|
-      if @ingredient.update(ingredient_params)
+      if @ingredient.update(ng_ingredient_params)
         format.html { redirect_to @ingredient, notice: 'Ingredient was successfully updated.' }
         format.json { render :show, status: :ok, location: @ingredient }
       else

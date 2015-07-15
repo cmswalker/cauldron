@@ -35,19 +35,11 @@
 //= require ./ng-stuff/angular.architectureTree/services/bus.js
 //= require_tree ./ng-stuff
 
-//JUST IN CASE
-
-// var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
-
 
 var url = location.pathname
 var ID = url.substring(url.lastIndexOf('/') + 1);
-
+var KEY;
 var CHART;
-
-console.log('chart id', ID);
-
-// var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
     .run(function(data) {
@@ -117,12 +109,6 @@ ChartApp.factory('User', function ($http, $q) {
 	return User;
 });
 
-function BEANS() {
-	alert('BEANS');
-}
-
-
-
 ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 
 	$scope.current_user = null;
@@ -147,6 +133,7 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			function(response){
 				$scope.current_user = response;
 				$scope.user_key = $scope.current_user.user_key;
+				KEY = $scope.user_key;
 				console.log('Current User ', $scope.current_user);
 			},
 			function(rejection) {
@@ -268,8 +255,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	//Initiate the page
 	gen_user();
 
-	
-	
 	$scope.new_recipe = function(taco_recipe, event) {
 		event.preventDefault();
 		$scope.master = {};
@@ -279,21 +264,42 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			.success(function(data, status) {
 				console.log(status);
 				console.log("SHOULD BE WORKING?");
-				//regenerate();
+				location.reload(true)
 			})
 			.error(function(error) {
 				console.log(error);
 			})
 	}
 
-
-
- 
-
-
-
-
 });
+
+function delete_recipe(id) {
+    console.log('trying to delete');
+    var ing_id = id
+    $.ajax({
+      method: "DELETE",
+      url: "/ingredients/" + id + ".json?user_key=" + KEY
+    })
+      .done(function( msg ) {
+        console.log('deleted ' + id);
+        location.reload(true)
+      });
+
+}
+
+function edit_recipe(id, new_name) {
+    console.log('trying to delete');
+    var ing_id = id
+    $.ajax({
+        type: "PUT",
+        url: "/ingredients/" + id + ".json?user_key=" + KEY,
+        data: {"name": new_name}
+    })
+      .done(function( msg ) {
+        console.log( "EDITED " + id + "with " + new_name);
+        location.reload(true)
+      });
+}
 
 
 

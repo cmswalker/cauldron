@@ -86,7 +86,7 @@ var colorbrewer = {YlGn: {
 6: ["#ffffb2","#fed976","#feb24c","#fd8d3c","#f03b20","#bd0026"],
 7: ["#ffffb2","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#b10026"],
 8: ["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#b10026"],
-9: ["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]
+9: ["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#D4AF37","#CF2100","#bd0026","#C75417"]
 },YlOrBr: {
 3: ["#fff7bc","#fec44f","#d95f0e"],
 4: ["#ffffd4","#fed98e","#fe9929","#cc4c02"],

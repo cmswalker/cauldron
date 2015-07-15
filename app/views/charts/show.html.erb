@@ -33,28 +33,57 @@
   <%= @root.name %><br>
 </p>
 
-<!-- <div ng-app="ChartApp"> -->
-
-  <div ng-controller="chartCtrl">
-      <tree-chart data="data" diameter="960"></tree-chart>
+<div ng-app="ChartApp">
+  <div id="chart_container" class="col-xs-8">
+    <div ng-controller="chartCtrl">
+        <tree-chart data="data" diameter="960"></tree-chart>
+    </div>
   </div>
-
+  
   <!-- START CUSTOM -->
   <div ng-controller="ChartCtrl">
-  NAMES HERE
-  <div id="demo"></div>
-  <div id="demo2"></div>
 
-  <div ng-click="add_new_rec=true">
-    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="add_new_rec_form=true">
+    <div id="edit_recipe_div" ng-show="edit_show">
+      <form>
+        <input type="text" id="delete_input_id" class="ninja">
+        <div>
+          <button type="button" id="delete_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            Delete
+          </button>
+        </div>
+      </form>
+
+      <form>
+        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+          <input type="text" id="edit_input" class="mdl-textfield__input" >
+          <label class="mdl-textfield__label" for="sample4">Edit Ingredient:</label>
+        </div>
+        <input type="text" id="edit_input_id" class="ninja">
+        <div>
+          <button type="button" id="edit_input_submit" class="mdl-button mdl-js-button mdl-js-ripple-effect">
+            Edit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div id="demo"></div>
+    <div id="demo2"></div>
+
+  <div ng-hide="edit_show" ng-hide="remove_add_button">
+    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="remove_add_button=true" ng-hide="remove_add_button">
       Add a new recipe
     </button>
   </div>
 
-  <div class="col-xs-4" ng-show="add_new_rec_form">
-      <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-        <label>Add a new recipe:</label>
-      </div>
+  <div ng-click="edit_show=true" ng-hide="remove_add_button">
+    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="add_new_rec_form=true">
+      Edit/Delete
+    </button>
+  </div>
+
+
+  <div class="col-xs-4" ng-show="add_new_rec_form" ng-hide="edit_show">
       <div>
         <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
           <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
@@ -97,7 +126,11 @@
   </div>
 
     <!-- SEARCH ENTIRE NAMES ARRAY, NEED TO BIND TO SVG -->
-    <div>
+
+    <button ng-click="show_search=true">
+      Search:
+    </button>
+    <div ng-show="show_search">
       Search: <input type="text" ng-model="search_key"/>
     </div>  
     <div ng-repeat="child in current_chart.allchild | filter: search_key ">
@@ -105,97 +138,11 @@
         {{ child }}
       </div>
     </div>
-    <h4>NEW CHART?</h4>
-    <div id="graph">
-    </div>
-    <h3>END SEARCH LOOP</h3>
-
-
-   <!--  <div ng-repeat="child in current_chart.children">
-      {{ child.name }}
-    </div> -->
-
-<!--     CHECK LAYER LOOP
-    <p>
-      <h3>LAYERS</h3>
-      <h2>one</h2>
-      {{ current_chart.layer_1 }}
-      <hr>
-      <h2>two</h2>
-      {{ current_chart.layer_2 }}
-      <hr>
-      <h2>three</h2>
-      {{ current_chart.layer_3 }}
-      <h2>four</h2>
-      {{ current_chart.layer_4 }}
-      <h2>five</h2>
-      {{ current_chart.layer_5 }}
-      <h2>six</h2>
-      {{ current_chart.layer_6 }}
-    </p>
-    END CHECK LAYER LOOP -->
-    
-<!--     CHECK ALL CHILDREN
-    <h2>ALL CHILDREN</h2>
-    {{ current_chart.allchild }}
-    END CHECK ALL CHILDREN -->
-
-
-<!--         TRIAL FORM START
-        <form name="ingredient_form" class="row">
-          <div class="small-9 columns">
-            <label>Base?</label>
-            <input type="text" name="rec_trans_num" ng-model="current_chart.children" >
-          </div>
-          <div class="small-9 columns">
-            <label>2nd Level</label>
-            <input type="text" name="rec_payment" ng-model="current_chart.layer_1">
-          </div>
-          <div class="small-9 columns">
-            <label>3rd Level</label>
-            <input type="text" name="rec_amount" ng-model="current_chart.layer_2">
-          </div>
-          <div class="small-9 columns">
-            <label>4th Level</label>
-            <input type="text" name="rec_tip" ng-model="current_chart.layer_3">
-          </div>
-          <div class="small-9 columns">
-            <label>5th Level</label>
-            <input type="text" name="rec_total" ng-model="current_chart.layer_4">
-          </div>
-          <div class="small-9 columns">
-            <label>6th Level</label>
-            <input type="text" name="rec_total" ng-model="current_chart.layer_5">
-          </div>
-          <hr>
-          <div class="row">
-            <input type="submit" value="Submit" class="button small-3 small-offset-4 medium-3 large-4 columns" ng-click="new_receipt(receipt, $event); receipt_modal=false">
-          </div>
-        </form>
-        TRIAL FORM END -->
-
-<!--         ANOTHER TRIAL START
-        <button type="button" ng-click="top=true" ng-hide="startedIng" ng-click="startedIng=true">Start Process</button>
-        <div>
-          <input type="text" ng-click="startedIng=true" placeholder="base ing" ng-model="current_chart.children">
-          SUBMIT FIRST
-          <button type="button" ng-click="top=false" ng-model="current_chart.children.children">onTo2nd</button><br>
-
-          <input type="text" placeholder="2nd ing" />
-          <button type="button" ng-click="onTo3rd">onTo3rd</button><br>
-
-          <input type="text" placeholder="3rd ing" />
-          <button type="button" ng-click="">onTo4th</button><br>
-        </div>
-        ANOTHER TRIAL END -->
-
-
-
 
 
   </div>
   <!-- END ChartCtrl -->
-<!-- </div> -->
+</div>
 <!-- END ChartApp -->
 
 

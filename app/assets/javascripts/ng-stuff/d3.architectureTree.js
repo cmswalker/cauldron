@@ -4,14 +4,17 @@ console.log('d3.architecture.js   NO DEPENDENCIES')
 
 d3.chart = d3.chart || {};
 
+var url = location.pathname
+var ID = url.substring(url.lastIndexOf('/') + 1);
+var nodes, links, svg;
+
 d3.chart.architectureTree = function() {
 
-    var svg, tree, treeData, diameter, activeNode;
+    var tree, treeData, diameter, activeNode;
 
     // var width = 960,
     //     height = 700,
     //     radius = Math.min(width, height) / 2;
-
     var width = 900,
         height = 900,
         radius = Math.min(width, height) / 2;
@@ -80,8 +83,8 @@ d3.chart.architectureTree = function() {
             //     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
         }
 
-        var nodes = tree.nodes(treeData),
-            links = tree.links(nodes);
+        nodes = tree.nodes(treeData);
+        links = tree.links(nodes);
 
         activeNode = null;
 
@@ -329,39 +332,39 @@ d3.chart.architectureTree = function() {
             return !isFoundByFilter(d);
         });
     };
-
+    var $graph = $("#graph");
     var demo_div2 = angular.element("#demo2");
+    var $edit_input = $("#edit_input");
+    var $edit_input_id =$("#edit_input_id");
+    var $edit_input_submit = $("#edit_input_submit");
+    var $delete_input_id = $("#delete_input_id");
+    var $delete_input_submit = $("#delete_input_submit");
 
-    function timeup() {
-        console.log('timeup');
-    }
-
-    BEANS("HI");
+    $edit_input_submit.on("click", function() {
+        edit_recipe($edit_input_id.val(), $edit_input.val());
+    });
+    $delete_input_submit.on("click", function() {
+        delete_recipe($delete_input_id.val());
+    });
 
     var select = function(d) {
-        //alert(d);
-        //BEANS();
-
-        console.log('you selected ', d.name);
+        var ing_id = d.id;
         demo_div2.text(d.name);
+
+        $edit_input.val(d.name);
+        $edit_input_id.val(d.id);
+        
+        $delete_input_id.val(d.id);
+
         if (activeNode && activeNode.name == d.name) {
             unselect();
             return;
         }
         unselect();
-
         svg.selectAll(".node")
             .filter(function(d) {
                 if (d.name === d.name) return true;
             })
-            // .each(function(d) {
-            //     demo_div2.dispatchEvent(
-            //         new CustomEvent("selectNode", { "detail": d.name })
-            //     );
-            //     d3.select(this).attr("id", "node-active");
-            //     activeNode = d;
-            //     fade(1)(d);
-            // });
     };
 
     var unselect = function() {
@@ -406,3 +409,4 @@ d3.chart.architectureTree = function() {
 
     return chart;
 };
+

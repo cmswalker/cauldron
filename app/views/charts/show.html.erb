@@ -79,46 +79,110 @@
   </div> -->
 
 
-  <div class="col-xs-4 ninja" id="add_new_rec_div">
-      <div>
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Base Ingredient:</label>
-        </div>
+<div class="row">
+      <div id="new_recipe_modal" class="modal fade in">
+            <div class="modal-dialog">
+                <div class="modal-content">              
+                 
+                      <div class="modal-body">
+                      <div class="row" id="close">
+                        <a class="btn btn-default" data-dismiss="modal"><span>X</span></a>
+                      </div>
+                      <!-- CONT1 -->
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-hide="cont1">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Base Ingredient:</label>
+                        </div>
 
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.two" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Ingredient 2...</label>
-        </div>
+                      <a ng-click="cont1=true;cont2=true" ng-hide="cont1" class="adds btn btn-default"><span>+</span></a>
+                      <!-- END CONT1 -->
 
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.three" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Ingredient 3...</label>
-        </div>
+                      <!-- CONT2 -->
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont2">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.two" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Ingredient 2...</label>
+                        </div>
 
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.four" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Ingredient 4...</label>
-        </div>
+                      <a ng-click="cont3=true;cont2=false" ng-show="cont2" class="adds btn btn-default"><span>+</span></a>
+                      <!-- ENC CONT2 -->
 
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.five" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Ingredient 5...</label>
-        </div>
 
-        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-          <input type="text" class="mdl-textfield__input" ng-model="rec.six" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
-          <label class="mdl-textfield__label" for="sample4">Ingredient 6...</label>
-        </div>
+                      <!-- CONT3 -->
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont3">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.three" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Ingredient 3...</label>
+                        </div>
 
-        <!-- Flat button with ripple -->
-        <div>
-          <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="new_recipe(rec, $event)">
-            Submit
-          </button>
-        </div>
-      </div>      
-  </div>
+                        <a ng-click="cont4=true;cont3=false" ng-show="cont3" class="adds btn btn-default"><span>+</span></a>
+                      <!-- END CONT3 -->
+
+
+                      <!-- CONT4 -->
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont4">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.four" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Ingredient 4...</label>
+                        </div>
+
+                        <a ng-click="cont5=true;cont4=false" ng-show="cont4" class="adds btn btn-default"><span>+</span></a>
+                      <!-- END CONT4 -->
+
+
+                      <!-- CONT5 -->
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont5">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.five" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Ingredient 5...</label>
+                        </div>
+
+                        <!-- <a ng-click="cont6=true;cont5=false" ng-show="cont5" class="adds btn btn-default"><span>+</span></a> -->
+                      <!-- END CONT5 -->
+
+                      <!-- CONT6 -->
+                       <!--  <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont6">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.six" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Ingredient 6...</label>
+                        </div> -->
+
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-hide="cont1">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.seven" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Recipe Name:</label>
+                        </div>
+
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont2">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.eight" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Recipe Name:</label>
+                        </div>
+
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont3">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.nine" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Name3...</label>
+                        </div>
+
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont4">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.ten" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Name4...</label>
+                        </div>
+
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont5">
+                          <input type="text" class="mdl-textfield__input" ng-model="rec.eleven" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
+                          <label class="mdl-textfield__label" for="sample4">Name5...</label>
+                        </div>
+
+                        <!-- Flat button with ripple -->
+                        <div>
+                          <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="new_recipe(rec, $event)">
+                            Submit
+                          </button>
+                        </div>
+
+                      </div>    
+          
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dalog -->
+      </div><!-- /.modal -->   
+</div>
+
+  
 
     
 

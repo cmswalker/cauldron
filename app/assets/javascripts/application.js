@@ -121,8 +121,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 				$scope.current_chart = response[0];
 				$scope.chart_id = $scope.current_chart.chart_id;
 				CHARTNAME = $scope.current_chart.name;
-				console.log('Current Chart ', $scope.current_chart);
-				console.log('Current Chart ID ', $scope.chart_id);
 			},
 			function(rejection) {
 				console.log('Chart GET error!');
@@ -136,7 +134,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 				$scope.current_user = response;
 				$scope.user_key = $scope.current_user.user_key;
 				KEY = $scope.user_key;
-				console.log('Current User ', $scope.current_user);
 			},
 			function(rejection) {
 				console.log('User GET error!');
@@ -155,9 +152,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	}
 
 	function build_chart_data() {
-
-			console.log('inside building chart');
-
 			//$scope.current_chart = response[0];
 			$scope.current_chart.allchild = null;
 			$scope.rec = {};
@@ -167,6 +161,13 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			$scope.rec.four = undefined;
 			$scope.rec.five = undefined;
 			$scope.rec.six = undefined;
+			$scope.rec.seven = undefined;
+			$scope.rec.eight = undefined;
+			$scope.rec.nine = undefined;
+			$scope.rec.ten = undefined;
+			$scope.rec.eleven = undefined;
+			$scope.rec.twelve = undefined;
+
 			console.log('here is scope.rec ', $scope.rec)
 			$scope.current_chart.layer_1 = [];
 			$scope.current_chart.layer_2 = [];
@@ -239,7 +240,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 		//END regen_layer_loop
 
 		regen_layer_loop();
-		console.log('yo names ', $scope.current_chart.layer_6_names)
 		
 		var end_seconds = new Date().getTime() / 1000;
 		var total_seconds = end_seconds - start_seconds;
@@ -257,12 +257,36 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	//Initiate the page
 	gen_user();
 
+	function validate(master) {
+		if (master.seven !== undefined) {
+			master.two = master.seven;
+		}
+		if (master.eight !== undefined) {
+			master.three = master.eight;
+		}
+		if (master.nine !== undefined) {
+			master.four = master.nine;
+		}
+		if (master.ten !== undefined) {
+			master.five = master.ten;
+		}
+		if (master.eleven !== undefined) {
+			master.six = master.eleven
+		}
+
+		return master;
+	}
+
+
+
+
 	$scope.new_recipe = function(taco_recipe, event) {
 		event.preventDefault();
 		$scope.master = {};
 		$scope.master = angular.copy(taco_recipe);
-		console.log('here is scopemaster ', $scope.master);
-		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, $scope.master)
+		var valid_master = validate($scope.master);
+		console.log('here is valid master ', valid_master);
+		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, valid_master)
 			.success(function(data, status) {
 				console.log(status);
 				console.log("SHOULD BE WORKING?");
@@ -276,7 +300,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 });
 
 function delete_recipe(id) {
-    console.log('trying to delete');
     var ing_id = id
     $.ajax({
       method: "DELETE",
@@ -290,7 +313,6 @@ function delete_recipe(id) {
 }
 
 function edit_recipe(id, new_name) {
-    console.log('trying to delete');
     var ing_id = id
     $.ajax({
         type: "PUT",

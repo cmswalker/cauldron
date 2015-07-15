@@ -187,9 +187,7 @@ d3.chart.architectureTree = function() {
           // fade out all text elements
           // stop root from regenerating
           // console.log('this from click ', this);
-          console.log('d from click ', d);
           if (d.ancestry === null) {
-            console.log('WOWWWWW');
             $edit_recipe_div.addClass("ninja");
           }
           else {$edit_recipe_div.removeClass("ninja");};
@@ -355,12 +353,14 @@ d3.chart.architectureTree = function() {
     var $add_new_rec_div = $("#add_new_rec_div");
     var $edit_recipe_div = $("#edit_recipe_div");
 
+    var $new_recipe_modal = $("#new_recipe_modal");
     var $detail_modal = $("#detail_modal");
     var $modal_body = $("#modal_body");
     var $modal_title = $("#modal_title");
 
     $add_button.on("click", function(e) {
-        $add_new_rec_div.fadeIn(700);
+        // $add_new_rec_div.fadeIn(700);
+        $new_recipe_modal.modal('show');
     })
 
     $edit_input_submit.on("click", function() {
@@ -377,7 +377,6 @@ d3.chart.architectureTree = function() {
     var select = function(d) {
         //show the edit modal on click
         //$demo_div.addClass("ninja");
-        console.log('this ', this);
         
         //$demo.hide();
         $edit_input.val(d.name);
@@ -385,11 +384,10 @@ d3.chart.architectureTree = function() {
         $delete_input_id.val(d.id);
 
         var ing_id = d.id;
-        console.log('kiddos ', d.children);
+
         if (!d.children) {
             var rec_name = d.name;
             while (d.parent) {
-                console.log(d.parent);
                 if (d.parent.name === CHARTNAME) {break}
                 $modal_body.prepend('<li>' + d.parent.name + '</li>');
                 d = d.parent;

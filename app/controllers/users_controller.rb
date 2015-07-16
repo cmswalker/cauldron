@@ -7,11 +7,13 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
+    redirect_to "/account"
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    @chart = Chart.new
     @user = current_user
     respond_to do |format|
         format.html { render :show, notice: 'User was successfully created.' }
@@ -26,6 +28,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = current_user
   end
 
   # POST /users
@@ -36,7 +39,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         login(@user)
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        @user = current_user
+        format.html { redirect_to "/account", notice: "Welcome #{@user.username}! Your charts will live here in your dashboard.  Get started by clicking on the Ctrl tab above." }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -50,7 +54,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successful2ly updated.' }
+        format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -62,6 +66,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @user = current_user
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

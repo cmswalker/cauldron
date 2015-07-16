@@ -1,33 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
+<div id="chart_header">
+	<strong>Charts</strong>
+</div>
 
-<p>
-  <strong>Password digest:</strong>
-  <%= @user.password_digest %>
-</p>
+<hr>
 
-<p>
-  <strong>USER key:</strong>
-  <%= @user.user_key %>
-</p>
-
-<p>
-  <strong>Api key:</strong>
-  <%= @user.api_key %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
-
+<div id="charts_index_container">
 <% @user.charts.each do |c| %>
-	<div><%= link_to c.name, chart_path(c) %></div>
+	<div class="chart_titles"><%= link_to c.name, chart_path(c), class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></div>
+  <div><span><%= link_to 'Edit', edit_chart_path(c), class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></span> <span><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></span></div><hr>
 <% end %>
+</div>
+

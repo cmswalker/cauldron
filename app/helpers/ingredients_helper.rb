@@ -4,12 +4,8 @@ module IngredientsHelper
 	# 	@ingredient = c3.children.create! :name => @four_field, :chart_id => @ingredient.chart_id
 	# end
 
-	def create_from_trie
-		@ingredient = @looping_parent.children.create! :name => @search, :chart_id => @ingredient.chart_id
-	end
-
-	def create_from_trie_drop
-		@ingredient_drop = @looping_parent.children.create! :name => @new_search, :chart_id => @ingredient.chart_id
+	def create_from_trie(meas)
+		@ingredient = @looping_parent.children.create! :name => @create_search, :chart_id => @ingredient.chart_id, :meas => meas
 	end
 
 

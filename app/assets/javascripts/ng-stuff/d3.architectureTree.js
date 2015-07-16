@@ -4,14 +4,18 @@ console.log('d3.architecture.js   NO DEPENDENCIES')
 
 d3.chart = d3.chart || {};
 
+var url = location.pathname
+var ID = url.substring(url.lastIndexOf('/') + 1);
+var nodes, links, svg;
+var root;
+
 d3.chart.architectureTree = function() {
 
-    var svg, tree, treeData, diameter, activeNode;
+    var tree, treeData, diameter, activeNode;
 
     // var width = 960,
     //     height = 700,
     //     radius = Math.min(width, height) / 2;
-
     var width = 900,
         height = 900,
         radius = Math.min(width, height) / 2;
@@ -26,7 +30,9 @@ d3.chart.architectureTree = function() {
 
     //var color = d3.scale.category20b();
 
-    var color = d3.scale.ordinal().range(colorbrewer.RdBu[9]);
+    // var color = d3.scale.ordinal().range(colorbrewer.RdBu[9]);
+    // var color = d3.scale.ordinal().range(colorbrewer.RdYlGn[9]);
+    var color = d3.scale.ordinal().range(colorbrewer.YlOrRd[9]);
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", width)
@@ -35,7 +41,6 @@ d3.chart.architectureTree = function() {
         .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
     var graph = angular.element("#graph")
-        
 
     var partition = d3.layout.partition()
         .sort(null)
@@ -79,15 +84,14 @@ d3.chart.architectureTree = function() {
             //     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
         }
 
-        var nodes = tree.nodes(treeData),
-            links = tree.links(nodes);
+        nodes = tree.nodes(treeData);
+        links = tree.links(nodes);
 
         activeNode = null;
 
         svg.call(updateData, nodes, links);
         //d3.select(self.frameElement).style("height", height + "px");
     }
-
     //d3.select(self.frameElement).style("height", height + "px");
 
     /**
@@ -112,13 +116,10 @@ d3.chart.architectureTree = function() {
         var container = angular.element(document.querySelector('#panel')),
             graph = document.querySelector('#graph');
 
+
         //ADD DOM EVENTS HERE
 
-        
-
-        var demo_div = angular.element("#demo");
-
-
+        var demo_div = angular.element("#demo_input");
 
         var g = svg.selectAll("g")
             .data(partition.nodes(treeData))
@@ -126,12 +127,12 @@ d3.chart.architectureTree = function() {
           .attr("class", "node")
             .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
             .on('mouseover', function(d) {
+                $modal_body.text("");
+                $modal_title.text("");
                 if(activeNode !== null) {
                     return;
                 }
-                fade(0.3)(d);
-                console.log('here is d right before ', d);
-
+                fade(0.4)(d);
                 demo_div.text(d.name);
             })
             .on('mouseout', function(d) {
@@ -148,29 +149,33 @@ d3.chart.architectureTree = function() {
         var path = g.append("path").attr("class", "link")
           .attr("d", arc)
           .style("fill", 
-            function(d) { 
-                //if (  color((d.children ? d : d.parent).name) === undefined ) {
-                    //return color((d.children ? d : d.parent).name);
-                    return color((d.parent ? d.parent.name : d.name))
-                //}
+            function(d) {
+                    if (d.ancestry) {
+                        return color((d.parent ? d.parent.name : d.name))
+                    }
+                    else return color('grey');
+                    //original, no conditional
+                    //return color((d.parent ? d.parent.name : d.name))
             })
           .on("click", click)
         //switch between uncommenting the two return IF statements for desired look
+        
         var text = g.append("text")
           .attr("class", "chart_text")
           .attr("class", "no_click chart_text")
           //font color
-          //.attr("fill", "pink")
+          .attr("fill", "#7B2F00")
           //.attr("transform", "translate(0," + height + ")")
           .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
           .attr("x", function(d) { return y(d.y); })
-          .attr("dx", "6") // margin
+          .attr("dx", "8") // margin
           .attr("dy", ".35em")
            // vertical-align
           .text(function(d) { 
-            //if (d.children.length !== 0) {
-                return d.name; 
-            //}
+                if (d.ancestry) {
+                    return d.name; 
+                }
+                else {root = d;}
           })
           //REMOVE initial text for all fields that dont have children
           .attr("opacity", function(d) {
@@ -179,14 +184,28 @@ d3.chart.architectureTree = function() {
             }
           });
 
+          // .attr("transform", function(d, i) {
+          //         return "translate(" + (850*Math.cos(i*2*Math.PI/365)+width) + "," + (850*Math.sin(i*2*Math.PI/365)+height) + ")rotate(" + (i*360/365) + ")";
+          //     })
+          //     .text(function(d) { return d; });
 
+
+
+
+
+        var new_depth;
         function click(d) {
           // fade out all text elements
           // stop root from regenerating
-          // console.log(this);
-          if (this.parentNode.textContent === null) {
-            return
+          // console.log('this from click ', this);
+          if (d.ancestry === null) {
+            $edit_recipe_div.addClass("ninja");
           }
+          else {$edit_recipe_div.removeClass("ninja");};
+
+          // if (this.parentNode.textContent === null) {
+          //   return
+          // }
           //Time defaults are 750
           text.transition().attr("opacity", 0);
           path.transition()
@@ -332,32 +351,79 @@ d3.chart.architectureTree = function() {
         });
     };
 
-    var demo_div2 = angular.element("#demo2");
+
+    var $chart_container = $("#chart_container");
+
+    var $edit_input = $("#edit_input");
+    var $edit_input_id =$("#edit_input_id");
+    var $edit_input_submit = $("#edit_input_submit");
+    var $delete_input_id = $("#delete_input_id");
+    var $delete_input_submit = $("#delete_input_submit");
+
+    var $add_button = $("#add_button");
+    var $add_new_rec_div = $("#add_new_rec_div");
+    var $edit_recipe_div = $("#edit_recipe_div");
+
+    var $new_recipe_modal = $("#new_recipe_modal");
+    var $detail_modal = $("#detail_modal");
+    var $modal_body = $("#modal_body");
+    var $modal_title = $("#modal_title");
+
+    $add_button.on("click", function(e) {
+        // $add_new_rec_div.fadeIn(700);
+        $new_recipe_modal.modal('show');
+    })
+
+    $edit_input_submit.on("click", function() {
+        edit_recipe($edit_input_id.val(), $edit_input.val());
+    });
+    $delete_input_submit.on("click", function() {
+        delete_recipe($delete_input_id.val());
+    });
+
+    var $test_modal = $("#test_modal");
+    var $demo = $("#demo");
+
 
     var select = function(d) {
-        //alert(d);
-        //BEANS();
+        //show the edit modal on click
+        //$demo_div.addClass("ninja");
+        //$demo.hide();
+        console.log('with meas', d);
+        $edit_input.val(d.name);
+        $edit_input_id.val(d.id);
+        $delete_input_id.val(d.id);
+       
+        var recipe = d.meas;
+        var ing_id = d.id;
 
-        console.log('you selected ', d.name);
-        demo_div2.text(d.name);
+        if (!d.children) {
+            var rec_name = d.name;
+            while (d.parent) {
+                if (d.parent.name === CHARTNAME) {break}
+                $modal_body.prepend('<div> - ' + d.parent.name + '</div>');
+                d = d.parent;
+            }  
+            $modal_title.text(rec_name);
+            $detail_modal.modal('show');
+            console.log('no meas ', d);
+        }
+        $modal_body.append('<br><span>  Recipe: </span>'); 
+        if (recipe) { 
+          $modal_body.append('<hr><p>' + recipe + '</p>')
+        }
+        
+        //else { $test_modal_div.text("");}
+        
         if (activeNode && activeNode.name == d.name) {
             unselect();
             return;
         }
-        unselect();
-
+        //unselect();
         svg.selectAll(".node")
             .filter(function(d) {
                 if (d.name === d.name) return true;
             })
-            // .each(function(d) {
-            //     demo_div2.dispatchEvent(
-            //         new CustomEvent("selectNode", { "detail": d.name })
-            //     );
-            //     d3.select(this).attr("id", "node-active");
-            //     activeNode = d;
-            //     fade(1)(d);
-            // });
     };
 
     var unselect = function() {
@@ -400,6 +466,9 @@ d3.chart.architectureTree = function() {
         refreshFilters();
     };
 
+    $chart_container.fadeIn(3000);
+
 
     return chart;
 };
+

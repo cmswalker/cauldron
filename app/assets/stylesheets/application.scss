@@ -12,6 +12,7 @@
  *
  *= require charts.scss
  *= require welcome.scss
+ *= require material-design-lite/material.css
  *= require_tree .
  *= require_self
  */
@@ -23,11 +24,10 @@
  	background-color: RGBA(39, 40, 34, .3);
  }
 
- #graph {
+ #chart_container {
  	margin: 0 auto;
  	text-align: center;
- 	margin-top:5vh;
-
+ 	margin-top:4vh;
  }
 
  .navbar-inverse {
@@ -44,7 +44,6 @@
  }
 
  //NAVBAR
-
 
  .navbar-brand-centered {
      position: absolute;
@@ -76,3 +75,19 @@
  svg g .node {
  	border: 10px solid black;
  }
+
+ //MODAL
+
+ .modal-content {
+    border-radius: 0;
+  }
+
+  .btn {
+  	border: none;
+  }
+
+input .mdl-textfield__input{
+  border: none;
+  width: 16vw;
+  margin-right: 3vw;
+}

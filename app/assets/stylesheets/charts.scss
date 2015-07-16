@@ -5,17 +5,40 @@
 
 // D3 chart
 
+  .modal .modal-header {
+    border-bottom: none;
+    position: relative;
+  }
+  .modal .modal-header .btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 0;
+    border-radius: 0;
+  }
+  .modal .modal-footer {
+    border-top: none;
+    padding: 0;
+  }
+  .modal .modal-footer .btn-group > .btn:first-child {
+    border-bottom-left-radius: 0;
+  }
+  .modal .modal-footer .btn-group > .btn:last-child {
+    border-top-right-radius: 0;
+  }
+
+  .modal-content {
+    border-radius: 0;
+  }
+
+  //////////////
+
+
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Josefin Sans", sans-serif;
   margin: auto;
   position: relative;
   width: 960px;
-}
-
-form {
-  position: absolute;
-  right: 10px;
-  top: 10px;
 }
 
 path {
@@ -25,6 +48,10 @@ path {
 
 text {
   font-size: 12px;
+}
+
+.ninja {
+  display: none;
 }
 
 //////////NEW CHART
@@ -153,6 +180,42 @@ text {
     width: 960px;
     margin: auto;
 }
+
+///FORMS
+
+#demo_input {
+  margin: 0 auto;
+  float: right;
+  text-align: right;
+  padding-right: 5vw;
+  max-width: 25vw;
+}
+
+#save_button, #delete_button {
+  display: inline-block;
+}
+
+#edit_recipe_div {
+  float: left;
+  margin: 0 auto;
+  position: absolute;
+  width: 30vw;
+  margin-top: -4vh;
+}
+
+#new_recipe_modal {
+  margin: 0 auto;
+  width: 37vw;
+}
+
+#close {
+  float: right;
+  padding-right: 2em;
+  padding-top: 0;
+}
+
+//////////////////
+
 
 
 

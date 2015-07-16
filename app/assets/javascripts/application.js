@@ -18,11 +18,13 @@
 //= require colorbrewer.js
 //= require angular/angular.min.js
 //= require angular-resource/angular-resource.min.js
-//= require angular-route/angular-route.min.js
+//= require angular-route/angular-route.js
 //= require angular-animate/angular-animate.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
-//= require ./ng-stuff/d3.architectureTree.js
+//= require zoom.js
+
 //= require_self
+//= require ./ng-stuff/d3.architectureTree.js
 //= require ./ng-stuff/angular.architectureTree/controllers/chart.js
 //= require ./ng-stuff/angular.architectureTree/controllers/filter.js
 //= require ./ng-stuff/angular.architectureTree/controllers/json-data.js
@@ -34,16 +36,16 @@
 //= require ./ng-stuff/angular.architectureTree/services/bus.js
 //= require_tree ./ng-stuff
 
-//JUST IN CASE
 
-
-console.log('overall chart app');
-
-// var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"]);
+var url = location.pathname
+var ID = url.substring(url.lastIndexOf('/') + 1);
+var KEY;
+var CHART;
+var CHARTNAME;
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
     .run(function(data) {
-        data.fetchJsonData().then(function (response) {
+        data.fetchJsonData(ID).then(function (response) {
             console.log('data loaded');
         }, console.error);
     });
@@ -74,11 +76,11 @@ ChartApp.run(function(data) {
 ChartApp.factory('Chart', function ($http, $q) {
 	var Chart = {};
 
-	Chart.get = function() {
+	Chart.get = function(ID) {
 		var deferred = $q.defer()
 
 		$http
-			.get("/charts/8.json")
+			.get("/charts/" + ID + ".json")
 			.success(function(response) {
 				deferred.resolve(response);
 			})
@@ -109,25 +111,17 @@ ChartApp.factory('User', function ($http, $q) {
 	return User;
 });
 
-function BEANS() {
-	alert('BEANS');
-}
-
-
-
 ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
-
 
 	$scope.current_user = null;
 	$scope.current_chart = null;
 
 	var gen_chart_data = function() {
-		Chart.get().then(
+		Chart.get(ID).then(
 			function(response){
 				$scope.current_chart = response[0];
 				$scope.chart_id = $scope.current_chart.chart_id;
-				console.log('Current Chart ', $scope.current_chart);
-				console.log('Current Chart ID ', $scope.chart_id);
+				CHARTNAME = $scope.current_chart.name;
 			},
 			function(rejection) {
 				console.log('Chart GET error!');
@@ -140,7 +134,7 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			function(response){
 				$scope.current_user = response;
 				$scope.user_key = $scope.current_user.user_key;
-				console.log('Current User ', $scope.current_user);
+				KEY = $scope.user_key;
 			},
 			function(rejection) {
 				console.log('User GET error!');
@@ -159,9 +153,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	}
 
 	function build_chart_data() {
-
-			console.log('inside building chart');
-
 			//$scope.current_chart = response[0];
 			$scope.current_chart.allchild = null;
 			$scope.rec = {};
@@ -171,6 +162,20 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			$scope.rec.four = undefined;
 			$scope.rec.five = undefined;
 			$scope.rec.six = undefined;
+			$scope.rec.seven = undefined;
+			$scope.rec.eight = undefined;
+			$scope.rec.nine = undefined;
+			$scope.rec.ten = undefined;
+			$scope.rec.eleven = undefined;
+			$scope.rec.twelve = undefined;
+
+			// $scope.rec.meas_one = undefined;
+			$scope.rec.meas_two = undefined;
+			$scope.rec.meas_three = undefined;
+			$scope.rec.meas_four = undefined;
+			$scope.rec.meas_five = undefined;
+			$scope.rec.meas_six = undefined;
+
 			console.log('here is scope.rec ', $scope.rec)
 			$scope.current_chart.layer_1 = [];
 			$scope.current_chart.layer_2 = [];
@@ -243,7 +248,6 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 		//END regen_layer_loop
 
 		regen_layer_loop();
-		console.log('yo names ', $scope.current_chart.layer_6_names)
 		
 		var end_seconds = new Date().getTime() / 1000;
 		var total_seconds = end_seconds - start_seconds;
@@ -261,32 +265,73 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 	//Initiate the page
 	gen_user();
 
-	
-	
+	function validate(master) {
+		if (master.seven !== undefined) {
+			master.two = master.seven;
+		}
+		if (master.eight !== undefined) {
+			master.three = master.eight;
+		}
+		if (master.nine !== undefined) {
+			master.four = master.nine;
+		}
+		if (master.ten !== undefined) {
+			master.five = master.ten;
+		}
+		if (master.eleven !== undefined) {
+			master.six = master.eleven
+		}
+
+		return master;
+	}
+
+
 	$scope.new_recipe = function(taco_recipe, event) {
 		event.preventDefault();
 		$scope.master = {};
 		$scope.master = angular.copy(taco_recipe);
-		console.log('here is scopemaster ', $scope.master);
-		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, $scope.master)
+		var valid_master = validate($scope.master);
+		//debugger;
+		
+		console.log('here is valid master ', valid_master);
+		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, valid_master)
 			.success(function(data, status) {
 				console.log(status);
 				console.log("SHOULD BE WORKING?");
-				//regenerate();
+				location.reload(true)
 			})
 			.error(function(error) {
 				console.log(error);
 			})
 	}
 
-
-
- 
-
-
-
-
 });
+
+function delete_recipe(id) {
+    var ing_id = id
+    $.ajax({
+      method: "DELETE",
+      url: "/ingredients/" + id + ".json?user_key=" + KEY
+    })
+      .done(function( msg ) {
+        console.log('deleted ' + id);
+        location.reload(true)
+      });
+
+}
+
+function edit_recipe(id, new_name) {
+    var ing_id = id
+    $.ajax({
+        type: "PUT",
+        url: "/ingredients/" + id + ".json?user_key=" + KEY,
+        data: {"name": new_name}
+    })
+      .done(function( msg ) {
+        console.log( "EDITED " + id + "with " + new_name);
+        location.reload(true)
+      });
+}
 
 
 

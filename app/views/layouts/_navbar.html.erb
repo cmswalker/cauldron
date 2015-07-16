@@ -9,26 +9,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <div class="navbar-brand navbar-brand-centered">TITLE</div>
+          <div id="navbar_title" class="navbar-brand navbar-brand-centered"> <%= @chart.name %> </div>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-brand-centered">
           <ul class="nav navbar-nav"> 
             <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ctrl <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                   <% if current_user %>
-                    <li><a href="#">Add</a></li>
+                    <li>
+                      <a href="#" id="add_button"> Add new...</a>
+                    </li>
+
                     <li><a href="#">Charts</a></li>
-                    <li><a href="#">Share</a></li>
+
                     <li class="divider"></li>
                     <li><a href="#">Share</a></li>
                     <li class="divider"></li>
                     <li><a href="#">Log Out</a></li>
                   <% end %>
                   </ul>
-                </li>
+            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">About</a></li>      

@@ -315,14 +315,13 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 		$scope.master = angular.copy(taco_recipe);
 		var valid_master = validate($scope.master);
 		var string_master = stringy(valid_master);
-		debugger
 		
 		console.log('here is string master ', string_master);
 		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, string_master)
 			.success(function(data, status) {
 				console.log(status);
 				console.log("SHOULD BE WORKING?");
-				//location.reload(true)
+				location.reload(true)
 			})
 			.error(function(error) {
 				console.log(error);

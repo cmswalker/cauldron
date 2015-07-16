@@ -103,6 +103,15 @@ class IngredientsController < ApplicationController
     @five_field = ng_ingredient_params[:five]
     @six_field = ng_ingredient_params[:six]
 
+    @meas_one = ng_ingredient_params[:meas_one]
+    @meas_two = ng_ingredient_params[:meas_two]
+    @meas_three = ng_ingredient_params[:meas_three]
+    @meas_four = ng_ingredient_params[:meas_four]
+    @meas_five = ng_ingredient_params[:meas_five]
+
+    # binding.pry
+
+
     @looping_parent = @root
 
     def trie_search
@@ -259,7 +268,7 @@ class IngredientsController < ApplicationController
     end
 
     def ng_ingredient_params
-      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six )
+      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six, :meas_one, :meas_two, :meas_three, :meas_four, :meas_five )
     end
 
     def restrict_access

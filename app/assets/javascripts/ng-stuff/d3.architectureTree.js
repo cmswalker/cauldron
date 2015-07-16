@@ -388,8 +388,8 @@ d3.chart.architectureTree = function() {
     var select = function(d) {
         //show the edit modal on click
         //$demo_div.addClass("ninja");
-        
         //$demo.hide();
+        console.log('select ', d);
         $edit_input.val(d.name);
         $edit_input_id.val(d.id);
         $delete_input_id.val(d.id);
@@ -400,7 +400,8 @@ d3.chart.architectureTree = function() {
             var rec_name = d.name;
             while (d.parent) {
                 if (d.parent.name === CHARTNAME) {break}
-                $modal_body.prepend('<li>' + d.parent.name + '</li>');
+                $modal_body.prepend('<li>' + d.parent.name + d.parent.meas_five + '</li>');
+
                 d = d.parent;
             }
             $modal_title.text(rec_name);
@@ -408,7 +409,9 @@ d3.chart.architectureTree = function() {
 
 
             $detail_modal.modal('show');
+            console.log('this is d dawg ', d);
         }
+        
         //else { $test_modal_div.text("");}
         
         

@@ -12,7 +12,10 @@
 	<body ng-app="ChartApp">	
 		
 		<div class="container-fluid">
-		<%= render partial: "layouts/navbar" %>
+		<% if @chart %>
+			<%= render partial: "layouts/navbar" %>
+		<% end %>
+		
 
 			<%= flash_messages %>
 			<% if flash[:notice] %>
@@ -21,6 +24,8 @@
 			  </div>
 			<% end %>
 			<%= yield %>
+
+			<% console %>
 
 		
 

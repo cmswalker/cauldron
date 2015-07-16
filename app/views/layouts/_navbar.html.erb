@@ -9,29 +9,54 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <div id="navbar_title" class="navbar-brand navbar-brand-centered"> <%= @chart.name %> </div>
+          <% if @chart.name %>
+            <div id="navbar_title" class="navbar-brand navbar-brand-centered"> <%= @chart.name %> </div>
+          <% else %>
+            <div id="navbar_title" class="navbar-brand navbar-brand-centered"> <%= @user.username %> </div>
+          <% end %>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-brand-centered">
           <ul class="nav navbar-nav"> 
-            <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ctrl <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                  <% if current_user %>
-                    <li>
-                      <a href="#" id="add_button"> Add new...</a>
-                    </li>
+            <% if @chart.name %>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ctrl <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                    <% if current_user %>
+                      <li>
+                        <a href="#" id="add_button">New Recipe</a>
+                      </li>
 
-                    <li><a href="#">Charts</a></li>
+                      <li><a href="#"><%= link_to 'Charts', "/account" %></a></li>
 
-                    <li class="divider"></li>
-                    <li><a href="#">Share</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Log Out</a></li>
-                  <% end %>
-                  </ul>
-            </li>
+                      <li class="divider"></li>
+                      <li><a href="#">Share</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#"><%= link_to 'Sign Out', user_logout_path %> </a></li>
+                    <% end %>
+                    </ul>
+              </li>
+            <% else %>
+              <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ctrl <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                    <% if current_user %>
+                      <li>
+                        <a href="#" id="add_button"><%= link_to 'New Chart', new_chart_path %></a>
+                      </li>
+
+                      <li><a href="#"><%= link_to 'Edit Profile', edit_user_path(@user) %></a></li>
+                      <li class="divider"></li>
+                      <li><a href="#">Share</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#"><%= link_to 'Sign Out', user_logout_path %> </a></li>
+                    <% end %>
+                    </ul>
+              </li>
+            <% end %>
+
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">About</a></li>      

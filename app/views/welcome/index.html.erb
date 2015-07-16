@@ -1,4 +1,6 @@
 Login
+LANDING PAGE
+
 
 <%= form_for @user, url: "/sessions", method: "post" do |f| %>
 
@@ -16,3 +18,39 @@ Login
 <% end %> 
 
 or <%= link_to "Register", new_user_path %>
+
+
+
+<%= form_for @user, url: "/users", method: "post" do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %><br>
+    <%= f.text_field :username %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <label>Confirm Password</label><br>
+    <%= f.text_field :password_confirmation %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

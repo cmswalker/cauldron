@@ -15,6 +15,7 @@
  *= require material-design-lite/material.css
  *= require_tree .
  *= require_self
+ *= require users.scss
  */
 
  @import "bootstrap-sprockets";

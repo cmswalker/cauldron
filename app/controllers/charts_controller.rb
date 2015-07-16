@@ -2,11 +2,15 @@ class ChartsController < ApplicationController
   # before_action :set_chart, only: [:show, :edit, :update, :destroy]
   # skip_before_filter :verify_authenticity_token
   # before_filter :restrict_access, except: :index
+  before_action :current_user
 
   # GET /charts
   # GET /charts.json
   def index
-    @charts = Chart.all
+    @current_user = current_user
+    # @charts = Chart.all
+    @charts = @current_user.charts
+    redirect_to "/account"
   end
 
   # GET /charts/1
@@ -32,6 +36,7 @@ class ChartsController < ApplicationController
   # end
 
   def show
+    @user = current_user
     @chart = current_chart
     @ingredient = Ingredient.new
     @root = @chart.ingredients.first
@@ -42,7 +47,6 @@ class ChartsController < ApplicationController
     end
   end
 
-
   # GET /charts/new
   def new
     @chart = Chart.new
@@ -50,19 +54,21 @@ class ChartsController < ApplicationController
 
   # GET /charts/1/edit
   def edit
+    @chart = set_chart
   end
 
   # POST /charts
   # POST /charts.json
   def create
     @chart = Chart.new(chart_params)
+    @chart.user_id = @current_user.id
     if @chart.save
-      @ingredient = Ingredient.create! :name => @chart.name, :chart_id => @chart.id
-      
+      @ingredient = Ingredient.create! :name => @chart.name, :chart_id => @chart.id   
     end
+
     respond_to do |format|
       if @chart
-        format.html { redirect_to @chart, notice: 'Chart was successfully created.' }
+        format.html { redirect_to @chart, notice: "Here is your #{@chart.name} chart. Start building by adding a new recipe under the Ctrl tab above" }
         format.json { render :show, status: :created, location: @chart }
       else
         format.html { render :new }
@@ -76,7 +82,7 @@ class ChartsController < ApplicationController
   def update
     respond_to do |format|
       if @chart.update(chart_params)
-        format.html { redirect_to @chart, notice: 'Chart was successfully updated.' }
+        format.html { redirect_to @chart, notice: "#{@chart.name} updated." }
         format.json { render :show, status: :ok, location: @chart }
       else
         format.html { render :edit }
@@ -88,9 +94,11 @@ class ChartsController < ApplicationController
   # DELETE /charts/1
   # DELETE /charts/1.json
   def destroy
+    set_chart
+    @chart_name = @chart.name
     @chart.destroy
     respond_to do |format|
-      format.html { redirect_to charts_url, notice: 'Chart was successfully destroyed.' }
+      format.html { redirect_to "/account", notice: "Deleted #{@chart_name}" }
       format.json { head :no_content }
     end
   end

@@ -259,7 +259,7 @@ class IngredientsController < ApplicationController
     end
 
     def ng_ingredient_params
-      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six)
+      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six )
     end
 
     def restrict_access

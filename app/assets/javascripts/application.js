@@ -169,6 +169,17 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			$scope.rec.eleven = undefined;
 			$scope.rec.twelve = undefined;
 
+			$scope.rec.meas_one = undefined;
+			$scope.rec.meas_one_amt = undefined;
+			$scope.rec.meas_two = undefined;
+			$scope.rec.meas_two_amt = undefined;
+			$scope.rec.meas_three = undefined;
+			$scope.rec.meas_three_amt = undefined;
+			$scope.rec.meas_four = undefined;
+			$scope.rec.meas_four_amt = undefined;
+			$scope.rec.meas_five = undefined;
+			$scope.rec.meas_five_amt = undefined;
+
 			console.log('here is scope.rec ', $scope.rec)
 			$scope.current_chart.layer_1 = [];
 			$scope.current_chart.layer_2 = [];
@@ -278,7 +289,24 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 		return master;
 	}
 
-
+	function stringy(master) {
+		if (master.meas_one !== undefined && master.meas_one_amt !== undefined) {
+			master.meas_one = master.meas_one + " " + master.meas_one_amt;
+		}
+		if (master.meas_two !== undefined && master.meas_two_amt !== undefined) {
+			master.meas_two = master.meas_two + " " + master.meas_two_amt;
+		}
+		if (master.meas_three !== undefined && master.meas_three_amt !== undefined) {
+			master.meas_three = master.meas_three + " " + master.meas_three_amt;
+		}
+		if (master.meas_four !== undefined && master.meas_four_amt !== undefined) {
+			master.meas_four = master.meas_four + " " + master.meas_four_amt;
+		}
+		if (master.meas_five !== undefined && master.meas_five_amt !== undefined) {
+			master.meas_five = master.meas_five + " " + master.meas_five_amt;
+		}
+		return master
+	}
 
 
 	$scope.new_recipe = function(taco_recipe, event) {
@@ -286,12 +314,15 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 		$scope.master = {};
 		$scope.master = angular.copy(taco_recipe);
 		var valid_master = validate($scope.master);
-		console.log('here is valid master ', valid_master);
-		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, valid_master)
+		var string_master = stringy(valid_master);
+		debugger
+		
+		console.log('here is string master ', string_master);
+		$http.post("/charts/" + $scope.chart_id + "/ingredients.json?user_key=" + $scope.current_user.user_key, string_master)
 			.success(function(data, status) {
 				console.log(status);
 				console.log("SHOULD BE WORKING?");
-				location.reload(true)
+				//location.reload(true)
 			})
 			.error(function(error) {
 				console.log(error);

@@ -12,6 +12,7 @@
  *
  *= require charts.scss
  *= require welcome.scss
+ *= require material-design-lite/material.css
  *= require_tree .
  *= require_self
  */
@@ -43,7 +44,6 @@
  }
 
  //NAVBAR
-
 
  .navbar-brand-centered {
      position: absolute;
@@ -86,4 +86,8 @@
   	border: none;
   }
 
-
+input .mdl-textfield__input{
+  border: none;
+  width: 16vw;
+  margin-right: 3vw;
+}

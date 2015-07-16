@@ -85,26 +85,17 @@
                 <div class="modal-content">              
                  
                       <div class="modal-body">
-                      <div class="row" id="close">
-                        <a class="btn btn-default" data-dismiss="modal"><span>X</span></a>
-                      </div>
+                        <div class="row" id="close">
+                          <a class="btn btn-default" data-dismiss="modal"><span>X</span></a>
+                        </div>
                       <!-- CONT1 -->
                         <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo limit" ng-hide="cont1">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.one" typeahead="name for name in current_chart.layer_1_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Base Ingredient:</label>
                         </div>
-                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:3vw;display:inline;" ng-hide="cont1">
-                        <!-- Left aligned menu below button -->
-                        <input type="text" class="mdl-textfield__input" style="width:3vw; display:inline;" ng-model="rec.meas_one">
-                        <select class="mdl-textfield__input" style="width:3vw; display:inline" ng-model="rec.meas_one_amt">
-                          <option>oz</option>
-                          <option>ml</option>
-                          <option>dash</option>
-                          <option>tsp</option>
-                          <option>cups</option>
-                        </select>
-                      </div>
-                        <a ng-click="cont1=true;cont2=true" ng-hide="cont1" class="adds btn btn-default" style="display:inline"><span>+</span></a>
+                        <a ng-click="cont1=true;cont2=true" ng-hide="cont1" class="adds btn btn-default" style="display:inline"><span>+ Ingredient</span></a>
+
+                  <!--       <a ng-click="cont1=true;cont2=true;finish=true" ng-hide="cont1" class="adds btn btn-default" style="display:block"><span>Name & Submit --></span></a>
                       <!-- END CONT1 -->
 
                       <!-- CONT2 -->
@@ -112,20 +103,13 @@
                           <input type="text" class="mdl-textfield__input" ng-model="rec.two" typeahead="name for name in current_chart.layer_2_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Ingredient 2...</label>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:3vw;display:inline;" ng-show="cont2">
-                          <!-- Left aligned menu below button -->
-                          <input type="text" class="mdl-textfield__input" style="width:3vw; display:inline;" ng-model="rec.meas_two">
-                          <select class="mdl-textfield__input" style="width:3vw; display:inline" ng-model="rec.meas_two_amt">
-                            <option>oz</option>
-                            <option>ml</option>
-                            <option>dash</option>
-                            <option>tsp</option>
-                            <option>cups</option>
-                          </select>
-                        </div>
 
-                      <a ng-click="cont3=true;cont2=false" ng-show="cont2" class="adds btn btn-default"><span>+</span></a>
+                        <a ng-click="cont3=true;cont2=false" ng-show="cont2" class="adds btn btn-default"><span>+ Ingredient</span></a>
+
+                        <a ng-click="cont3=true;cont2=false;finish2=true;submit=true" ng-show="cont2" class="adds btn btn-default" style="display:block"><span>Name & Submit 2--></span></a>
                       <!-- ENC CONT2 -->
+
+
 
 
                       <!-- CONT3 -->
@@ -133,19 +117,10 @@
                           <input type="text" class="mdl-textfield__input" ng-model="rec.three" typeahead="name for name in current_chart.layer_3_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Ingredient 3...</label>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:3vw;display:inline;" ng-show="cont3">
-                          <!-- Left aligned menu below button -->
-                          <input type="text" class="mdl-textfield__input" style="width:3vw; display:inline;" ng-model="rec.meas_three">
-                          <select class="mdl-textfield__input" style="width:3vw; display:inline" ng-model="rec.meas_three_amt">
-                            <option>oz</option>
-                            <option>ml</option>
-                            <option>dash</option>
-                            <option>tsp</option>
-                            <option>cups</option>
-                          </select>
-                        </div>
 
-                        <a ng-click="cont4=true;cont3=false" ng-show="cont3" class="adds btn btn-default"><span>+</span></a>
+                        <a ng-click="cont4=true;cont3=false" ng-show="cont3" class="adds btn btn-default"><span>+ Ingredient</span></a>
+
+                        <a ng-click="cont4=true;cont3=false;finish3=true;submit=true" ng-show="cont3" class="adds btn btn-default" style="display:block"><span>Name & Submit 3--></span></a>
                       <!-- END CONT3 -->
 
 
@@ -154,19 +129,10 @@
                           <input type="text" class="mdl-textfield__input" ng-model="rec.four" typeahead="name for name in current_chart.layer_4_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Ingredient 4...</label>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:3vw;display:inline;" ng-show="cont4">
-                          <!-- Left aligned menu below button -->
-                          <input type="text" class="mdl-textfield__input" style="width:3vw; display:inline;" ng-model="rec.meas_four">
-                          <select class="mdl-textfield__input" style="width:3vw; display:inline" ng-model="rec.meas_four_amt">
-                            <option>oz</option>
-                            <option>ml</option>
-                            <option>dash</option>
-                            <option>tsp</option>
-                            <option>cups</option>
-                          </select>
-                        </div>
 
-                        <a ng-click="cont5=true;cont4=false" ng-show="cont4" class="adds btn btn-default"><span>+</span></a>
+                        <a ng-click="cont5=true;cont4=false" ng-show="cont4" class="adds btn btn-default"><span>+ Ingredient</span></a>
+
+                        <a ng-click="cont5=true;cont3=false;finish4=true;submit=true" ng-show="cont4" class="adds btn btn-default" style="display:block"><span>Name & Submit 4--></span></a>
                       <!-- END CONT4 -->
 
 
@@ -175,17 +141,8 @@
                           <input type="text" class="mdl-textfield__input" ng-model="rec.five" typeahead="name for name in current_chart.layer_5_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Ingredient 5...</label>
                         </div>
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:3vw;display:inline;" ng-show="cont5">
-                          <!-- Left aligned menu below button -->
-                          <input type="text" class="mdl-textfield__input" style="width:3vw; display:inline;" ng-model="rec.meas_five">
-                          <select class="mdl-textfield__input" style="width:3vw; display:inline" ng-model="rec.meas_five_amt">
-                            <option>oz</option>
-                            <option>ml</option>
-                            <option>dash</option>
-                            <option>tsp</option>
-                            <option>cups</option>
-                          </select>
-                        </div>
+
+                        <a ng-click="cont6=true;cont4=false;finish5=true;submit=true" ng-show="cont5" class="adds btn btn-default" style="display:block"><span>Name & Submit 5--></span></a>
 
                         <!-- <a ng-click="cont6=true;cont5=false" ng-show="cont5" class="adds btn btn-default"><span>+</span></a> -->
                       <!-- END CONT5 -->
@@ -196,34 +153,59 @@
                           <label class="mdl-textfield__label" for="sample4">Ingredient 6...</label>
                         </div> -->
 
-                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-hide="cont1">
+                        <!-- <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-hide="cont1">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.seven" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Recipe Name:</label>
-                        </div>
+                          <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="10"
+                             id="schools" ng-model="rec.meas_one"></textarea>
+                            <label class="mdl-textfield__label">Recipe:</label>
+                          </div>
+                        </div> -->
 
-                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont2">
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="finish2">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.eight" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
-                          <label class="mdl-textfield__label" for="sample4">Recipe Name:</label>
+                          <label class="mdl-textfield__label" for="sample4">Name2...</label>
+                          <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="3" maxrows="10"
+                             id="schools" ng-model="rec.meas_three"></textarea>
+                            <label class="mdl-textfield__label">Recipe2:</label>
+                          </div>
                         </div>
 
-                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont3">
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="finish3">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.nine" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Name3...</label>
+                          <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="4" maxrows="10"
+                             id="schools" ng-model="rec.meas_four"></textarea>
+                            <label class="mdl-textfield__label">Recipe3:</label>
+                          </div>
                         </div>
 
-                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont4">
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="finish4">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.ten" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Name4...</label>
+                          <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="5" maxrows="10"
+                             id="schools" ng-model="rec.meas_five"></textarea>
+                            <label class="mdl-textfield__label">Recipe4:</label>
+                          </div>
                         </div>
 
-                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="cont5">
+                        <div class="row mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" ng-show="finish5">
                           <input type="text" class="mdl-textfield__input" ng-model="rec.eleven" typeahead="name for name in current_chart.layer_6_names | filter:$viewValue | limitTo:8" >
                           <label class="mdl-textfield__label" for="sample4">Name5...</label>
+                          <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" rows="6" maxrows="10"
+                             id="schools" ng-model="rec.meas_six"></textarea>
+                            <label class="mdl-textfield__label">Recipe5:</label>
+                          </div>
                         </div>
 
                         <!-- Flat button with ripple -->
                         <div>
-                          <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-click="new_recipe(rec, $event)">
+                          <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect" ng-show="submit" ng-click="new_recipe(rec, $event)">
                             Submit
                           </button>
                         </div>

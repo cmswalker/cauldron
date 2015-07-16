@@ -389,33 +389,33 @@ d3.chart.architectureTree = function() {
         //show the edit modal on click
         //$demo_div.addClass("ninja");
         //$demo.hide();
-        console.log('select ', d);
+        console.log('select should define meas', d);
         $edit_input.val(d.name);
         $edit_input_id.val(d.id);
         $delete_input_id.val(d.id);
-
+       
+        var recipe = d.meas;
         var ing_id = d.id;
 
         if (!d.children) {
             var rec_name = d.name;
             while (d.parent) {
                 if (d.parent.name === CHARTNAME) {break}
-                $modal_body.prepend('<li>' + d.parent.name + d.parent.meas_five + '</li>');
-
+                $modal_body.prepend('<li>' + d.parent.name + '</li>');
                 d = d.parent;
-            }
+            }  
             $modal_title.text(rec_name);
-
-
-
             $detail_modal.modal('show');
-            console.log('this is d dawg ', d);
+            console.log('this is not defining meas? ', d);
+        }
+        
+        if (recipe) {
+          $modal_body.append('<span> Recipe: </span>');  
+          $modal_body.append('<p>' + recipe + '</p>')
         }
         
         //else { $test_modal_div.text("");}
         
-        
-
         if (activeNode && activeNode.name == d.name) {
             unselect();
             return;

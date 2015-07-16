@@ -103,11 +103,11 @@ class IngredientsController < ApplicationController
     @five_field = ng_ingredient_params[:five]
     @six_field = ng_ingredient_params[:six]
 
-    @meas_one = ng_ingredient_params[:meas_one]
     @meas_two = ng_ingredient_params[:meas_two]
     @meas_three = ng_ingredient_params[:meas_three]
     @meas_four = ng_ingredient_params[:meas_four]
     @meas_five = ng_ingredient_params[:meas_five]
+    @meas_six = ng_ingredient_params[:meas_six]
 
     # binding.pry
 
@@ -158,7 +158,7 @@ class IngredientsController < ApplicationController
                   end
                   @found = false
                   @create_search = @six_field
-                  create_from_trie
+                  create_from_trie(@meas_six)
                   return
                 end
               else #if level_5_search fails
@@ -167,7 +167,7 @@ class IngredientsController < ApplicationController
                 end
                 @found = false
                 @create_search = @five_field
-                create_from_trie
+                create_from_trie(@meas_five)
                 trie_search
               end
             else #if level_4_search fails
@@ -176,7 +176,7 @@ class IngredientsController < ApplicationController
               end
               @found = false
               @create_search = @four_field
-              create_from_trie
+              create_from_trie(@meas_four)
               trie_search
             end
           else # if level_3_search fails
@@ -185,7 +185,7 @@ class IngredientsController < ApplicationController
             end
             @found = false
             @create_search = @three_field
-            create_from_trie
+            create_from_trie(@meas_three)
             #call for the rest of the stack
             trie_search
           end
@@ -195,7 +195,7 @@ class IngredientsController < ApplicationController
           end
           @found = false
           @create_search = @two_field
-          create_from_trie
+          create_from_trie(@meas_two)
           #call for the rest of the stack
           trie_search
         end
@@ -205,7 +205,7 @@ class IngredientsController < ApplicationController
         end
         @found = false
         @create_search = @one_field
-        create_from_trie
+        create_from_trie(@meas_one)
         #call for the rest of the stack
         trie_search
       end
@@ -268,7 +268,7 @@ class IngredientsController < ApplicationController
     end
 
     def ng_ingredient_params
-      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six, :meas_one, :meas_two, :meas_three, :meas_four, :meas_five )
+      params.permit(:name, :chart_id, :one, :two, :three, :four, :five, :six, :meas_two, :meas_three, :meas_four, :meas_five, :meas_six )
     end
 
     def restrict_access

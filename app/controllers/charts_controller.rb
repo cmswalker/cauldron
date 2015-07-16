@@ -1,7 +1,7 @@
 class ChartsController < ApplicationController
-  before_action :set_chart, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :verify_authenticity_token
-  before_filter :restrict_access, except: :index
+  # before_action :set_chart, only: [:show, :edit, :update, :destroy]
+  # skip_before_filter :verify_authenticity_token
+  # before_filter :restrict_access, except: :index
 
   # GET /charts
   # GET /charts.json
@@ -32,6 +32,7 @@ class ChartsController < ApplicationController
   # end
 
   def show
+    @chart = current_chart
     @ingredient = Ingredient.new
     @root = @chart.ingredients.first
     @ingredients = @chart.ingredients.arrange_serializable
@@ -57,6 +58,7 @@ class ChartsController < ApplicationController
     @chart = Chart.new(chart_params)
     if @chart.save
       @ingredient = Ingredient.create! :name => @chart.name, :chart_id => @chart.id
+      
     end
     respond_to do |format|
       if @chart

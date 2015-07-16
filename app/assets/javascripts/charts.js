@@ -1,146 +1,146 @@
 
 
-	console.log('loaded charts.js');
-	/////////////////
-	//BEGIND3
+// 	console.log('loaded charts.js');
+// 	/////////////////
+// 	//BEGIND3
 
-	setTimeout(function () {go()}, 0);
+// 	setTimeout(function () {go()}, 0);
 
-	function go() {
-		console.log('inside go');
+// 	function go() {
+// 		console.log('inside go');
 
-		var width = 960,
-		    height = 700,
-		    radius = Math.min(width, height) / 2;
+// 		var width = 960,
+// 		    height = 700,
+// 		    radius = Math.min(width, height) / 2;
 
-		var x = d3.scale.linear()
-		    .range([0, 2 * Math.PI]);
+// 		var x = d3.scale.linear()
+// 		    .range([0, 2 * Math.PI]);
 
-		var y = d3.scale.linear()
-				//can be sqrt!
-		    .range([0, radius]);
+// 		var y = d3.scale.linear()
+// 				//can be sqrt!
+// 		    .range([0, radius]);
 
-		var color = d3.scale.category20c(); 
+// 		var color = d3.scale.category20c(); 
 
-		var svg = d3.select("body").append("svg")
-		    .attr("width", width)
-		    .attr("height", height)
-		  .append("g")
-		    .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
+// 		var svg = d3.select("body").append("svg")
+// 		    .attr("width", width)
+// 		    .attr("height", height)
+// 		  .append("g")
+// 		    .attr("transform", "translate(" + width / 2 + "," + (height / 2 + 10) + ")");
 
-		var partition = d3.layout.partition()
-		    .sort(null)
-		    .value(function(d) { return 1; });
+// 		var partition = d3.layout.partition()
+// 		    .sort(null)
+// 		    .value(function(d) { return 1; });
 
-		var arc = d3.svg.arc()
-		    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
-		    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
-		    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
-		    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+// 		var arc = d3.svg.arc()
+// 		    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+// 		    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+// 		    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+// 		    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
 
-		  d3.json("/charts/8.json", function(error, root) {
-		    var g = svg.selectAll("g")
-		        .data(partition.nodes(root[0]))
-		      .enter().append("g");
+// 		  d3.json("/charts/8.json", function(error, root) {
+// 		    var g = svg.selectAll("g")
+// 		        .data(partition.nodes(root[0]))
+// 		      .enter().append("g");
 
-		    d3.selectAll("input").on("change", function change() {
-		      var value = this.value;
-		      if (value === "count") {
-		        //reset somewher
-		      }
-		    });
+// 		    d3.selectAll("input").on("change", function change() {
+// 		      var value = this.value;
+// 		      if (value === "count") {
+// 		        //reset somewher
+// 		      }
+// 		    });
 
-		    var path = g.append("path")
-		      .attr("d", arc)
-		      .style("fill", 
-		      	function(d) { 
-		      		// if (  color((d.children ? d : d.parent).name) === undefined ) {
-		      			//return color((d.children ? d : d.parent).name);
-		      			return color((d.parent ? d.parent.name : d.name))
-		      		//}
-		        })
-		      .on("click", click);
+// 		    var path = g.append("path")
+// 		      .attr("d", arc)
+// 		      .style("fill", 
+// 		      	function(d) { 
+// 		      		// if (  color((d.children ? d : d.parent).name) === undefined ) {
+// 		      			//return color((d.children ? d : d.parent).name);
+// 		      			return color((d.parent ? d.parent.name : d.name))
+// 		      		//}
+// 		        })
+// 		      .on("click", click);
 
-		    var text = g.append("text")
-		      .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
-		      .attr("x", function(d) { return y(d.y); })
-		      .attr("dx", "6") // margin
-		      .attr("dy", ".35em") // vertical-align
-		      .text(function(d) { return d.name; })
-		      //REMOVE initial text for all fields
-		      .attr("opacity", function(d) {
-		        if (!d.children) {
-		          return 0;
-		        }
-		      })
+// 		    var text = g.append("text")
+// 		      .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; })
+// 		      .attr("x", function(d) { return y(d.y); })
+// 		      .attr("dx", "6") // margin
+// 		      .attr("dy", ".35em") // vertical-align
+// 		      .text(function(d) { return d.name; })
+// 		      //REMOVE initial text for all fields
+// 		      .attr("opacity", function(d) {
+// 		        if (!d.children) {
+// 		          return 0;
+// 		        }
+// 		      })
 
-		    function click(d) {
-		    	console.log("this is what you clicked", d);
+// 		    function click(d) {
+// 		    	console.log("this is what you clicked", d);
 		    	
-		    	//console.log('clicked it');
-		      // fade out all text elements
+// 		    	//console.log('clicked it');
+// 		      // fade out all text elements
 
-		      // stop root from regenerating
-		      // console.log(this);
-		      // if (this.parentNode.textContent === "Dranks") {
-		      //   return
-		      // }
-		      text.transition().attr("opacity", 0);
+// 		      // stop root from regenerating
+// 		      // console.log(this);
+// 		      // if (this.parentNode.textContent === "Dranks") {
+// 		      //   return
+// 		      // }
+// 		      text.transition().attr("opacity", 0);
 
-		      path.transition()
-		        .duration(750)
-		        .attrTween("d", arcTween(d))
-		        .each("end", function(e, i) {
-		        	//console.log('arrrrt d', d);
-		            // check if the animated element's data e lies within the visible angle span given in d
-		            if (e.x >= d.x && e.x < (d.x + d.dx)) {
-		              // get a selection of the associated text element
-		              var arcText = d3.select(this.parentNode).select("text");
-		              // fade in the text element and recalculate positions
-		              arcText.transition().duration(750)
-		                .attr("opacity", 1)
-		                .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
-		                .attr("x", function(d) { return y(d.y); });
-		            }
-		        });
-		    }
-		  });
-		  ///END GET
-
-
-		//d3.select(self.frameElement).style("height", height + "px");
-
-		// Interpolate the scales!
-		function arcTween(d) {
-			console.log('heres args');
-			console.log(arguments);
-		  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
-		      yd = d3.interpolate(y.domain(), [d.y, 1]),
-		      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
-		      console.log(xd, yd, yr);
-		  return function(d, i) {
-		  	//console.log('heres d and i')
-		  	//console.log(d, i);
-		    return i
-		        ? function(t) { return arc(d); }
-		        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
-		  };
-		}
-
-		function computeTextRotation(d) {
-		  return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
-		}
-
-		chart_ctrl();
-		//run next script
-
-	}
-	///////////////////////
-	//END D3
+// 		      path.transition()
+// 		        .duration(750)
+// 		        .attrTween("d", arcTween(d))
+// 		        .each("end", function(e, i) {
+// 		        	//console.log('arrrrt d', d);
+// 		            // check if the animated element's data e lies within the visible angle span given in d
+// 		            if (e.x >= d.x && e.x < (d.x + d.dx)) {
+// 		              // get a selection of the associated text element
+// 		              var arcText = d3.select(this.parentNode).select("text");
+// 		              // fade in the text element and recalculate positions
+// 		              arcText.transition().duration(750)
+// 		                .attr("opacity", 1)
+// 		                .attr("transform", function() { return "rotate(" + computeTextRotation(e) + ")" })
+// 		                .attr("x", function(d) { return y(d.y); });
+// 		            }
+// 		        });
+// 		    }
+// 		  });
+// 		  ///END GET
 
 
-//END SERVICE
+// 		//d3.select(self.frameElement).style("height", height + "px");
+
+// 		// Interpolate the scales!
+// 		function arcTween(d) {
+// 			console.log('heres args');
+// 			console.log(arguments);
+// 		  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+// 		      yd = d3.interpolate(y.domain(), [d.y, 1]),
+// 		      yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+// 		      console.log(xd, yd, yr);
+// 		  return function(d, i) {
+// 		  	//console.log('heres d and i')
+// 		  	//console.log(d, i);
+// 		    return i
+// 		        ? function(t) { return arc(d); }
+// 		        : function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); return arc(d); };
+// 		  };
+// 		}
+
+// 		function computeTextRotation(d) {
+// 		  return (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
+// 		}
+
+// 		chart_ctrl();
+// 		//run next script
+
+// 	}
+// 	///////////////////////
+// 	//END D3
+
+
+// //END SERVICE
 
 
 

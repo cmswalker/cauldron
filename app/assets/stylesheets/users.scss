@@ -5,20 +5,40 @@
 
 
 
-
-
 body {
 	text-align: center;
+	font-family: 'Cabin', helvetica, sans-serif;
+	font-weight: 400;
+}
+
+.mdl-button__ripple-container {
+	font-family: 'Cabin', helvetica, sans-serif;
+	font-weight: 400;
+}
+
+a {
+	font-family: 'Cabin', helvetica, sans-serif;
+	font-weight: 400;
+}
+
+.mdl-button .mdl-js-button .mdl-js-ripple-effect {
+	font-family: 'Cabin', helvetica, sans-serif;
+	font-weight: 400;
 }
 
 #chart_header {
 	font-size: 3em;
 }
 
-.chart_titles a {
-	font-size: 2em;
+.chart_titles {
+	font-size: 1.5em;
 }
 
 .chart_titles a:hover {
 	text-decoration: none;
+}
+
+.chart_buttons {
+	margin-top: -6px;
+	margin-bottom: -16px;
 }

@@ -1,3 +1,5 @@
+
+
 <% if @user.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -9,6 +11,17 @@
     </ul>
   </div>
 <% end %>
+
+<div id="title_div" class="row">
+  <span id="index_one">C</span>
+  <span id="index_two">a</span>
+  <span id="index_three">u</span>
+  <span id="index_four">l</span>
+  <span id="index_five">d</span>
+  <span id="index_six">r</span>
+  <span id="index_seven">o</span>
+  <span id="index_eight">n</span>
+</div>
 
 <!-- LOGIN MODAL -->
 <div id="wrap" class="text-center">
@@ -24,16 +37,14 @@
     <div class="row">
       <div class="modal_content col-sm-6 col-sm-offset-3 text-center">
         <button type="button" class="close" data-dismiss="modal">x</button>
-        <h2>Log In to ChartApp</h2>
+        <h3>Log In to Cauldron</h3>
         <%= form_for @user, url: "/sessions", method: "post" do |f| %>
 
-          <div class="field">
-            <%= f.label :username %><br>
-            <%= f.text_field :username %>
+          <div class="form-group">
+            <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
           </div>
-          <div class="field">
-            <%= f.label :password %><br>
-            <%= f.password_field :password %>
+          <div class="form-group">
+            <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
           </div>
           <div class="actions">
             <%= f.submit "Log In", class: "mdl-button mdl-js-button mdl-js-ripple-effect" %>
@@ -64,7 +75,7 @@
     <div class="row">
       <div class="modal_content col-sm-6 col-sm-offset-3 text-center">
         <button type="button" class="close" data-dismiss="modal">x</button>
-        <h2>Sign Up for ChartApp</h2>
+        <h3>Sign Up for Cauldron</h3>
         <%= form_for @user, url: "/users", method: "post" do |f| %>
           <% if @user.errors.any? %>
             <div id="error_explanation">
@@ -76,21 +87,17 @@
               </ul>
             </div>
           <% end %>
-          <div class="field">
-            <%= f.label :username %><br>
-            <%= f.text_field :username %>
+          <div class="form-group">
+            <%= f.text_field :username, placeholder: "Username", class: "form-control" %>
           </div>
-          <div class="field">
-            <%= f.label :email %><br>
-            <%= f.text_field :email %>
+          <div class="form-group">
+            <%= f.text_field :email, placeholder: "Email", class: "form-control" %>
           </div>
-          <div class="field">
-            <%= f.label :password %><br>
-            <%= f.password_field :password %>
+          <div class="form-group">
+            <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
           </div>
-          <div class="field">
-            <label>Confirm Password</label><br>
-            <%= f.password_field :password_confirmation %>
+          <div class="form-grup">
+            <%= f.password_field :password_confirmation, placeholder: "Confirm Password", class: "form-control" %>
           </div>
           <div class="actions">
             <%= f.submit "Sign Up", class: "mdl-button mdl-js-button mdl-js-ripple-effect" %>
@@ -106,6 +113,7 @@
   </div>
 </div>
 <!-- END SIGN UP MODAL -->
+
 
 
 

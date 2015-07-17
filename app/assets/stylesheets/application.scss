@@ -21,9 +21,16 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
+#charts_index_container .chart_titles a span  {
+   // background-color: RGBA(39, 40, 34, .9);
+  font-family: Arial;
+  font-weight: 400;
+}
+
  body {
  	background-color: RGBA(39, 40, 34, .3);
  }
+
 
  #chart_container {
  	margin: 0 auto;
@@ -43,6 +50,12 @@
  	            box-shadow: 0 8px 6px -6px #999;
 
  }
+
+ .navbar-toggle {
+  padding-right: 13px;
+  padding-left: 21px;
+ }
+
 
  //NAVBAR
 

@@ -1,8 +1,52 @@
-body {
+ body {
+  font-family: 'Cabin', helvetica, sans-serif;
+  font-weight: 400;
+ }
 
-}
+ span {
+    margin-left: -9px;
+ }
 
+ #title_div {
+    font-size: 9em;
+    background-color: RGBA(39, 40, 34, .9);
+    height: 83vh;
+ }
 
+ #index_one {
+    color: #F0D33B
+ }
+
+ #index_two {
+    
+    color: #FED976;
+ }
+
+ #index_three {
+    color: #FFAD6D;
+ }
+
+ #index_four {
+    color: #F1835A;
+ }
+
+ #index_five {
+    
+    color: #FEB24C;
+ }
+
+ #index_six {
+   color: #FED976;
+ }
+
+ #index_seven {
+    color: #E8F4CF;
+ }
+
+ #index_eight {
+    
+     color: #B1F9EE;
+ }
 
 
 // MODAL
@@ -23,8 +67,12 @@ body.modal-open #wrap{
 }
 
 .modal_content {
-	background-color: RGBA(255, 255, 255, .8);
+	background-color: RGBA(230, 230, 230, .9);
 	padding-bottom: 2vh;
 	padding-top: -5vh;
 	margin-top: 8vh;
+}
+
+.modal {
+    border-radius: 3px;
 }

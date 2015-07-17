@@ -50,7 +50,7 @@ var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
         }, console.error);
     });
 
-ChartApp.config(function($routeProvider) {
+ChartApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
 
 	$routeProvider
 		.when('/',{
@@ -59,8 +59,9 @@ ChartApp.config(function($routeProvider) {
 		.when('/charts/:id', {
 			controller: 'ChartCtrl'
 		});
+		$locationProvider.html5Mode(true);
 
-});
+}]);
 
 ChartApp.config(["$httpProvider", function($httpProvider) {
     $httpProvider.

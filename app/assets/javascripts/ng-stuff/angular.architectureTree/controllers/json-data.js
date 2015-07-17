@@ -1,5 +1,5 @@
 console.log('json data.js   pushing in $scope, bus, data');
-ChartApp.controller('jsonDataCtrl', function ($scope, bus, data) {
+ChartApp.controller('jsonDataCtrl', ["$scope", "bus", "data", function ($scope, bus, data) {
     'use strict';
 
     var previousData;
@@ -20,4 +20,4 @@ ChartApp.controller('jsonDataCtrl', function ($scope, bus, data) {
         }
     };
 
-});
+}]);

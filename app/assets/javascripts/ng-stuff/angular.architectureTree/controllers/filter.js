@@ -1,7 +1,7 @@
 console.log('filter.js   pusing in $scope, bus')
 
 
-ChartApp.controller('filterCtrl', function ($scope, bus) {
+ChartApp.controller('filterCtrl', ["$scope", "bus", function ($scope, bus) {
     'use strict';
 
     bus.on('updateData', function(data) {
@@ -86,4 +86,4 @@ ChartApp.controller('filterCtrl', function ($scope, bus) {
         return Object.keys(hosts).sort();
     }
 
-});
+}]);

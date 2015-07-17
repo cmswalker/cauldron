@@ -44,11 +44,11 @@ var CHART;
 var CHARTNAME;
 
 var ChartApp = angular.module("ChartApp", ["ngRoute", "ui.bootstrap"])
-    .run(function(data) {
+    .run(["data", function(data) {
         data.fetchJsonData(ID).then(function (response) {
             console.log('data loaded');
         }, console.error);
-    });
+    }]);
 
 ChartApp.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
 

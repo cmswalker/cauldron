@@ -11,10 +11,11 @@
  * file per style scope.
  *
  *= require charts.scss
- *= require welcome.scss
  *= require material-design-lite/material.css
  *= require_tree .
  *= require_self
+ *= require users.scss
+ *= require welcome.scss
  */
 
  @import "bootstrap-sprockets";

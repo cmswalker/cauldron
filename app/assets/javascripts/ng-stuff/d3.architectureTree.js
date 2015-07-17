@@ -408,9 +408,9 @@ d3.chart.architectureTree = function() {
             $detail_modal.modal('show');
             console.log('no meas ', d);
         }
-        $modal_body.append('<br><span>  Recipe: </span>'); 
+        $modal_body.append('<hr><span>  Recipe </span><br>'); 
         if (recipe) { 
-          $modal_body.append('<hr><p>' + recipe + '</p>')
+          $modal_body.append('<br><p>' + recipe + '</p>')
         }
         
         //else { $test_modal_div.text("");}

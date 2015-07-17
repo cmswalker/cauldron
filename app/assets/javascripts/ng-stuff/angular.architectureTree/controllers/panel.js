@@ -1,7 +1,10 @@
 console.log('panel.js  pushing in $scope, $timeout, $window, data bus');
-ChartApp.controller('panelCtrl', ["$scope", "$timeout", "$window", "data", "bus", function ($scope, $timeout, $window, data, bus) {
 
-    
+ChartApp.controller('panelCtrl', 
+    ["$scope", "$timeout", "$window", "data", "bus", "Chart", "User", 
+        function ($scope, $timeout, $window, data, bus, Chart, User) {
+
+
     'use strict';
     var container = angular.element(document.querySelector('#panel')),
         graph = document.querySelector('#graph');

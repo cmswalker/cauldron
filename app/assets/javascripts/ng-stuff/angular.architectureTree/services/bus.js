@@ -1,6 +1,6 @@
 console.log('bus pushing in $http, $q')
 
-ChartApp.service('bus', function ($http, $q) {
+ChartApp.service('bus', ["$http", "$q", function ($http, $q) {
     'use strict';
 
     // Simple message bus to event the overhead of angular emit / broadcast
@@ -28,4 +28,4 @@ ChartApp.service('bus', function ($http, $q) {
         on: on,
         emit: emit
     };
-});
+}]);

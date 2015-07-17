@@ -1,7 +1,6 @@
-console.log('chart.js   pusing in $scope, bus');
-ChartApp.controller('chartCtrl', ["scope", "bus", function ($scope, bus) {
-    'use strict';
+ 'use strict';
 
+ChartApp.controller('chartCtrl', ["$scope", "bus", function ($scope, bus) {
 
     bus.on('updateData', function(data) {
         $scope.data = angular.copy(data);

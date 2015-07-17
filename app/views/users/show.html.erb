@@ -13,7 +13,7 @@
   	<span>
   		<%= button_to 'Edit', "/charts/#{c.id}/edit", class: "button mdl-button mdl-js-button mdl-js-ripple-effect chart_buttons", :method => :get %>
   	</span> 
-  	<span><%= button_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-js-ripple-effect chart_buttons", :method => :get %></span>
+  	<span><%= button_to 'Delete', "/charts/#{c.id}", method: :delete, data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-js-ripple-effect chart_buttons" %></span>
   </div><hr>
 <% end %>
 </div>

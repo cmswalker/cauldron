@@ -80,6 +80,7 @@ class ChartsController < ApplicationController
   # PATCH/PUT /charts/1
   # PATCH/PUT /charts/1.json
   def update
+    @chart = set_chart
     respond_to do |format|
       if @chart.update(chart_params)
         format.html { redirect_to @chart, notice: "#{@chart.name} updated." }
@@ -95,8 +96,10 @@ class ChartsController < ApplicationController
   # DELETE /charts/1.json
   def destroy
     set_chart
+    @user = current_user
     @chart_name = @chart.name
     @chart.destroy
+    @charts = @user.charts
     respond_to do |format|
       format.html { redirect_to "/account", notice: "Deleted #{@chart_name}" }
       format.json { head :no_content }

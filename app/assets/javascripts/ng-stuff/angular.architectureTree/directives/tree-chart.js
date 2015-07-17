@@ -1,6 +1,6 @@
 console.log('treechart.js   pushing in bus')
 
-ChartApp.directive('treeChart', function(bus) {
+ChartApp.directive('treeChart', ["bus", function(bus) {
     'use strict';
 
     return {
@@ -39,4 +39,4 @@ ChartApp.directive('treeChart', function(bus) {
 
         }
     };
-});
+}]);

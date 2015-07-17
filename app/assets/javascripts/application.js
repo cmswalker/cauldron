@@ -68,13 +68,13 @@ ChartApp.config(["$httpProvider", function($httpProvider) {
         defaults.headers.common["X-CSRF"] = $("meta[name=csrf-token]").attr("content");
 }]);
 
-ChartApp.run(function(data) {
+ChartApp.run(["data", function(data) {
         data.fetchJsonData().then(function (response) {
             console.log('data loaded FROM OTHER GUYS');
         }, console.error);
-    });
+    }]);
 
-ChartApp.factory('Chart', function ($http, $q) {
+ChartApp.factory('Chart', ["$http", "$q", function ($http, $q) {
 	var Chart = {};
 
 	Chart.get = function(ID) {
@@ -91,9 +91,9 @@ ChartApp.factory('Chart', function ($http, $q) {
 		return deferred.promise;
 	}
 	return Chart;
-});
+}]);
 
-ChartApp.factory('User', function ($http, $q) {
+ChartApp.factory('User', ["$http", "$q", function ($http, $q) {
 	var User = {};
 
 	User.get = function() {
@@ -110,9 +110,9 @@ ChartApp.factory('User', function ($http, $q) {
 		return deferred.promise;
 	}
 	return User;
-});
+}]);
 
-ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
+ChartApp.controller("ChartCtrl", ["$scope", "$http", "Chart", "User", function ($scope, $http, Chart, User) {
 
 	$scope.current_user = null;
 	$scope.current_chart = null;
@@ -306,7 +306,7 @@ ChartApp.controller("ChartCtrl", function ($scope, $http, Chart, User) {
 			})
 	}
 
-});
+}]);
 
 function delete_recipe(id) {
     var ing_id = id
@@ -333,6 +333,8 @@ function edit_recipe(id, new_name) {
         location.reload(true)
       });
 }
+
+
 
 
 

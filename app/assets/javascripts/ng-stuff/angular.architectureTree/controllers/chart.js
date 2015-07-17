@@ -1,5 +1,5 @@
 console.log('chart.js   pusing in $scope, bus');
-ChartApp.controller('chartCtrl', function ($scope, bus) {
+ChartApp.controller('chartCtrl', ["scope", "bus", function ($scope, bus) {
     'use strict';
 
 
@@ -8,4 +8,4 @@ ChartApp.controller('chartCtrl', function ($scope, bus) {
         // console.log('updating data with copy');
         // console.log($scope.data);
     });
-});
+}]);

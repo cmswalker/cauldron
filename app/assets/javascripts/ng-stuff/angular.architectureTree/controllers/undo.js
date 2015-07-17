@@ -1,5 +1,5 @@
 console.log('undo.js   pushing in $scope, bus, data');
-ChartApp.controller('undoCtrl', function($scope, bus, data) {
+ChartApp.controller('undoCtrl', ["$scope", "bus", "data", function($scope, bus, data) {
 
     var history = [];
 
@@ -19,4 +19,4 @@ ChartApp.controller('undoCtrl', function($scope, bus, data) {
         data.setJsonData(history.pop()); // restore previsous state
     };
 
-});
+}]);

@@ -1,56 +1,111 @@
-Login
-LANDING PAGE
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-
-<%= form_for @user, url: "/sessions", method: "post" do |f| %>
-
-	<div class="field">
-	  <%= f.label :username %><br>
-	  <%= f.text_field :username %>
-	</div>
-	<div class="field">
-	  <%= f.label :password %><br>
-	  <%= f.text_field :password %>
-	</div>
-	<div class="actions">
-	  <%= f.submit "Log In" %>
-	</div>
-<% end %> 
-
-or <%= link_to "Register", new_user_path %>
-
-
-
-<%= form_for @user, url: "/users", method: "post" do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :username %><br>
-    <%= f.text_field :username %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <label>Confirm Password</label><br>
-    <%= f.text_field :password_confirmation %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
   </div>
 <% end %>
+
+<!-- LOGIN MODAL -->
+<div id="wrap" class="text-center">
+  <!-- Button trigger modal -->
+  <br>
+<button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-toggle="modal" data-target="#login_modal">
+  Log In
+</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="container">
+    <div class="row">
+      <div class="modal_content col-sm-6 col-sm-offset-3 text-center">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h2>Log In to ChartApp</h2>
+        <%= form_for @user, url: "/sessions", method: "post" do |f| %>
+
+          <div class="field">
+            <%= f.label :username %><br>
+            <%= f.text_field :username %>
+          </div>
+          <div class="field">
+            <%= f.label :password %><br>
+            <%= f.password_field :password %>
+          </div>
+          <div class="actions">
+            <%= f.submit "Log In", class: "mdl-button mdl-js-button mdl-js-ripple-effect" %>
+          </div>
+        <% end %> 
+        or
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-dismiss="modal" data-toggle="modal" data-target="#signup_modal">
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END LOGIN MODAL -->
+
+
+<!-- SIGN UP MODAL -->
+<div id="wrap" class="text-center">
+  <!-- Button trigger modal -->
+  <br>
+<button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-toggle="modal" data-target="#signup_modal">
+  Sign Up
+</button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="container">
+    <div class="row">
+      <div class="modal_content col-sm-6 col-sm-offset-3 text-center">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h2>Sign Up for ChartApp</h2>
+        <%= form_for @user, url: "/users", method: "post" do |f| %>
+          <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+              <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="field">
+            <%= f.label :username %><br>
+            <%= f.text_field :username %>
+          </div>
+          <div class="field">
+            <%= f.label :email %><br>
+            <%= f.text_field :email %>
+          </div>
+          <div class="field">
+            <%= f.label :password %><br>
+            <%= f.password_field :password %>
+          </div>
+          <div class="field">
+            <label>Confirm Password</label><br>
+            <%= f.password_field :password_confirmation %>
+          </div>
+          <div class="actions">
+            <%= f.submit "Sign Up", class: "mdl-button mdl-js-button mdl-js-ripple-effect" %>
+          </div>
+        <% end %>
+        or 
+          <!-- Button trigger modal -->
+        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-dismiss="modal" data-toggle="modal" data-target="#login_modal">
+          Log In
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END SIGN UP MODAL -->
+
+
+

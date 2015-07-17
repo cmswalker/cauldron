@@ -116,37 +116,37 @@ class IngredientsController < ApplicationController
 
     def trie_search
 
-      @level_1_search = @root.descendants.find_by(name: @one_field)
+      @level_1_search = @root.children.find_by(name: @one_field)
       if @level_1_search and @one_field.length
         @found = true
         @looping_parent = @level_1_search
         @new_root = @looping_parent
         #continue the loop
-        @level_2_search = @new_root.descendants.find_by(name: @two_field)
+        @level_2_search = @new_root.children.find_by(name: @two_field)
         if @level_2_search and @two_field.length
           @found = true
           @looping_parent = @level_2_search
           @new_root = @looping_parent
           #continue the loop
-          @level_3_search = @new_root.descendants.find_by(name: @three_field)
+          @level_3_search = @new_root.children.find_by(name: @three_field)
           if @level_3_search and @three_field.length
             @found = true
             @looping_parent = @level_3_search
             @new_root = @looping_parent
             #continue the loop
-            @level_4_search = @new_root.descendants.find_by(name: @four_field)
+            @level_4_search = @new_root.children.find_by(name: @four_field)
             if @level_4_search and @four_field.length
               @found = true
               @looping_parent = @level_4_search
               @new_root = @looping_parent
               #contiue the loop
-              @level_5_search = @new_root.descendants.find_by(name: @five_field)
+              @level_5_search = @new_root.children.find_by(name: @five_field)
               if @level_5_search and @five_field.length
                 @found = true
                 @looping_parent = @level_5_search
                 @new_root = @looping_parent
                 #continue the loop
-                @level_6_search = @new_root.descendants.find_by(name: @six_field)
+                @level_6_search = @new_root.children.find_by(name: @six_field)
                 if @level_6_search and @six_field.length
                   @found = true
                   @looping_parent = @level_6_search

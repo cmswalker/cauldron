@@ -1,6 +1,15 @@
 // Place all the styles related to the Charts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+ font-family: 'Cabin', helvetica, sans-serif;
+ font-weight: 400;
+}
+
+textarea.form-control {
+  margin-top: 2em;
+}
+
 
 
 // D3 chart
@@ -14,7 +23,7 @@
     top: 0;
     right: 0;
     margin-top: 0;
-    border-radius: 0;
+    border-radius: 4px;
   }
   .modal .modal-footer {
     border-top: none;
@@ -201,11 +210,6 @@ text {
   position: absolute;
   width: 30vw;
   margin-top: -4vh;
-}
-
-#new_recipe_modal {
-  margin: 0 auto;
-  width: 37vw;
 }
 
 #close {

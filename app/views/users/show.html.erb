@@ -1,15 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <div id="chart_header">
-	<strong>Charts</strong>
+	<h2>Charts</h2>
 </div>
 
 <hr>
 
-<div id="charts_index_container">
+<div id="charts_index_container col-xs-10">
 <% @user.charts.each do |c| %>
-	<div class="chart_titles"><%= link_to c.name, chart_path(c), class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></div>
-  <div><span><%= link_to 'Edit', edit_chart_path(c), class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></span> <span><%= link_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-js-ripple-effect" %></span></div><hr>
+	<div ><%= button_to c.name, chart_path(c), class: "mdl-button mdl-js-button mdl-js-ripple-effect chart_titles", :method => :get %></div>
+  <div>
+  	<span>
+  		<%= button_to 'Edit', "/charts/#{c.id}/edit", class: "button mdl-button mdl-js-button mdl-js-ripple-effect chart_buttons", :method => :get %>
+  	</span> 
+  	<span><%= button_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-js-ripple-effect chart_buttons", :method => :get %></span>
+  </div><hr>
 <% end %>
 </div>
 

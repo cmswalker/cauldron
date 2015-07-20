@@ -3,7 +3,6 @@
 <% if @user.errors.any? %>
   <div id="error_explanation">
     <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
     <ul>
     <% @user.errors.full_messages.each do |message| %>
       <li><%= message %></li>
@@ -69,6 +68,11 @@
   Sign Up
 </button>
 </div>
+
+<span id="trial">
+  <a href="/charts/1">Try it Out</a>
+</span>
+
 <!-- Modal -->
 <div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="container">
